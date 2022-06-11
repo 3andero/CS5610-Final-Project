@@ -1,8 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, LinearProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import { BackButton } from "../components/back.button";
-import { appConfig } from "../config";
+import { BackButton } from "../../components/back.button";
+import { appConfig } from "../../config";
 
 import "./serverApi.css";
 
@@ -47,7 +47,7 @@ const RequireActionComponent = ({
   buttonMsg: string;
 }) => {
   return (
-    <div
+    <Box
       style={{
         display: "flex",
         flexDirection: "column",
@@ -60,7 +60,7 @@ const RequireActionComponent = ({
           {buttonMsg}
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 };
 
@@ -179,5 +179,4 @@ const _serverApi = () => {
   );
 };
 
-// export const ServerApi = withAuthenticationRequired(_serverApi);
 export const ServerApi = _serverApi;
