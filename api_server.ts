@@ -12,6 +12,11 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { expressjwt as jwt } from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
+import { mongoose } from '@typegoose/typegoose';
+import { config } from 'dotenv';
+import { ProductModel, Product } from './src/models/product';
+import { OrderModel, Order } from './src/models/order';
+
 
 const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -30,7 +35,7 @@ const checkJWT = jwt({
         rateLimit: true,
         jwksRequestsPerMinute: 5,
         jwksUri: jwksURI,
-    }),
+    }) as jwksRsa.GetVerificationKey,
     audience: logStr(appConfig.AUDIENCE),
     issuer: logStr(appConfig.ISSUER_BASE_URL + '/'),
     algorithms: ["RS256"],
@@ -56,4 +61,18 @@ app.use(((err, req, res, next) => {
     }
 }) as ErrorRequestHandler);
 
-app.listen(appConfig.API_PORT);
+const start = async (): Promise<void> => {
+    try {
+      await mongoose.connect(
+        appConfig.MONGO_DB
+      );
+      app.listen(appConfig.API_PORT, () => {
+        console.log("Server started on port 3000");
+      });
+    } catch (error) {
+      console.error(error);
+      process.exit(1);
+    }
+  };
+
+  void start();
