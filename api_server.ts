@@ -16,7 +16,8 @@ import { mongoose } from '@typegoose/typegoose';
 import { config } from 'dotenv';
 import { ProductModel, Product } from './src/models/product';
 import { OrderModel, Order } from './src/models/order';
-
+import { router_Index } from './src/routes';
+import { router_Products } from './src/routes/products';
 
 const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -26,6 +27,10 @@ app.use(morgan('dev'));
 
 app.use(helmet());
 app.use(cors({ origin: appOrigin }));
+
+app.use("/", router_Index);
+app.use("/products", router_Products);
+
 
 const jwksURI = logStr(appConfig.ISSUER_BASE_URL + (appConfig.ISSUER_BASE_URL.slice(-1) === '/' ? '' : '/') + ".well-known/jwks.json");
 
@@ -41,13 +46,13 @@ const checkJWT = jwt({
     algorithms: ["RS256"],
 });
 
-app.get("/", (req, res, next) => {
-    res.send("hello world");
-});
+// app.get("/", (req, res, next) => {
+//     res.send("hello world");
+// });
 
-app.get("/v1/protected/", checkJWT, (req, res, next) => {
-    res.send({ msg: "protected routes" });
-});
+// app.get("/v1/protected/", checkJWT, (req, res, next) => {
+//     res.send({ msg: "protected routes" });
+// });
 
 app.use((_req, _res, next) => {
     next(new ApiError(404, 'Not found'));
