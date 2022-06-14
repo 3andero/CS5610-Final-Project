@@ -1,4 +1,4 @@
-import { Box, Typography, Drawer, Button } from "@mui/material";
+import { Box, Typography, Drawer, Button, AppBar } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
@@ -53,9 +53,13 @@ const SideBarAndButton = ({
 export const StoreNavigation = () => {
   const context = useContext(AppContext);
   return (
-    <Box
+    <AppBar
+      position="sticky"
       sx={{
-        margin: "5em",
+        top: 0,
+        bgcolor: "white",
+        color: "grey",
+        padding: "2em",
         display: "flex",
         flexDirection: "row",
         gap: "1em",
@@ -95,6 +99,6 @@ export const StoreNavigation = () => {
           anchor={"right"}
         />
       </Box>
-    </Box>
+    </AppBar>
   );
 };
