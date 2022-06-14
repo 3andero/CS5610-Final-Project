@@ -1,21 +1,29 @@
-import typegoose, { getModelForClass, prop, Ref, ReturnModelType } from "@typegoose/typegoose";
-import { Order } from "./order";
+import typegoose, {
+  getModelForClass,
+  index,
+  modelOptions,
+  prop,
+  Ref,
+  ReturnModelType,
+} from "@typegoose/typegoose";
 
+@modelOptions({ schemaOptions: { id: false } })
+@index({ id: 1 })
 export class UserInformation {
   @prop()
   public email!: String;
 
-//   @prop()
-//   public order?: Ref<Order>;
+  @prop({required:true, unique:true})
+  public id!: String;
 
   @prop()
   public address!: String;
 
   @prop()
-  public payment?: Number;
+  public payment?: String;
 
   @prop()
-  public phone?: Number;
+  public phone?: String;
 
   @prop()
   public avatar?: String;
@@ -23,15 +31,15 @@ export class UserInformation {
   static async createUser(
     this: ReturnModelType<typeof UserInformation>,
     email: string,
-    // order: Order,
+    id: string,
     address: string,
-    payment: number,
-    phone: number,
+    payment: string,
+    phone: string,
     avatar: string
   ): Promise<UserInformation> {
     const res = await this.create({
       email,
-    //   order,
+      id,
       address,
       payment,
       phone,

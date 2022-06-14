@@ -1,9 +1,5 @@
-import express from "express"
+import express from "express";
 export const router_Products = express.Router();
-import {index} from "../controllers/productsController"
-import { user_detail } from "../controllers/userController";
+import { index } from "../controllers/productsController";
 
-
-router_Products.get("/", index)
-
-router_Products.get("/:userId", user_detail);
+router_Products.get("/", index);

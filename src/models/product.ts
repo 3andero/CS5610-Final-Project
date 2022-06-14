@@ -26,8 +26,6 @@ export class Product {
   @prop()
   public variant?: String;
 
-  
-
   static async createProduct(
     this: ReturnModelType<typeof Product>,
     price: number,

@@ -32,7 +32,7 @@ export class Order {
       status,
       amount,
       products: productsList,
-      userInfo
+      userInfo,
     });
     return res;
   }
