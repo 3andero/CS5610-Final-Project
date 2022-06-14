@@ -2,7 +2,7 @@ import express from "express";
 import jwksRsa from "jwks-rsa";
 import { appConfig } from "../config";
 export const router_user = express.Router();
-import { user_get, user_create } from "../controllers/userController";
+import { user_get, user_create, user_patch } from "../controllers/userController";
 import { logStr } from "../utils";
 import { expressjwt as jwt } from "express-jwt";
 
@@ -27,3 +27,5 @@ const checkJWT = jwt({
 router_user.get("/", checkJWT, user_get);
 
 router_user.post("/", checkJWT, user_create);
+
+router_user.put("/", checkJWT, user_patch);

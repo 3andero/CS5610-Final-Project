@@ -1,8 +1,6 @@
 import { UserModel, UserInformation } from "../models/user_info";
-import { Request, Response, NextFunction } from "express";
-interface Error {
-  status?: number;
-}
+import { Request, Response, NextFunction, json } from "express";
+import { listClasses } from "@mui/material";
 
 export const user_create = async (
   req: any,
@@ -28,17 +26,37 @@ export const user_create = async (
 };
 
 export const user_get = (req: any, res: Response, next: NextFunction) => {
-  // console.log(req.params);
+  // console.log(req);
   UserModel.findOne({ id: req.auth.sub }).exec(
     (err, user_: UserInformation | null) => {
+      // console.log(err, user_);
       if (err) {
         return next(err);
       }
-      if (!user_) {
-        const err = new Error("User not found");
-        return res.status(404);
-      }
+      // if (!user_) {
+      //   const err = new Error("User not found");
+      //   return res.status(404);
+      // }
       return res.json(user_);
     }
   );
+};
+
+export const user_patch = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  // try{
+  //   const body_ = await req.json();
+  //   res.send(body_);
+  // }catch(err){
+  //   res.send(err);
+  // }
+  try {
+    const data = await UserModel.updateOne({ id: req.auth.sub }, req.body);
+    res.send(200);
+  } catch (err) {
+    res.status(404).send(err);
+  }
 };

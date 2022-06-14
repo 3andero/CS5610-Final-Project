@@ -13,7 +13,7 @@ export class UserInformation {
   @prop()
   public email!: String;
 
-  @prop({required:true, unique:true})
+  @prop({ required: true, unique: true })
   public id!: String;
 
   @prop()
@@ -28,6 +28,9 @@ export class UserInformation {
   @prop()
   public avatar?: String;
 
+  @prop()
+  public name?: String;
+
   static async createUser(
     this: ReturnModelType<typeof UserInformation>,
     email: string,
@@ -35,7 +38,8 @@ export class UserInformation {
     address: string,
     payment: string,
     phone: string,
-    avatar: string
+    avatar: string,
+    name: string
   ): Promise<UserInformation> {
     const res = await this.create({
       email,
@@ -44,6 +48,7 @@ export class UserInformation {
       payment,
       phone,
       avatar,
+      name,
     });
     return res;
   }
