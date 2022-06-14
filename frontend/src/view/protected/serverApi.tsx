@@ -1,41 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, LinearProgress } from "@mui/material";
-import { useEffect, useState } from "react";
-import { BackButton } from "../../components/back.button";
+import React, { useEffect, useState } from "react";
 import { appConfig } from "../../config";
-
-import "./serverApi.css";
-
-interface ServerAPIComponentState {
-  error?: string;
-  token?: string;
-  showResult?: boolean;
-  apiMsg?: any;
-}
-
-const getTokenBy =
-  (
-    tokenGetter: () => Promise<string | void>,
-    state: ServerAPIComponentState,
-    setState: (st: ServerAPIComponentState) => void
-  ) =>
-  async () => {
-    try {
-      const token = await tokenGetter();
-      setState({
-        ...state,
-        token: (typeof token === "string" && token) || undefined,
-        error: "",
-      });
-    } catch (e: any) {
-      console.assert("error" in e, "");
-      setState({
-        ...state,
-        error: e.error || "",
-        token: undefined,
-      });
-    }
-  };
 
 const RequireActionComponent = ({
   onClick,
@@ -64,119 +30,132 @@ const RequireActionComponent = ({
   );
 };
 
-const _serverApi = () => {
-  const {
-    logout,
-    getAccessTokenSilently,
-    getAccessTokenWithPopup,
-    loginWithPopup,
-  } = useAuth0();
-  const [state, setState] = useState({
-    showResult: false,
-  } as ServerAPIComponentState);
-
-  const silentConsent = getTokenBy(getAccessTokenSilently, state, setState);
-  useEffect(() => {
-    silentConsent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const popupConsent = getTokenBy(getAccessTokenWithPopup, state, setState);
-  const popupLogin = getTokenBy(loginWithPopup, state, setState);
-
-  const callAPI = async () => {
-    if (state.showResult) {
-      return true;
-    }
-    console.log("call api");
-
-    if (!state.token) {
-      console.error("call api without a valid token");
-      return false;
-    }
-
-    let responseData: string | undefined;
-    try {
-      const response = await fetch(
-        `${appConfig.SERVER_DOMAIN}:${appConfig.API_PORT}/v1/protected/`,
-        {
-          headers: {
-            Authorization: `Bearer ${state.token}`,
-          },
-        }
-      );
-
-      responseData = await response.text();
-      console.assert(responseData);
-      setState({
-        ...state,
-        showResult: true,
-        apiMsg: JSON.parse(responseData),
-        error: "",
-      });
-    } catch (e: any) {
-      console.log(e);
-
-      setState({
-        ...state,
-        showResult: true,
-        error: responseData || "unable to get a response",
-      });
-    }
-
-    return true;
-  };
-
-  useEffect(() => {
-    if (state.token) {
-      callAPI();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.token]);
+export const FurtherAction = ({
+  refresh,
+  error,
+  isLoading,
+  children,
+}: {
+  refresh: () => void;
+  error?: string;
+  isLoading: boolean;
+  children?: React.ReactNode;
+}): JSX.Element => {
+  const { loginWithPopup, getAccessTokenWithPopup } = useAuth0();
   return (
-    <>
-      <div>
-        {state.error === undefined && (
-          <LinearProgress color="secondary" style={{ width: "100%" }} />
-        )}
-      </div>
-      <div className="server-api-page">
-        {(state.error === "login_required" && (
-          <RequireActionComponent
-            onClick={async () => {
-              await popupLogin();
-              await silentConsent();
-            }}
-            msg={"Waiting to Login..."}
-            buttonMsg={"Login"}
-          />
-        )) ||
-          (state.error === "consent_required" && (
-            <RequireActionComponent
-              onClick={popupConsent}
-              msg={"Waiting for consent..."}
-              buttonMsg={"Consent"}
-            />
-          )) ||
-          (state.error && state.error.length > 0 && (
-            <p style={{ color: "red" }}>unknown error: {state.error}</p>
-          ))}
-
-        {state.token && (
-          <>
-            {state.apiMsg !== undefined && (
-              <p style={{ color: "black" }}>API Message: {state.apiMsg.msg}</p>
-            )}
-            <Box p={5}>
-              <Button variant="outlined" color="error" onClick={() => logout()}>
-                Logout
-              </Button>
-            </Box>
-            <BackButton />
-          </>
-        )}
-      </div>
-    </>
+    (error === undefined && isLoading && (
+      <LinearProgress
+        color="secondary"
+        style={{ width: "100%" }}
+        sx={{
+          position: "fixed",
+          top: 0,
+          zIndex: 1100,
+        }}
+      />
+    )) ||
+    (error === "login_required" && (
+      <RequireActionComponent
+        onClick={async () => {
+          await loginWithPopup();
+          refresh();
+        }}
+        msg={"Waiting to Login..."}
+        buttonMsg={"Login"}
+      />
+    )) ||
+    (error === "consent_required" && (
+      <RequireActionComponent
+        onClick={async () => {
+          await getAccessTokenWithPopup();
+          refresh();
+        }}
+        msg={"Waiting for consent..."}
+        buttonMsg={"Consent"}
+      />
+    )) ||
+    (error && error.length > 0 && (
+      <p style={{ color: "red" }}>unknown error: {error}</p>
+    )) || <>{children}</>
   );
 };
 
-export const ServerApi = _serverApi;
+export const useApi = (
+  url: string,
+  fetchOptions: Parameters<typeof fetch>[1] & {
+    scope?: string;
+  }
+) => {
+  return useProtected(
+    async (authHeaders, state) => {
+      const res = await fetch(url, {
+        ...fetchOptions,
+        headers: {
+          ...fetchOptions.headers,
+          // Add the Authorization header to the existing headers
+          ...authHeaders,
+        },
+      });
+      state.data =
+        (res.status >= 200 && res.status <= 299 && (await res.json())) || {};
+      state.error =
+        (res.status >= 400 && res.status <= 599 && (await res.text())) ||
+        undefined;
+    },
+    {
+      audience: appConfig.AUDIENCE,
+      scope: fetchOptions.scope,
+    }
+  );
+};
+
+export interface ProtectedCallState {
+  error?: string;
+  loading: boolean;
+  data?: any;
+}
+
+export type ProtectedCall = (
+  authHeader: { Authorization: string },
+  state: ProtectedCallState,
+  args?: any
+) => Promise<void>;
+
+export const useProtected = (
+  fn: ProtectedCall,
+  options: { audience?: string; scope?: string }
+) => {
+  const { getAccessTokenSilently } = useAuth0();
+  const [state, setState] = useState<ProtectedCallState>({
+    error: undefined,
+    loading: true,
+    data: undefined,
+  });
+  const [refreshIndex, setRefreshIndex] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { audience, scope } = options;
+        const accessToken = await getAccessTokenSilently({ audience, scope });
+        await fn({ Authorization: `Bearer ${accessToken}` }, state);
+        setState({
+          ...state,
+          loading: false,
+        });
+      } catch (error: any) {
+        setState({
+          ...state,
+          error,
+          loading: false,
+        });
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshIndex]);
+
+  return {
+    ...state,
+    refresh: () => setRefreshIndex(refreshIndex + 1),
+  };
+};
