@@ -1,13 +1,12 @@
 import { UserModel, UserInformation } from "../models/user_info";
 import { Request, Response, NextFunction, json } from "express";
-import { listClasses } from "@mui/material";
 
 export const user_create = async (
   req: any,
   res: Response,
   next: NextFunction
 ) => {
-  console.log(JSON.stringify(req.body));
+  console.log(req.body);
   try {
     const data = {
       email: req.body.email,
@@ -17,9 +16,9 @@ export const user_create = async (
       phone: req.body.phone,
       avatar: req.body.avatar,
     } as UserInformation;
-    console.log("123", req, data);
+    // console.log("123", req, data);
     const newUser = await UserModel.create(data);
-    return res.status(200);
+    return res.status(200).send();
   } catch (err) {
     return res.send(err);
   }
@@ -55,8 +54,8 @@ export const user_patch = async (
   // }
   try {
     const data = await UserModel.updateOne({ id: req.auth.sub }, req.body);
-    res.send(200);
+    return res.status(200).send();
   } catch (err) {
-    res.status(404).send(err);
+    return res.status(404).send(err);
   }
 };

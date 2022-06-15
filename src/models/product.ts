@@ -7,7 +7,6 @@ import typegoose, {
 
 @modelOptions({ options: { customName: "products" } })
 export class Product {
-  [x: string]: any;
   @prop({ required: true })
   public price!: number;
 
@@ -15,16 +14,16 @@ export class Product {
   public name!: String;
 
   @prop()
-  public image?: String;
+  public image!: String;
 
   @prop()
-  public quantity?: Number;
+  public quantity!: Number;
 
   @prop()
   public discount?: Number;
 
   @prop()
-  public variant?: String;
+  public is_available!: boolean;
 
   static async createProduct(
     this: ReturnModelType<typeof Product>,

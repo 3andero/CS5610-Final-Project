@@ -19,6 +19,7 @@ import { OrderModel, Order } from "./src/models/order";
 import { router_Index } from "./src/routes";
 import { router_Products } from "./src/routes/products";
 import { router_user } from "./src/routes/user";
+import { router_cart } from "./src/routes/shoppingCart";
 
 const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -30,10 +31,10 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors({ origin: "*" }));
 
-
 app.use("/", router_Index);
 app.use("/products", router_Products);
 app.use("/user", router_user);
+app.use("/shopping-cart", router_cart);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
@@ -58,8 +59,7 @@ const checkJWT = jwt({
 // });
 
 app.get("/v1/protected/", checkJWT, (req, res, next) => {
-
-    res.send({ msg: "protected routes" });
+  res.send({ msg: "protected routes" });
 });
 
 app.use((_req, _res, next) => {

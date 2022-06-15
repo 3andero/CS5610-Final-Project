@@ -29,7 +29,19 @@ export class UserInformation {
   public avatar?: String;
 
   @prop()
-  public name?: String;
+  public first_name?: String;
+
+  @prop()
+  public last_name?: String;
+
+  @prop()
+  public bio?: String;
+
+  @prop()
+  public country?: String;
+
+  @prop()
+  public city?: String;
 
   static async createUser(
     this: ReturnModelType<typeof UserInformation>,
@@ -39,7 +51,11 @@ export class UserInformation {
     payment: string,
     phone: string,
     avatar: string,
-    name: string
+    first_name: string,
+    last_name: string,
+    bio: string,
+    country: string,
+    city: string
   ): Promise<UserInformation> {
     const res = await this.create({
       email,
@@ -48,7 +64,11 @@ export class UserInformation {
       payment,
       phone,
       avatar,
-      name,
+      first_name,
+      last_name,
+      bio,
+      country,
+      city,
     });
     return res;
   }

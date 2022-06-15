@@ -1,14 +1,10 @@
 import express from "express";
 import jwksRsa from "jwks-rsa";
 import { appConfig } from "../config";
-export const router_user = express.Router();
-import {
-  user_get,
-  user_create,
-  user_patch,
-} from "../controllers/userController";
+export const router_cart = express.Router();
 import { logStr } from "../utils";
 import { expressjwt as jwt } from "express-jwt";
+import { cart_create, cart_delete, cart_get } from "../controllers/shoppingCartController";
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
@@ -28,8 +24,8 @@ const checkJWT = jwt({
   algorithms: ["RS256"],
 });
 
-router_user.get("/", checkJWT, user_get);
+router_cart.post("/", checkJWT, cart_create);
 
-router_user.post("/", checkJWT, user_create);
+router_cart.get("/", checkJWT, cart_get);
 
-router_user.put("/", checkJWT, user_patch);
+router_cart.delete("/", checkJWT, cart_delete);

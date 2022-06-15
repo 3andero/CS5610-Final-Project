@@ -15,10 +15,10 @@ const start = async (): Promise<void> => {
     await ProductModel.createProduct(30,"c","image_of_c",0),
     await ProductModel.createProduct(15,"d","image_of_d",6));
     console.log(products);
-    const userOne = await UserModel.createUser("hyue623@neu.edu","123","abc street", 123, 123, "avatar");
-    console.log(userOne);
-    const newOrder = await OrderModel.createOrder("paid", 75, products, userOne);
-    console.log(newOrder);
+    // const userOne = await UserModel.createUser("hyue623@neu.edu","123","abc street", 123, 123, "avatar");
+    // console.log(userOne);
+    // const newOrder = await OrderModel.createOrder("paid", 75, products, userOne);
+    // console.log(newOrder);
   } catch (error) {
     console.error(error);
     process.exit(1);

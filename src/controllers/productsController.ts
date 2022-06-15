@@ -9,3 +9,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
     res.json(product_list);
   });
 };
+
+export const product_search = () => {
+  
+}
