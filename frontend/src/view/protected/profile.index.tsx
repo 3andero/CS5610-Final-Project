@@ -3,12 +3,15 @@ import { LogoutButton } from "../../components/logout.button";
 import { FurtherAction, ProtectedCall, useProtected } from "./serverApi";
 import { appConfig } from "../../config";
 import { useAuth0, User } from "@auth0/auth0-react";
+import { UpdateProfile } from "../../components/update-profile";
+import { useEffect } from "react";
 
-const getOrPostNewUser: ProtectedCall = async (
+const getOrPostNewUser: ProtectedCall<User> = async (
   authHeader,
   state,
-  user: User
+  user?: User
 ) => {
+  user = user as User;
   const url = `${appConfig.SERVER_DOMAIN}:${appConfig.API_PORT}/user`;
   let res = await fetch(url, {
     method: "GET",
@@ -23,18 +26,14 @@ const getOrPostNewUser: ProtectedCall = async (
       return;
     }
     const newUserProfile = {
-      name: user.name,
       email: user.email,
-      address: user.address,
-      phone: user.phone_number,
-      payment: "",
-      avatar: "",
     };
     res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader },
       body: JSON.stringify(newUserProfile),
     });
+    console.log("res2", res);
     state.data = newUserProfile;
     state.error = undefined;
   } else {
@@ -45,14 +44,12 @@ const getOrPostNewUser: ProtectedCall = async (
 
 export const ProfileIndexView = () => {
   const { user } = useAuth0();
-  const {
-    loading,
-    error,
-    refresh,
-    data: userProfile,
-  } = useProtected(async (a0, a1) => getOrPostNewUser(a0, a1, user), {
+  const handle = useProtected(getOrPostNewUser, {
     audience: appConfig.AUDIENCE,
   });
+  useEffect(() => {
+    handle.refresh(user);
+  }, []);
 
   return (
     <Box
@@ -63,8 +60,17 @@ export const ProfileIndexView = () => {
     >
       <LogoutButton variant="contained" />
       <Typography>Profile.Index.View</Typography>
-      <FurtherAction refresh={refresh} error={error} isLoading={loading}>
-        <Box>{JSON.stringify(userProfile)}</Box>
+      <FurtherAction protectedCallHandle={handle} refreshArgs={user}>
+        <Box
+          sx={{
+            margin: "3em",
+          }}
+        >
+          <UpdateProfile initialValues={handle.data} />
+          {/* {(status.data && <>{JSON.stringify(status.data)}</>) || (
+            <>failed: {JSON.stringify(status)}</>
+          )} */}
+        </Box>
       </FurtherAction>
     </Box>
   );

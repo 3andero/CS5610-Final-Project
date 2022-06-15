@@ -30,16 +30,14 @@ const RequireActionComponent = ({
   );
 };
 
-export const FurtherAction = ({
-  refresh,
-  error,
-  isLoading,
+export const FurtherAction = <T,>({
+  protectedCallHandle: { refresh, error, isLoading },
   children,
+  refreshArgs,
 }: {
-  refresh: () => void;
-  error?: string;
-  isLoading: boolean;
+  protectedCallHandle: ProtectedCallHandle<T>;
   children?: React.ReactNode;
+  refreshArgs?: T;
 }): JSX.Element => {
   const { loginWithPopup, getAccessTokenWithPopup } = useAuth0();
   return (
@@ -58,7 +56,7 @@ export const FurtherAction = ({
       <RequireActionComponent
         onClick={async () => {
           await loginWithPopup();
-          refresh();
+          isLoading && refresh(refreshArgs);
         }}
         msg={"Waiting to Login..."}
         buttonMsg={"Login"}
@@ -68,7 +66,7 @@ export const FurtherAction = ({
       <RequireActionComponent
         onClick={async () => {
           await getAccessTokenWithPopup();
-          refresh();
+          isLoading && refresh(refreshArgs);
         }}
         msg={"Waiting for consent..."}
         buttonMsg={"Consent"}
@@ -80,18 +78,22 @@ export const FurtherAction = ({
   );
 };
 
-export const useApi = (
-  url: string,
-  fetchOptions: Parameters<typeof fetch>[1] & {
-    scope?: string;
-  }
-) => {
+export type ApiCallArgs = {
+  url: string;
+  fetchOptions: Parameters<typeof fetch>[1];
+};
+
+type AuthOptions = { audience?: string; scope?: string };
+
+export const useApi = (authOptions?: AuthOptions) => {
   return useProtected(
-    async (authHeaders, state) => {
+    async (authHeaders, state, _args?: ApiCallArgs) => {
+      const { url, fetchOptions } = _args as ApiCallArgs;
       const res = await fetch(url, {
         ...fetchOptions,
         headers: {
-          ...fetchOptions.headers,
+          "Content-Type": "application/json",
+          ...fetchOptions?.headers,
           // Add the Authorization header to the existing headers
           ...authHeaders,
         },
@@ -104,58 +106,76 @@ export const useApi = (
     },
     {
       audience: appConfig.AUDIENCE,
-      scope: fetchOptions.scope,
+      scope: authOptions?.scope,
     }
   );
 };
 
 export interface ProtectedCallState {
   error?: string;
-  loading: boolean;
+  isLoading: boolean;
   data?: any;
 }
 
-export type ProtectedCall = (
+export type ProtectedCallHandle<T> = ProtectedCallState & {
+  refresh: (args?: T) => void;
+};
+
+export type ProtectedCall<T> = (
   authHeader: { Authorization: string },
   state: ProtectedCallState,
-  args?: any
+  args?: T
 ) => Promise<void>;
 
-export const useProtected = (
-  fn: ProtectedCall,
-  options: { audience?: string; scope?: string }
-) => {
+export const useProtected = <T,>(
+  fn: ProtectedCall<T>,
+  options: AuthOptions
+): ProtectedCallHandle<T> => {
   const { getAccessTokenSilently } = useAuth0();
   const [state, setState] = useState<ProtectedCallState>({
     error: undefined,
-    loading: true,
+    isLoading: false,
     data: undefined,
   });
-  const [refreshIndex, setRefreshIndex] = useState(0);
+  const [refreshState, setRefreshState] = useState<{
+    count: number;
+    args?: T;
+  }>({ count: 0 });
 
   useEffect(() => {
     (async () => {
       try {
+        console.log(0);
         const { audience, scope } = options;
         const accessToken = await getAccessTokenSilently({ audience, scope });
-        await fn({ Authorization: `Bearer ${accessToken}` }, state);
+        if (refreshState.count === 0) {
+          return;
+        }
+        await fn(
+          { Authorization: `Bearer ${accessToken}` },
+          state,
+          refreshState.args
+        );
+        console.log(1);
         setState({
           ...state,
-          loading: false,
+          isLoading: false,
         });
       } catch (error: any) {
         setState({
           ...state,
           error,
-          loading: false,
+          isLoading: false,
         });
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshIndex]);
-
+  }, [refreshState.count]);
   return {
     ...state,
-    refresh: () => setRefreshIndex(refreshIndex + 1),
+    refresh: (args?: T) => {
+      setRefreshState({ count: refreshState.count + 1, args });
+      state.isLoading = true;
+    },
   };
 };
