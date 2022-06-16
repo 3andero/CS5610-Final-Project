@@ -38,7 +38,8 @@
   "scripts": {
     "back": "npx ts-node ./api_server.ts",
     "back:dev": "npx nodemon ./api_server.ts",
-    "front": "cd frontend && npm run start",
+    "front:dev": "cd frontend && npm run start",
+    "front": "npx ts-node ./server.ts",
     "build": "cd frontend && react-scripts build",
     "test": "cd frontend && react-scripts test",
     "eject": "cd frontend && react-scripts eject",
