@@ -1,0 +1,69 @@
+{
+  "/user": {
+    "post": {
+      "body": {
+        "sub": "auth0|id",
+        "name": "string",
+        "email": "string",
+        "address?": "string",
+        "phone?": "string",
+        "payment?": "string",
+        "avatar?": "string"
+      },
+      "return": {
+        "http_status": "number"
+      }
+    },
+    "get": {
+      "body": {
+        "sub": "auth0|id"
+      },
+      "return": {
+        "all info posted": "object"
+      }
+    },
+    "patch": {
+      "body": {
+        "name?": "string",
+        "address?": "string",
+        "phone?": "string",
+        "payment?": "string",
+        "avatar?": "string"
+      }
+    }
+  },
+  "/product": {
+    "get": {
+      "price": "number",
+      "name": "string",
+      "image": "string",
+      "description": "string",
+      "quantity": "number",
+      "discount?": "number",
+      "is_available": "boolean"
+    }
+  },
+  "/shopping-cart": {
+    "get": {
+      "return": {
+        "http_status": "number",
+        "products": [{ "product_id": "string", "quantity": "number" }]
+      }
+    },
+    "post": {
+      "body": {
+        "products": [{ "product_id": "string", "quantity": "number" }]
+      }
+    },
+    "delete": {
+      "body": {}
+    }
+  },
+  "/checkout": {
+    "post": {
+      "body": {
+        "products": [{ "product_id": "string", "quantity": "number" }]
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@
     "@types/express": "^4.17.13",
     "@types/helmet": "^4.0.0",
     "@types/morgan": "^1.9.3",
+    "cross-env": "^7.0.3",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
     "typescript": "^4.6.4"
@@ -12,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.3",
     "@mui/material": "^5.7.0",
     "@typegoose/typegoose": "^9.9.0",
     "cors": "^2.8.5",
@@ -19,6 +21,7 @@
     "express": "^4.18.1",
     "express-jwt": "^7.7.0",
     "express-openid-connect": "^2.7.2",
+    "formik": "^2.2.9",
     "helmet": "^5.0.2",
     "history": "^5.3.0",
     "http-status": "^1.5.1",
@@ -29,12 +32,14 @@
     "node-jose": "^2.1.1",
     "nodemon": "^2.0.16",
     "typescript": "^4.6.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "back": "npx ts-node ./api_server.ts",
     "back:dev": "npx nodemon ./api_server.ts",
-    "front": "cd frontend && npm run start",
+    "front:dev": "cd frontend && npm run start",
+    "front": "npx ts-node ./server.ts",
     "build": "cd frontend && react-scripts build",
     "test": "cd frontend && react-scripts test",
     "eject": "cd frontend && react-scripts eject",
