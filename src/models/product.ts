@@ -25,18 +25,25 @@ export class Product {
   @prop()
   public is_available!: boolean;
 
+  @prop()
+  public description!: string;
+
   static async createProduct(
     this: ReturnModelType<typeof Product>,
     price: number,
     name: string,
     image: string,
-    quantity: number
+    quantity: number,
+    is_available: boolean,
+    description: string
   ): Promise<Product> {
     const res = await this.create({
       price,
       name,
       image,
       quantity,
+      is_available,
+      description,
     });
     return res;
   }
