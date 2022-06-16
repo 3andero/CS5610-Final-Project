@@ -7,6 +7,9 @@ interface AppConfig {
     AUDIENCE: string;
     SERVER_DOMAIN: string;
     API_PORT: number;
+    API_URL?: string;
 }
 
 export const appConfig: AppConfig = conf_json;
+
+appConfig.API_URL = `${appConfig.SERVER_DOMAIN}:${appConfig.API_PORT}/`;
