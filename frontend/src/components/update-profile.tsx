@@ -78,7 +78,7 @@ export const UpdateProfile = ({
   const handle = useApi();
 
   const [formVals, setFormVals] = useState<ApiCallArgs>({
-    url: `${appConfig.SERVER_DOMAIN}:${appConfig.API_PORT}/user`,
+    url: `${appConfig.API_URL!}user`,
     fetchOptions: {
       method: "PUT",
       body: "",

@@ -12,7 +12,7 @@ const getOrPostNewUser: ProtectedCall<User> = async (
   user?: User
 ) => {
   user = user as User;
-  const url = `${appConfig.SERVER_DOMAIN}:${appConfig.API_PORT}/user`;
+  const url = `${appConfig.API_URL!}user`;
   let res = await fetch(url, {
     method: "GET",
     headers: { ...authHeader },
