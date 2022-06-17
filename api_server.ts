@@ -20,7 +20,7 @@ import { router_Products } from "./src/routes/products";
 import { router_user } from "./src/routes/user";
 import { router_cart } from "./src/routes/shoppingCart";
 
-const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
+// const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
 const app = express();
 app.use(express.json());
@@ -28,7 +28,6 @@ app.use(express.urlencoded());
 app.use(morgan("dev"));
 
 app.use(helmet());
-app.use(cors({ origin: "*" }));
 
 app.use("/", router_Index);
 app.use("/products", router_Products);
