@@ -11,7 +11,7 @@ This is an online store to sell anime products of [Genshin Impact](https://gensh
 
 ## Getting Started
 1. Visit online version
-https://ca.gen2d.store:3000/ 
+https://ww1.gen2d.store/
 
 ## Contributor
 Tianyi (Kenny) Chen - front-end related task
