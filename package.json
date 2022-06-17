@@ -40,7 +40,8 @@
     "back:dev": "npx nodemon ./api_server.ts",
     "front:dev": "cd frontend && npm run start",
     "front": "npx ts-node ./server.ts",
-    "build": "cd frontend && react-scripts build",
+    "build-front": "cd frontend && react-scripts build",
+    "build-back": "npx tsc",
     "test": "cd frontend && react-scripts test",
     "eject": "cd frontend && react-scripts eject",
     "addDB": "npx nodemon ./addDataDB.ts"

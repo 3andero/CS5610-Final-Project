@@ -104,8 +104,9 @@ dist
 .tern-port
 
 .txt
-.zip
+*.zip
 .env.json
 .env
+build/
 
 .DS_Store
