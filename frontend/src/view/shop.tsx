@@ -16,7 +16,7 @@ export const ShopView = () => {
   useEffect(() => {
     console.log("fetch products");
     (async () => {
-      const res = await fetch(`${appConfig.API_URL!}products`);
+      const res = await fetch(`${appConfig.API_SERVER_DOMAIN}products`);
       setProducts(await res.json());
     })();
   }, []);
@@ -45,7 +45,9 @@ export const ShopView = () => {
                     <Typography variant="h4" display={"flex"}>
                       {v.name}
                     </Typography>
-                    <Typography variant="h4" color="#004466">${v.price}</Typography>
+                    <Typography variant="h4" color="#004466">
+                      ${v.price}
+                    </Typography>
                   </Box>
                   <Typography variant="body2">
                     In Stock: {v.quantity}

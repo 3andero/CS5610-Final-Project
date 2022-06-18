@@ -5,7 +5,7 @@
  */
 
 import express, { ErrorRequestHandler } from "express";
-import { appConfig } from "./src/config";
+import { appConfig, LISTEN_LOCAL_ADDR } from "./src/config";
 import { ApiError, logStr } from "./src/utils";
 import morgan from "morgan";
 import cors from "cors";
@@ -71,8 +71,8 @@ app.use(((err, req, res, next) => {
 const start = async (): Promise<void> => {
   try {
     await mongoose.connect(appConfig.MONGO_DB);
-    app.listen(appConfig.API_PORT, appConfig.LISTEN_LOCAL_ADDR!, () => {
-      console.log(`Server started on port ${appConfig.LISTEN_LOCAL_ADDR}:${appConfig.API_PORT}`);
+    app.listen(appConfig.API_PORT, LISTEN_LOCAL_ADDR(), () => {
+      console.log(`Server started on port ${LISTEN_LOCAL_ADDR()}:${appConfig.API_PORT}`);
     });
   } catch (error) {
     console.error(error);

@@ -12,7 +12,7 @@ const getOrPostNewUser: ProtectedCall<User> = async (
   user?: User
 ) => {
   user = user as User;
-  const url = `${appConfig.API_URL!}user`;
+  const url = `${appConfig.API_SERVER_DOMAIN}user`;
   let res = await fetch(url, {
     method: "GET",
     headers: { ...authHeader },
@@ -49,6 +49,7 @@ export const ProfileIndexView = () => {
   });
   useEffect(() => {
     handle.refresh(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
