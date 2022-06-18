@@ -14,4 +14,4 @@ App.use(helmet({
 const static_website = logStr(join(__dirname, 'frontend'));
 App.use(express.static(static_website));
 
-App.listen(appConfig.APP_PORT);
+App.listen(3000);

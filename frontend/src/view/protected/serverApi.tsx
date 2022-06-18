@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, LinearProgress } from "@mui/material";
+import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../config";
 
@@ -73,7 +73,7 @@ export const FurtherAction = <T,>({
       />
     )) ||
     (error && error.length > 0 && (
-      <p style={{ color: "red" }}>unknown error: {error}</p>
+      <Typography sx={{ color: "red" }}>unknown error: {error}</Typography>
     )) || <>{children}</>
   );
 };

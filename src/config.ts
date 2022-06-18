@@ -1,21 +1,21 @@
 import config_raw from "../.env.json";
+import { readConfig } from "../frontend/src/config-utils";
 
-interface AppConfig {
-    APP_PORT: number;
+interface BaseAppConfig {
     API_PORT: number;
     CLIENT_ID: string;
     CLIENT_SECRET: string;
     ISSUER_BASE_URL: string;
-    APP_ORIGIN?: string;
     AUDIENCE: string;
     MONGO_DB: string;
-    LISTEN_LOCAL_ADDR?: "0.0.0.0" | "127.0.0.1";
 }
 
-export const appConfig: AppConfig = config_raw;
+export const appConfig = readConfig<BaseAppConfig>(config_raw);
 
-if (process.env.NODE_ENV === "production") {
-    appConfig.LISTEN_LOCAL_ADDR = "127.0.0.1";
-} else {
-    appConfig.LISTEN_LOCAL_ADDR = "0.0.0.0";
+export const LISTEN_LOCAL_ADDR = () => {
+    if (process.env.NODE_ENV === "production") {
+        return "127.0.0.1";
+    } else {
+        return "0.0.0.0";
+    }
 }
