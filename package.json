@@ -11,13 +11,10 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.8.3",
-    "@mui/material": "^5.7.0",
     "@typegoose/typegoose": "^9.9.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
+    "expand-home-dir": "^0.0.3",
     "express": "^4.18.1",
     "express-jwt": "^7.7.0",
     "express-openid-connect": "^2.7.2",
@@ -36,11 +33,14 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "back": "npx ts-node ./api_server.ts",
+    "install-deps": "npm install && cd frontend && npm install && npm install -g create-react-app",
+    "back": "cross-env NODE_ENV=production node ./build/api_server.js",
     "back:dev": "npx nodemon ./api_server.ts",
     "front:dev": "cd frontend && npm run start",
-    "front": "npx ts-node ./server.ts",
-    "build": "cd frontend && react-scripts build",
+    "front": "cross-env NODE_ENV=production node ./build/server.js",
+    "build-front": "cd frontend && npm run build && cd ..",
+    "build-back": "npx tsc",
+    "build": "cross-env NODE_ENV=production rm -rf build && npm run build-front && npm run build-back && mv ./frontend/build ./build/frontend ",
     "test": "cd frontend && react-scripts test",
     "eject": "cd frontend && react-scripts eject",
     "addDB": "npx nodemon ./addDataDB.ts"

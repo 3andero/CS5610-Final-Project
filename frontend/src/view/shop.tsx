@@ -16,7 +16,7 @@ export const ShopView = () => {
   useEffect(() => {
     console.log("fetch products");
     (async () => {
-      const res = await fetch(`${appConfig.API_URL}products`);
+      const res = await fetch(`${appConfig.API_URL!}products`);
       setProducts(await res.json());
     })();
   }, []);

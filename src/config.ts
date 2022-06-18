@@ -9,6 +9,13 @@ interface AppConfig {
     APP_ORIGIN?: string;
     AUDIENCE: string;
     MONGO_DB: string;
+    LISTEN_LOCAL_ADDR?: "0.0.0.0" | "127.0.0.1";
 }
 
 export const appConfig: AppConfig = config_raw;
+
+if (process.env.NODE_ENV === "production") {
+    appConfig.LISTEN_LOCAL_ADDR = "127.0.0.1";
+} else {
+    appConfig.LISTEN_LOCAL_ADDR = "0.0.0.0";
+}

@@ -5,7 +5,11 @@ export const LogoutButton = ({ variant }: Parameters<typeof Button>[0]) => {
 
   return (
     (isAuthenticated && (
-      <Button variant={variant} color="error" onClick={() => logout()}>
+      <Button
+        variant={variant}
+        color="error"
+        onClick={() => logout({ returnTo: window.location.origin })}
+      >
         Logout
       </Button>
     )) || <></>

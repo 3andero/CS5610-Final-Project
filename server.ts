@@ -11,7 +11,7 @@ App.use(helmet({
     contentSecurityPolicy: false,
 }));
 
-const static_website = logStr(join(__dirname, 'frontend/build'));
+const static_website = logStr(join(__dirname, 'frontend'));
 App.use(express.static(static_website));
 
 App.listen(appConfig.APP_PORT);

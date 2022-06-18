@@ -13,7 +13,6 @@ import helmet from "helmet";
 import { expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import { mongoose } from "@typegoose/typegoose";
-import { config } from "dotenv";
 import { ProductModel, Product } from "./src/models/product";
 import { OrderModel, Order } from "./src/models/order";
 import { router_Index } from "./src/routes";
@@ -21,7 +20,7 @@ import { router_Products } from "./src/routes/products";
 import { router_user } from "./src/routes/user";
 import { router_cart } from "./src/routes/shoppingCart";
 
-const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
+// const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
 const app = express();
 app.use(express.json());
@@ -29,7 +28,6 @@ app.use(express.urlencoded());
 app.use(morgan("dev"));
 
 app.use(helmet());
-app.use(cors({ origin: "*" }));
 
 app.use("/", router_Index);
 app.use("/products", router_Products);
@@ -38,8 +36,8 @@ app.use("/shopping-cart", router_cart);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
-    (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
-    ".well-known/jwks.json"
+  (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
+  ".well-known/jwks.json"
 );
 
 const checkJWT = jwt({
@@ -53,10 +51,6 @@ const checkJWT = jwt({
   issuer: logStr(appConfig.ISSUER_BASE_URL + "/"),
   algorithms: ["RS256"],
 });
-
-// app.get("/", (req, res, next) => {
-//     res.send("hello world");
-// });
 
 app.get("/v1/protected/", checkJWT, (req, res, next) => {
   res.send({ msg: "protected routes" });
@@ -77,8 +71,8 @@ app.use(((err, req, res, next) => {
 const start = async (): Promise<void> => {
   try {
     await mongoose.connect(appConfig.MONGO_DB);
-    app.listen(appConfig.API_PORT, () => {
-      console.log("Server started on port 3000");
+    app.listen(appConfig.API_PORT, appConfig.LISTEN_LOCAL_ADDR!, () => {
+      console.log(`Server started on port ${appConfig.LISTEN_LOCAL_ADDR}:${appConfig.API_PORT}`);
     });
   } catch (error) {
     console.error(error);
