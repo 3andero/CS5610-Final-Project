@@ -19,6 +19,7 @@ import { router_Index } from "./src/routes";
 import { router_Products } from "./src/routes/products";
 import { router_user } from "./src/routes/user";
 import { router_cart } from "./src/routes/shoppingCart";
+import { router_order } from "./src/routes/order";
 
 // const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -26,18 +27,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(morgan("dev"));
-
+process.env.NODE_ENV !== "production" && app.use(cors({origin: "*"}));
 app.use(helmet());
 
 app.use("/", router_Index);
 app.use("/products", router_Products);
 app.use("/user", router_user);
 app.use("/shopping-cart", router_cart);
+app.use("/order", router_order);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
-  (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
-  ".well-known/jwks.json"
+    (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
+    ".well-known/jwks.json"
 );
 
 const checkJWT = jwt({

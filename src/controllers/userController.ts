@@ -6,7 +6,7 @@ export const user_create = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const data = {
       email: req.body.email,
@@ -25,7 +25,7 @@ export const user_create = async (
 };
 
 export const user_get = (req: any, res: Response, next: NextFunction) => {
-  // console.log(req);
+  console.log(req);
   UserModel.findOne({ id: req.auth.sub }).exec(
     (err, user_: UserInformation | null) => {
       // console.log(err, user_);

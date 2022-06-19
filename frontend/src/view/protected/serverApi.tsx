@@ -151,8 +151,10 @@ export const useProtected = <T,>(
         if (refreshState.count === 0) {
           return;
         }
+        const _token = `Bearer ${accessToken}`;
+        console.log(_token);
         await fn(
-          { Authorization: `Bearer ${accessToken}` },
+          { Authorization: _token },
           state,
           refreshState.args
         );

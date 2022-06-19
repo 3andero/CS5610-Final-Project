@@ -1,6 +1,8 @@
 import typegoose, {
   DocumentType,
   getModelForClass,
+  mongoose,
+  Passthrough,
   prop,
   Ref,
   ReturnModelType,
@@ -13,20 +15,26 @@ export class Order {
   public status!: String;
 
   @prop()
-  public amount!: Number;
+  public amount!: number;
 
-  @prop({ ref: () => Product })
-  public products?: Ref<Product>[];
+  @prop({
+    type: () =>
+      new Passthrough({
+        product_id: mongoose.Schema.Types.ObjectId,
+        quantity: Number,
+      }),
+  })
+  public products!: { product_id: Ref<Product>; quantity: number }[];
 
-  @prop({ ref: () => UserInformation })
-  public userInfo?: Ref<UserInformation>;
+  @prop()
+  public userInfo!: string;
 
   static async createOrder(
     this: ReturnModelType<typeof Order>,
     status: string,
     amount: number,
-    productsList: Product[],
-    userInfo: UserInformation
+    productsList: { product_id: Ref<Product>; quantity: number }[],
+    userInfo: string
   ): Promise<Order> {
     const res = await this.create({
       status,
@@ -36,11 +44,6 @@ export class Order {
     });
     return res;
   }
-
-  // async setProductsAndSave(this: DocumentType<Product>, products: Product[]) {
-  //   this.products = products;
-  //   await this.save();
-  // }
 }
 
 export const OrderModel = getModelForClass(Order);

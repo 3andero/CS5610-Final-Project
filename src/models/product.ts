@@ -1,4 +1,5 @@
 import typegoose, {
+  DocumentType,
   getModelForClass,
   modelOptions,
   prop,
@@ -17,10 +18,10 @@ export class Product {
   public image!: String;
 
   @prop()
-  public quantity!: Number;
+  public quantity!: number;
 
   @prop()
-  public discount?: Number;
+  public discount?: number;
 
   @prop()
   public is_available!: boolean;
@@ -46,6 +47,11 @@ export class Product {
       description,
     });
     return res;
+  }
+
+  async setQuantityAndSave(this: DocumentType<Product>, quantity: number) {
+    this.quantity = quantity;
+    await this.save();
   }
 }
 
