@@ -14,13 +14,13 @@ const RequireActionComponent = ({
 }) => {
   return (
     <Box
-      style={{
+      sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <p className="server-api-page__title">{msg}</p>
+      <Typography>{msg}</Typography>
       <Box p={5} alignContent="center">
         <Button variant="outlined" onClick={onClick}>
           {buttonMsg}
@@ -153,11 +153,7 @@ export const useProtected = <T,>(
         }
         const _token = `Bearer ${accessToken}`;
         console.log(_token);
-        await fn(
-          { Authorization: _token },
-          state,
-          refreshState.args
-        );
+        await fn({ Authorization: _token }, state, refreshState.args);
         console.log(1);
         setState({
           ...state,

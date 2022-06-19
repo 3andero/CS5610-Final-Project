@@ -9,5 +9,5 @@ interface LinkedButtonProps {
 }
 
 export const LinkedButton = (props: LinkedButtonProps) => (
-  <Button {...props} component={Link}></Button>
+  <Button {...props} component={Link} sx={{ color: "text.primary" }}></Button>
 );
