@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import { LogoutButton } from "../../components/logout.button";
+import { Box } from "@mui/material";
 import { FurtherAction, ProtectedCall, useProtected } from "./serverApi";
 import { appConfig } from "../../config";
 import { useAuth0, User } from "@auth0/auth0-react";
@@ -59,8 +58,6 @@ export const ProfileIndexView = () => {
       alignItems={"center"}
       gap="1em"
     >
-      <LogoutButton variant="contained" />
-      <Typography>Profile.Index.View</Typography>
       <FurtherAction protectedCallHandle={handle} refreshArgs={user}>
         <Box
           sx={{

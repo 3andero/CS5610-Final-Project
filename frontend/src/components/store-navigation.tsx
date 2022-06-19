@@ -1,11 +1,4 @@
-import {
-  Box,
-  Typography,
-  Drawer,
-  Button,
-  AppBar,
-  useScrollTrigger,
-} from "@mui/material";
+import { Box, Drawer, Button, AppBar, useScrollTrigger } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
@@ -15,6 +8,8 @@ import { NavLink } from "react-router-dom";
 import { SearchBar } from "./searchbar";
 import { TitleComponent } from "./title";
 import React from "react";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 const SideBarAndButton = ({
   onClick,
@@ -82,8 +77,7 @@ export const StoreNavigation = () => {
         position="sticky"
         sx={{
           top: 0,
-          bgcolor: "white",
-          color: "grey",
+          bgcolor: "background.default",
           padding: "2em",
           display: "flex",
           flexDirection: "row",
@@ -128,6 +122,22 @@ export const StoreNavigation = () => {
             icon={<ShoppingBag />}
             anchor={"right"}
           />
+          <Button
+            onClick={context.toggleColorMode}
+            sx={{
+              minWidth: "auto",
+              margin: "0.5em",
+            }}
+          >
+            {(context.colorMode === "dark" && (
+              <LightModeIcon
+                fontSize="small"
+                sx={{ color: "secondary.main" }}
+              />
+            )) || (
+              <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
+            )}
+          </Button>
         </Box>
       </AppBar>
     </ElevationScroll>

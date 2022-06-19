@@ -4,7 +4,12 @@ import { StoreNavigation } from "./components/store-navigation";
 
 function App() {
   return (
-    <Box display={"flex"} flexDirection="column" justifyContent={"center"}>
+    <Box
+      display={"flex"}
+      flexDirection="column"
+      justifyContent={"center"}
+      bgcolor={"background.default"}
+    >
       <StoreNavigation />
       <Outlet />
     </Box>

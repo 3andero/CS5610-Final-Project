@@ -8,6 +8,8 @@ import { appConfig } from "./config";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { AppContext } from "./app-context";
+import { getTheme } from "./theme/myTheme";
+import { Box, PaletteMode, ThemeProvider } from "@mui/material";
 
 const Auth0ProviderRedirectBack = ({
   children,
@@ -28,8 +30,9 @@ const Auth0ProviderRedirectBack = ({
 
 const AppRoot = () => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
-  const [colorMode, setColorMode] = useState(false);
+  const [colorMode, setColorMode] = useState<PaletteMode>("light");
   const [shoppingCartStatus, setShoppingCartStatus] = useState(false);
+  const theme = React.useMemo(() => getTheme(colorMode), [colorMode]);
   return (
     <React.StrictMode>
       <AppContext.Provider
@@ -39,26 +42,38 @@ const AppRoot = () => {
             setSidebarStatus((v) => !v);
           },
           toggleColorMode: () => {
-            setColorMode((v) => !v);
+            setColorMode((v) => (v === "dark" ? "light" : "dark"));
           },
           shoppingCartStatus,
           toggleShoppingCart: () => {
             setShoppingCartStatus((v) => !v);
           },
+          colorMode,
         }}
       >
-        <BrowserRouter>
-          <Auth0ProviderRedirectBack
-            domain={appConfig.ISSUER_BASE_URL}
-            clientId={appConfig.CLIENT_ID}
-            redirectUri={window.location.origin}
-            audience={appConfig.AUDIENCE}
-            cacheLocation={"localstorage"}
-            useRefreshTokens={false}
+        <ThemeProvider theme={theme}>
+          <Box
+            sx={{
+              minHeight: "auto",
+              height: "100vh",
+              width: "100%",
+              bgcolor: "background.default",
+            }}
           >
-            <AppRoutes />
-          </Auth0ProviderRedirectBack>
-        </BrowserRouter>
+            <BrowserRouter>
+              <Auth0ProviderRedirectBack
+                domain={appConfig.ISSUER_BASE_URL}
+                clientId={appConfig.CLIENT_ID}
+                redirectUri={window.location.origin}
+                audience={appConfig.AUDIENCE}
+                cacheLocation={"localstorage"}
+                useRefreshTokens={false}
+              >
+                <AppRoutes />
+              </Auth0ProviderRedirectBack>
+            </BrowserRouter>
+          </Box>
+        </ThemeProvider>
       </AppContext.Provider>
     </React.StrictMode>
   );
