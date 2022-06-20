@@ -10,19 +10,6 @@ export const cart_create: RequestHandler<
     products: { product_id: ObjectId; quantity: number }[];
   }
 > = (req, res, next) => {
-  // ProductModel.findById(req.body.product_id).exec(
-  //   (err, product_: Product | null) => {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     if (product_ === null || product_.quantity < req.body.quantity) {
-  //       return res.send(product_);
-  //     }
-  //     if (product_.quantity < req.body.quantity) {
-  //       return res.send({});
-  //     }
-  //   }
-  // );
   const data = {
     products: req.body.products,
     user_info: req.auth?.sub,
@@ -32,18 +19,14 @@ export const cart_create: RequestHandler<
       if (err) {
         return next(err);
       }
-      // console.log(data);
-      // console.log(JSON.stringify(item));
       if (item.length === 0) {
         try {
           const newCart = await ShoppingCartModel.create(data);
           return res.status(200).send();
         } catch (err) {
-          // console.log(err);
           return next(err);
         }
       } else {
-        // console.log("2");
         const updatedCart = await ShoppingCartModel.updateOne(
           { user_info: req.auth!.sub },
           req.body
@@ -52,8 +35,6 @@ export const cart_create: RequestHandler<
       }
     }
   );
-  // console.log("here");
-  // const newCart = await ShoppingCartModel.create(data);
 };
 
 export const cart_get: RequestHandler = (req, res, next) => {

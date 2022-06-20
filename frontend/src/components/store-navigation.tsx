@@ -1,4 +1,4 @@
-import { Box, Drawer, Button, AppBar, useScrollTrigger } from "@mui/material";
+import { Box, Drawer, Button, AppBar, useScrollTrigger, Typography } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
@@ -10,6 +10,7 @@ import { TitleComponent } from "./title";
 import React from "react";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { ShoppingCartView } from "../view/shopping-cart";
 
 const SideBarAndButton = ({
   onClick,
@@ -17,12 +18,16 @@ const SideBarAndButton = ({
   sx,
   icon,
   anchor,
+  children,
+  drawerWidth
 }: {
   onClick: () => void;
   open: boolean;
   sx: Parameters<typeof Button>[0]["sx"];
   icon: React.ReactNode;
   anchor: Parameters<typeof Drawer>[0]["anchor"];
+  children?: React.ReactNode;
+  drawerWidth: number
 }) => {
   return (
     <>
@@ -46,10 +51,10 @@ const SideBarAndButton = ({
         sx={{
           "& .MuiPaper-root": {
             width: "100%",
-            maxWidth: 260,
+            maxWidth: drawerWidth,
           },
         }}
-      />
+      >{children}</Drawer>
     </>
   );
 };
@@ -114,6 +119,7 @@ export const StoreNavigation = () => {
             sx={{ display: { md: "none", xs: "flex" } }}
             icon={<MenuIcon />}
             anchor={"left"}
+            drawerWidth={260}
           />
           <SideBarAndButton
             onClick={context.toggleShoppingCart}
@@ -121,7 +127,9 @@ export const StoreNavigation = () => {
             sx={{ display: "flex" }}
             icon={<ShoppingBag />}
             anchor={"right"}
-          />
+            drawerWidth={800}
+          ><ShoppingCartView /></SideBarAndButton>
+
           <Button
             onClick={context.toggleColorMode}
             sx={{
@@ -135,8 +143,8 @@ export const StoreNavigation = () => {
                 sx={{ color: "secondary.main" }}
               />
             )) || (
-              <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
-            )}
+                <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
+              )}
           </Button>
         </Box>
       </AppBar>

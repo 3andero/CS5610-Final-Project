@@ -160,6 +160,7 @@ export const useProtected = <T,>(
           isLoading: false,
         });
       } catch (error: any) {
+        console.log(error);
         setState({
           ...state,
           error,
