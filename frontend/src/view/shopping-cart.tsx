@@ -12,7 +12,15 @@ export interface CartItem {
 }
 
 export const ShoppingCartView = () => {
-  const handle = useApi();
+  const handle = useApi<{
+    _id: string,
+    price: number,
+    name: string,
+    image: string,
+    quantity: number,
+    is_available: boolean,
+    description: string,
+  }[]>();
   const { isAuthenticated } = useAuth0();
   const context = useContext(AppContext);
   const initialCart = {
@@ -83,16 +91,13 @@ export const ShoppingCartView = () => {
             marginTop: 3,
           }} />
 
-          <Typography>
-            {JSON.stringify(handle.data)}
-          </Typography>
-          {mock.map((item, i) => (
-            <Box key={i}>
+          {handle.data?.map((item, i) => (
+            <Box key={item._id}>
               <Box display={'flex'}>
                 <Box
                   component={'img'}
                   src={item.image}
-                  alt={item.title}
+                  alt={item.name}
                   sx={{
                     borderRadius: 2,
                     width: 1,
@@ -100,7 +105,7 @@ export const ShoppingCartView = () => {
                     maxWidth: { xs: 48, sm: 72 },
                     marginRight: 2,
                     marginLeft: 1,
-                    marginTop: 3,
+                    marginTop: 1,
                     filter:
                       context.colorMode === 'dark' ? 'brightness(0.7)' : 'none',
                   }}
@@ -109,15 +114,17 @@ export const ShoppingCartView = () => {
                   display={'flex'}
                   flexDirection={{ xs: 'column', sm: 'row' }}
                   justifyContent={'space-between'}
-                  alignItems={'flex-start'}
-                  width={1}
+                  // alignItems={'flex-start'}
+                  alignItems="center"
+                  width={0.7}
+                // sx={{flexWrap:"wrap"}}
                 >
-                  <Box sx={{ order: 1 }}>
+                  <Box sx={{ order: 1, flexWrap: "wrap" }} maxWidth={0.4}>
                     <Typography fontWeight={700} gutterBottom variant={'body2'}>
-                      {item.title}
+                      {item.name}
                     </Typography>
 
-                    <Typography
+                    {/* <Typography
                       color={'text.secondary'}
                       variant={'body2'}
                       gutterBottom
@@ -129,7 +136,7 @@ export const ShoppingCartView = () => {
                         color={'inherit'}
                         fontWeight={700}
                       >
-                        {item.size}
+                        {item.variant}
                       </Typography>
                     </Typography>
                     <Typography
@@ -146,7 +153,7 @@ export const ShoppingCartView = () => {
                       >
                         {item.gender}
                       </Typography>
-                    </Typography>
+                    </Typography> */}
                     <Typography
                       color={'text.secondary'}
                       variant={'body2'}
@@ -159,8 +166,10 @@ export const ShoppingCartView = () => {
                         component={'span'}
                         color={'inherit'}
                         fontWeight={700}
+                        width={"10px"}
+                        noWrap={true}
                       >
-                        {item.code}
+                        {item._id}
                       </Typography>
                     </Typography>
                   </Box>
@@ -261,7 +270,7 @@ export const ShoppingCartView = () => {
                       </Select>
                     </FormControl>
                     <Typography fontWeight={700} marginLeft={2}>
-                      {item.price}
+                      ${item.price}
                     </Typography>
                   </Stack>
                 </Box>

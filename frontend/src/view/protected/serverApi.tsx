@@ -1,4 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { ThreeGMobiledata } from "@mui/icons-material";
 import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../config";
@@ -30,12 +31,12 @@ const RequireActionComponent = ({
   );
 };
 
-export const FurtherAction = <T,>({
+export const FurtherAction = <T, TData>({
   protectedCallHandle: { refresh, error, isLoading },
   children,
   refreshArgs,
 }: {
-  protectedCallHandle: ProtectedCallHandle<T>;
+  protectedCallHandle: ProtectedCallHandle<T, TData>;
   children?: React.ReactNode;
   refreshArgs?: T;
 }): JSX.Element => {
@@ -85,9 +86,9 @@ export type ApiCallArgs = {
 
 type AuthOptions = { audience?: string; scope?: string };
 
-export const useApi = (authOptions?: AuthOptions) => {
-  return useProtected(
-    async (authHeaders, state, _args?: ApiCallArgs) => {
+export const useApi = <TData = any>(authOptions?: AuthOptions) => {
+  return useProtected<ApiCallArgs, TData>(
+    async (authHeaders, state, _args) => {
       const { url, fetchOptions } = _args as ApiCallArgs;
       const res = await fetch(url, {
         ...fetchOptions,
@@ -111,28 +112,28 @@ export const useApi = (authOptions?: AuthOptions) => {
   );
 };
 
-export interface ProtectedCallState {
+export interface ProtectedCallState<TData> {
   error?: string;
   isLoading: boolean;
-  data?: any;
+  data?: TData;
 }
 
-export type ProtectedCallHandle<T> = ProtectedCallState & {
+export type ProtectedCallHandle<T, TData> = ProtectedCallState<TData> & {
   refresh: (args?: T) => void;
 };
 
-export type ProtectedCall<T> = (
+export type ProtectedCall<T, TData = any> = (
   authHeader: { Authorization: string },
-  state: ProtectedCallState,
+  state: ProtectedCallState<TData>,
   args?: T
 ) => Promise<void>;
 
-export const useProtected = <T,>(
-  fn: ProtectedCall<T>,
+export const useProtected = <T, TData = any>(
+  fn: ProtectedCall<T, TData>,
   options: AuthOptions
-): ProtectedCallHandle<T> => {
+): ProtectedCallHandle<T, TData> => {
   const { getAccessTokenSilently } = useAuth0();
-  const [state, setState] = useState<ProtectedCallState>({
+  const [state, setState] = useState<ProtectedCallState<TData>>({
     error: undefined,
     isLoading: false,
     data: undefined,
@@ -152,7 +153,7 @@ export const useProtected = <T,>(
           return;
         }
         const _token = `Bearer ${accessToken}`;
-        console.log(_token);
+        // console.log(_token);
         await fn({ Authorization: _token }, state, refreshState.args);
         console.log(1);
         setState({

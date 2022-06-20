@@ -127,7 +127,7 @@ export const StoreNavigation = () => {
             sx={{ display: "flex" }}
             icon={<ShoppingBag />}
             anchor={"right"}
-            drawerWidth={800}
+            drawerWidth={360}
           ><ShoppingCartView /></SideBarAndButton>
 
           <Button

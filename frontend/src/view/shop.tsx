@@ -55,7 +55,7 @@ export const ShopView = () => {
                 <CardMedia
                   title={item.name}
                   image={
-                    "https://assets.maccarianagency.com/backgrounds/img57.jpg"
+                    "https://img.amiami.com/images/product/review/212/FIGURE-126186_08.jpg"
                   }
                   sx={{
                     position: "relative",
