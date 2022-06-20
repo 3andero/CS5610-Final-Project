@@ -37,13 +37,32 @@ export const cart_create: RequestHandler<
   );
 };
 
-export const cart_get: RequestHandler = (req, res, next) => {
-  ShoppingCartModel.find({ user_info: req.auth!.sub }).exec((err, item) => {
-    if (err) {
-      return next(err);
-    }
-    return res.json(item);
-  });
+export const cart_get: RequestHandler = async (req, res, next) => {
+  try {
+    const items = await ShoppingCartModel.find({
+      user_info: req.auth!.sub,
+    }).exec();
+    const product_ids = items[0]["products"];
+    const product_details = await Promise.all(
+      product_ids.map(async (prod) => {
+        try {
+          const prod_detail = await ProductModel.findById(
+            prod.product_id
+          ).exec();
+          if (!prod_detail) {
+            return prod_detail;
+          }
+          prod_detail.quantity = prod.quantity;
+          return prod_detail;
+        } catch (e) {
+          return next(e);
+        }
+      })
+    );
+    return res.json(product_details);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const cart_delete: RequestHandler = (req, res, next) => {
