@@ -1,5 +1,10 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import Hero from "components/hero";
 
 export const IndexPageView = () => {
-  return <Typography>Index.Page.View</Typography>;
+  return (
+    <Box>
+      <Hero />
+    </Box>
+  );
 };

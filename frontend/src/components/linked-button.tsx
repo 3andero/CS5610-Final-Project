@@ -6,8 +6,11 @@ interface LinkedButtonProps {
   sx?: Parameters<typeof Button>[0]["sx"];
   variant?: Parameters<typeof Button>[0]["variant"];
   children: Parameters<typeof Button>[0]["children"];
+  size?: Parameters<typeof Button>[0]["size"];
 }
 
-export const LinkedButton = (props: LinkedButtonProps) => (
-  <Button {...props} component={Link} sx={{ color: "text.primary" }}></Button>
-);
+export const LinkedButton = (props: LinkedButtonProps) => {
+  return (
+    <Button sx={{ color: "text.primary" }} {...props} component={Link}></Button>
+  );
+};

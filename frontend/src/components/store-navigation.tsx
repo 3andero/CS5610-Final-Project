@@ -1,4 +1,12 @@
-import { Box, Drawer, Button, AppBar, useScrollTrigger } from "@mui/material";
+import {
+  Box,
+  Drawer,
+  Button,
+  AppBar,
+  useScrollTrigger,
+  alpha,
+  useTheme,
+} from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
@@ -70,20 +78,23 @@ function ElevationScroll({ children }: { children: any }) {
 
 export const StoreNavigation = () => {
   const context = useContext(AppContext);
-
+  const theme = useTheme();
   return (
     <ElevationScroll>
       <AppBar
         position="sticky"
+        color="transparent"
         sx={{
           top: 0,
-          bgcolor: "background.default",
+          // bgcolor: "background.default",
           padding: "2em",
           display: "flex",
           flexDirection: "row",
           gap: "1em",
           alignItems: "center",
           justifyContent: "space-between",
+          backdropFilter: "saturate(180%) blur(30px)",
+          background: alpha(theme.palette.background.default, 0.85),
         }}
       >
         <NavLink
