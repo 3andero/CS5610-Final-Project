@@ -39,8 +39,9 @@
     "front:dev": "cd frontend && npm run start",
     "build-front": "cd frontend && npm run build && cd ..",
     "build-back": "npx tsc",
-    "build": "cross-env NODE_ENV=production rm -rf build && npm run build-front && npm run build-back && mv ./frontend/build ./build/frontend",
-    "deploy": "rm -rf build/ && unzip build.zip && npm run back",
+    "build": "cross-env NODE_ENV=production rm -rf build && npm run build-front && npm run build-back && mv ./frontend/build ./build/frontend-build && zip -r \"build-$(date +%s).zip\" build/",
+    "deploy": "rm -rf build/ && unzip $(ls -r build-*.zip | head -1) && npm run back",
+    "deploy-ver": "func() { rm -rf build/ && unzip \"$1\" && npm run back; }; func",
     "addDB": "npx nodemon ./addDataDB.ts"
   },
   "browserslist": [
