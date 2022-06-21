@@ -27,7 +27,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(morgan("dev"));
-process.env.NODE_ENV !== "production" && app.use(cors({origin: "*"}));
+process.env.NODE_ENV !== "production" && app.use(cors({ origin: "*" }));
 app.use(helmet());
 
 app.use("/", router_Index);
@@ -38,8 +38,8 @@ app.use("/order", router_order);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
-    (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
-    ".well-known/jwks.json"
+  (appConfig.ISSUER_BASE_URL.slice(-1) === "/" ? "" : "/") +
+  ".well-known/jwks.json"
 );
 
 const checkJWT = jwt({
@@ -63,10 +63,15 @@ app.use((_req, _res, next) => {
 });
 
 app.use(((err, req, res, next) => {
-  console.log("error");
-  res.status(err.status || 500);
+  console.log(`error: ${err}`);
   if (!res.headersSent) {
-    res.send(`${err.status} ${err.message}`);
+    if (err.status) {
+      res.status(err.status);
+      res.send(`${err.status} ${err.message}`);
+    } else {
+      res.status(500);
+      res.send(`${err}`);
+    }
   }
 }) as ErrorRequestHandler);
 
