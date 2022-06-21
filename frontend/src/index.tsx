@@ -9,8 +9,14 @@ import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { AppContext } from "./app-context";
 import { getTheme } from "./theme/myTheme";
-import { Box, PaletteMode, ThemeProvider } from "@mui/material";
 import { CartItem } from "./view/shopping-cart";
+import {
+  Box,
+  CssBaseline,
+  PaletteMode,
+  Paper,
+  ThemeProvider,
+} from "@mui/material";
 
 const Auth0ProviderRedirectBack = ({
   children,
@@ -56,27 +62,30 @@ const AppRoot = () => {
         }}
       >
         <ThemeProvider theme={theme}>
-          <Box
-            sx={{
-              minHeight: "auto",
-              height: "100vh",
-              width: "100%",
-              bgcolor: "background.default",
-            }}
-          >
-            <BrowserRouter>
-              <Auth0ProviderRedirectBack
-                domain={appConfig.ISSUER_BASE_URL}
-                clientId={appConfig.CLIENT_ID}
-                redirectUri={window.location.origin}
-                audience={appConfig.AUDIENCE}
-                cacheLocation={"localstorage"}
-                useRefreshTokens={false}
-              >
-                <AppRoutes />
-              </Auth0ProviderRedirectBack>
-            </BrowserRouter>
-          </Box>
+          <CssBaseline />
+          <Paper elevation={0}>
+            <Box
+              sx={{
+                minHeight: "auto",
+                height: "100vh",
+                width: "100%",
+                bgcolor: "background.default",
+              }}
+            >
+              <BrowserRouter>
+                <Auth0ProviderRedirectBack
+                  domain={appConfig.ISSUER_BASE_URL}
+                  clientId={appConfig.CLIENT_ID}
+                  redirectUri={window.location.origin}
+                  audience={appConfig.AUDIENCE}
+                  // cacheLocation={"localstorage"}
+                  // useRefreshTokens={false}
+                >
+                  <AppRoutes />
+                </Auth0ProviderRedirectBack>
+              </BrowserRouter>
+            </Box>
+          </Paper>
         </ThemeProvider>
       </AppContext.Provider>
     </React.StrictMode>

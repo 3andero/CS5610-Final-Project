@@ -1,5 +1,13 @@
-import { Box, Drawer, Button, AppBar, useScrollTrigger } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
+import {
+  Box,
+  Drawer,
+  Button,
+  AppBar,
+  useScrollTrigger,
+  alpha,
+  useTheme,
+} from "@mui/material";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -129,19 +137,23 @@ export const StoreNavigation = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, context.cartState]);
+  const theme = useTheme();
   return (
     <ElevationScroll>
       <AppBar
         position="sticky"
+        color="transparent"
         sx={{
           top: 0,
-          bgcolor: "background.default",
+          // bgcolor: "background.default",
           padding: "2em",
           display: "flex",
           flexDirection: "row",
           gap: "1em",
           alignItems: "center",
           justifyContent: "space-between",
+          backdropFilter: "saturate(180%) blur(30px)",
+          background: alpha(theme.palette.background.default, 0.85),
         }}
       >
         <NavLink

@@ -26,8 +26,8 @@ const TitleComponent1 = () => {
 // https://codepen.io/josephwong2004/pen/pogbrOv
 const TitleComponent2 = () => {
   const text = "'Gen2D'";
-  const pathAfter = "polygon(0 25%, 100% 65%, 100% 100%, 0% 100%)";
-  const pathBefore = "polygon(0 0, 110% 0, 100% 65%, 0 25%)";
+  const pathAfter = "polygon(0 50%, 100% 70%, 100% 100%, 0% 100%)";
+  const pathBefore = "polygon(0 50%, 100% 70%, 100% 0, 0 0)";
   return (
     <Typography
       variant="h2"
@@ -48,6 +48,7 @@ const TitleComponent2 = () => {
           WebkitClipPath: pathAfter,
           clipPath: pathAfter,
           bgcolor: "text.primary",
+          paddingX: "0.5em",
         },
         "&:before": {
           content: text,
@@ -55,6 +56,7 @@ const TitleComponent2 = () => {
           color: "text.primary",
           WebkitClipPath: pathBefore,
           clipPath: pathBefore,
+          paddingX: "0.5em",
         },
       }}
     >
