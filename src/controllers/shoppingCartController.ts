@@ -6,12 +6,10 @@ import { ShoppingCart, ShoppingCartModel } from "../models/shoppingCart";
 export const cart_create: RequestHandler<
   {},
   {},
-  {
-    products: { product_id: ObjectId; quantity: number }[];
-  }
+  { product_id: ObjectId; quantity: number }[]
 > = (req, res, next) => {
   const data = {
-    products: req.body.products,
+    products: req.body,
     user_info: req.auth?.sub,
   };
   ShoppingCartModel.find({ user_info: req.auth!.sub }).exec(
@@ -29,7 +27,7 @@ export const cart_create: RequestHandler<
       } else {
         const updatedCart = await ShoppingCartModel.updateOne(
           { user_info: req.auth!.sub },
-          req.body
+          { products: req.body }
         );
         return res.status(200).send();
       }
@@ -42,6 +40,10 @@ export const cart_get: RequestHandler = async (req, res, next) => {
     const items = await ShoppingCartModel.find({
       user_info: req.auth!.sub,
     }).exec();
+    if (items.length === 0) {
+      res.status(200).send([]);
+      return;
+    }
     const product_ids = items[0]["products"];
     const product_details = await Promise.all(
       product_ids.map(async (prod) => {
@@ -55,6 +57,7 @@ export const cart_get: RequestHandler = async (req, res, next) => {
           prod_detail.quantity = prod.quantity;
           return prod_detail;
         } catch (e) {
+          console.log(e);
           return next(e);
         }
       })

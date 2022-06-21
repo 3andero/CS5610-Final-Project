@@ -1,5 +1,4 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { ThreeGMobiledata } from "@mui/icons-material";
 import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../config";
@@ -35,14 +34,16 @@ export const FurtherAction = <T, TData>({
   protectedCallHandle: { refresh, error, isLoading },
   children,
   refreshArgs,
+  activated = true,
 }: {
   protectedCallHandle: ProtectedCallHandle<T, TData>;
   children?: React.ReactNode;
   refreshArgs?: T;
+  activated?: boolean
 }): JSX.Element => {
   const { loginWithPopup, getAccessTokenWithPopup } = useAuth0();
   return (
-    (error === undefined && isLoading && (
+    (activated && ((error === undefined && isLoading && (
       <LinearProgress
         color="secondary"
         style={{ width: "100%" }}
@@ -53,29 +54,29 @@ export const FurtherAction = <T, TData>({
         }}
       />
     )) ||
-    (error === "login_required" && (
-      <RequireActionComponent
-        onClick={async () => {
-          await loginWithPopup();
-          isLoading && refresh(refreshArgs);
-        }}
-        msg={"Waiting to Login..."}
-        buttonMsg={"Login"}
-      />
-    )) ||
-    (error === "consent_required" && (
-      <RequireActionComponent
-        onClick={async () => {
-          await getAccessTokenWithPopup();
-          isLoading && refresh(refreshArgs);
-        }}
-        msg={"Waiting for consent..."}
-        buttonMsg={"Consent"}
-      />
-    )) ||
-    (error && error.length > 0 && (
-      <Typography sx={{ color: "red" }}>unknown error: {error}</Typography>
-    )) || <>{children}</>
+      (error === "login_required" && (
+        <RequireActionComponent
+          onClick={async () => {
+            await loginWithPopup();
+            isLoading && refresh(refreshArgs);
+          }}
+          msg={"Waiting to Login..."}
+          buttonMsg={"Login"}
+        />
+      )) ||
+      (error === "consent_required" && (
+        <RequireActionComponent
+          onClick={async () => {
+            await getAccessTokenWithPopup();
+            isLoading && refresh(refreshArgs);
+          }}
+          msg={"Waiting for consent..."}
+          buttonMsg={"Consent"}
+        />
+      )) ||
+      (error && error.length > 0 && (
+        <Typography sx={{ color: "red" }}>unknown error: {error}</Typography>
+      )))) || <>{children}</>
   );
 };
 

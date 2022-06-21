@@ -58,7 +58,14 @@
     },
     "post": {
       "body": {
-        "products": [{ "product_id": "string", "quantity": "number" }]
+        "_id": "string",
+        "price": "number",
+        "name": "string",
+        "image": "string",
+        "quantity": "number",
+        "is_available": "boolean",
+        "description": "string",
+        "__v": "number"
       }
     },
     "delete": {
