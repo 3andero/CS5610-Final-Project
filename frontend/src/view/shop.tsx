@@ -9,21 +9,24 @@ import {
   alpha,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../app-context";
 import { appConfig } from "../config";
+import { CartItem } from "./shopping-cart";
 
 export const ShopView = () => {
   const [products, setProducts] = useState<
-    {
-      _id: string;
-      price: number;
-      name: string;
-      quantity: number;
-      description: string;
-      image?: string;
-      reviewScore?: number;
-      reviewCount?: number;
-    }[]
+    // {
+    //   _id: string;
+    //   price: number;
+    //   name: string;
+    //   quantity: number;
+    //   description: string;
+    //   image?: string;
+    //   reviewScore?: number;
+    //   reviewCount?: number;
+    // }[]
+    CartItem[]
   >([]);
   useEffect(() => {
     console.log("fetch products");
@@ -34,6 +37,7 @@ export const ShopView = () => {
   }, []);
 
   const theme = useTheme();
+  const context = useContext(AppContext);
 
   return (
     <Box margin="3em" sx={{ flexGrow: 1 }}>
@@ -55,7 +59,7 @@ export const ShopView = () => {
                 <CardMedia
                   title={item.name}
                   image={
-                    "https://assets.maccarianagency.com/backgrounds/img57.jpg"
+                    item.image
                   }
                   sx={{
                     position: "relative",
@@ -85,7 +89,7 @@ export const ShopView = () => {
                         key={r}
                         component={"svg"}
                         color={
-                          r <= (item.reviewScore || 3)
+                          r <= (/*item.reviewScore ||*/ 3)
                             ? theme.palette.secondary.main
                             : theme.palette.divider
                         }
@@ -104,7 +108,7 @@ export const ShopView = () => {
                     color={"text.secondary"}
                     marginLeft={0.5}
                   >
-                    {item.reviewCount || 0} reviews
+                    {/*item.reviewCount ||*/ 0} reviews
                   </Typography>
                 </Box>
                 <Stack marginTop={2} spacing={1} direction={"row"}>
@@ -113,6 +117,22 @@ export const ShopView = () => {
                     color={"primary"}
                     size={"large"}
                     fullWidth
+                    onClick={() => {
+                      let flag = false;
+                      item.quantity = 1;
+                      const prev_cart = context.cartState;
+                      const updated_cart = prev_cart.map((prev) => {
+                        if (prev._id === item._id) {
+                          prev.quantity += 1;
+                          flag = true;
+                        }
+                        return prev;
+                      });
+                      if (!flag) {
+                        updated_cart.push(item);
+                      }
+                      context.setCartState(updated_cart);
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

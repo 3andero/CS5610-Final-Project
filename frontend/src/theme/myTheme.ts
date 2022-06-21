@@ -1,10 +1,15 @@
 import { PaletteMode } from "@mui/material";
 import { ComponentsOverrides, createTheme, responsiveFontSizes, Theme } from "@mui/material/styles";
+import { TypographyStyleOptions } from "@mui/material/styles/createTypography";
 import { dark, light } from "./palette";
 
 const titleFont1 = {
-    fontFamily: "'Work Sans', sans-serif",
-    fontWeight: 600,
+  fontFamily: "'Work Sans', sans-serif",
+  fontWeight: 600,
+};
+const titleFont4: TypographyStyleOptions = {
+  fontFamily: "'Montserrat', sans-serif",
+  fontWeight: 100
 };
 
 export const getTheme = (mode: PaletteMode): Theme => {
@@ -14,7 +19,7 @@ export const getTheme = (mode: PaletteMode): Theme => {
             h1: titleFont1,
             h2: titleFont1,
             h3: titleFont1,
-            h4: titleFont1,
+            h4: titleFont4,
             h5: titleFont1,
             subtitle1: {
                 fontFamily: "'Montserrat', sans-serif",

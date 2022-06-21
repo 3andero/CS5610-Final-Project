@@ -6,25 +6,10 @@ import { ShoppingCart, ShoppingCartModel } from "../models/shoppingCart";
 export const cart_create: RequestHandler<
   {},
   {},
-  {
-    products: { product_id: ObjectId; quantity: number }[];
-  }
+  { product_id: ObjectId; quantity: number }[]
 > = (req, res, next) => {
-  // ProductModel.findById(req.body.product_id).exec(
-  //   (err, product_: Product | null) => {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     if (product_ === null || product_.quantity < req.body.quantity) {
-  //       return res.send(product_);
-  //     }
-  //     if (product_.quantity < req.body.quantity) {
-  //       return res.send({});
-  //     }
-  //   }
-  // );
   const data = {
-    products: req.body.products,
+    products: req.body,
     user_info: req.auth?.sub,
   };
   ShoppingCartModel.find({ user_info: req.auth!.sub }).exec(
@@ -32,37 +17,55 @@ export const cart_create: RequestHandler<
       if (err) {
         return next(err);
       }
-      // console.log(data);
-      // console.log(JSON.stringify(item));
       if (item.length === 0) {
         try {
           const newCart = await ShoppingCartModel.create(data);
           return res.status(200).send();
         } catch (err) {
-          // console.log(err);
           return next(err);
         }
       } else {
-        // console.log("2");
         const updatedCart = await ShoppingCartModel.updateOne(
           { user_info: req.auth!.sub },
-          req.body
+          { products: req.body }
         );
         return res.status(200).send();
       }
     }
   );
-  // console.log("here");
-  // const newCart = await ShoppingCartModel.create(data);
 };
 
-export const cart_get: RequestHandler = (req, res, next) => {
-  ShoppingCartModel.find({ user_info: req.auth!.sub }).exec((err, item) => {
-    if (err) {
-      return next(err);
+export const cart_get: RequestHandler = async (req, res, next) => {
+  try {
+    const items = await ShoppingCartModel.find({
+      user_info: req.auth!.sub,
+    }).exec();
+    if (items.length === 0) {
+      res.status(200).send([]);
+      return;
     }
-    return res.json(item);
-  });
+    const product_ids = items[0]["products"];
+    const product_details = await Promise.all(
+      product_ids.map(async (prod) => {
+        try {
+          const prod_detail = await ProductModel.findById(
+            prod.product_id
+          ).exec();
+          if (!prod_detail) {
+            return prod_detail;
+          }
+          prod_detail.quantity = prod.quantity;
+          return prod_detail;
+        } catch (e) {
+          console.log(e);
+          return next(e);
+        }
+      })
+    );
+    return res.json(product_details);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const cart_delete: RequestHandler = (req, res, next) => {

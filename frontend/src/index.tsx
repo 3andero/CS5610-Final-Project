@@ -9,6 +9,7 @@ import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { AppContext } from "./app-context";
 import { getTheme } from "./theme/myTheme";
+import { CartItem } from "./view/shopping-cart";
 import {
   Box,
   CssBaseline,
@@ -38,6 +39,7 @@ const AppRoot = () => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
   const [colorMode, setColorMode] = useState<PaletteMode>("light");
   const [shoppingCartStatus, setShoppingCartStatus] = useState(false);
+  const [cartState, setCartState] = useState<CartItem[]>([]);
   const theme = React.useMemo(() => getTheme(colorMode), [colorMode]);
   return (
     <React.StrictMode>
@@ -55,6 +57,8 @@ const AppRoot = () => {
             setShoppingCartStatus((v) => !v);
           },
           colorMode,
+          cartState,
+          setCartState
         }}
       >
         <ThemeProvider theme={theme}>
