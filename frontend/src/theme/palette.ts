@@ -52,11 +52,11 @@ export const dark = {
     secondary: {
         light: '#FFEA41',
         main: '#FFE102',
-        dark: '#DBBE01',
+        dark: '#9E8800',
         contrastText: 'rgba(0, 0, 0, 0.87)',
     },
     text: {
-        primary: '#EEEEEF',
+        primary: '#EFEFF0',
         secondary: '#AEB0B4',
     },
     divider: 'rgba(255, 255, 255, 0.12)',
