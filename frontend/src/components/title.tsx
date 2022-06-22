@@ -26,24 +26,24 @@ const TitleComponent1 = () => {
 // https://codepen.io/josephwong2004/pen/pogbrOv
 const TitleComponent2 = () => {
   const text = "'Gen2D'";
-  const pathAfter = "polygon(0 50%, 100% 70%, 100% 100%, 0% 100%)";
-  const pathBefore = "polygon(0 50%, 100% 70%, 100% 0, 0 0)";
+  const pathAfter = "polygon(0 60%, 100% 80%, 100% 100%, 0% 100%)";
+  const pathBefore = "polygon(0 60%, 100% 80%, 100% 0, 0 0)";
   return (
     <Typography
-      variant="h2"
+      variant="h3"
       fontWeight={900}
       letterSpacing={5}
       sx={{
         position: "relative",
         textTransform: "uppercase",
         color: "transparent",
-        fontFamily: "'Catamaran', sans-serif",
+        fontFamily: "'Poppins', sans-serif",
         fontStyle: "italic",
         ":after": {
           content: text,
           position: "absolute",
-          left: "-3px",
-          top: "-1px",
+          left: "0px",
+          top: "0px",
           color: "background.default",
           WebkitClipPath: pathAfter,
           clipPath: pathAfter,
@@ -64,5 +64,4 @@ const TitleComponent2 = () => {
     </Typography>
   );
 };
-
 export const TitleComponent = TitleComponent2;
