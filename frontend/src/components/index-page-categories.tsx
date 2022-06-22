@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import GenshinLogo from "./genshin.logo";
+import JujutsuLogo from "./jujutsu.logo";
 
 const mock = [
   {
@@ -43,6 +44,79 @@ const mock = [
         <Box height={80} width={80}>
           <GenshinLogo />
         </Box>
+      </Box>
+    ),
+  },
+  {
+    title: "呪術廻戦",
+    icon: (
+      <Box
+        sx={{
+          position: "relative",
+          top: "1.5em",
+        }}
+      >
+        <Box height={110} width={110}>
+          <JujutsuLogo />
+        </Box>
+      </Box>
+    ),
+  },
+  {
+    title: "Figures",
+    icon: (
+      <Box
+        sx={{
+          position: "relative",
+          top: "1em",
+        }}
+      >
+        <Box
+          component={"img"}
+          height={64}
+          width={"auto"}
+          src={
+            "https://static.wikia.nocookie.net/piapro-studio/images/2/23/Img_illust_mikunt.png"
+          }
+        />
+      </Box>
+    ),
+  },
+  {
+    title: "Blu-rays",
+    icon: (
+      <Box
+        sx={{
+          position: "relative",
+          top: "0em",
+        }}
+      >
+        <Box
+          component={"img"}
+          height={48}
+          width={"auto"}
+          src={
+            "https://upload.wikimedia.org/wikipedia/commons/1/14/Blu-ray_Disc.svg"
+          }
+        />
+      </Box>
+    ),
+  },
+  {
+    title: "Games",
+    icon: (
+      <Box
+        sx={{
+          position: "relative",
+          top: "0em",
+        }}
+      >
+        <Box
+          component={"img"}
+          height={48}
+          width={"auto"}
+          src={"https://www.svgrepo.com/show/2336/xbox-logo.svg"}
+        />
       </Box>
     ),
   },
