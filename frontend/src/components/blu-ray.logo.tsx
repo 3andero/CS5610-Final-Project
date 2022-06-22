@@ -3,7 +3,7 @@ import StyledSVG from "./styled-svg";
 const BluRayLogo = () => {
   return (
     <StyledSVG
-      enable-background="new -0.744 82.256 386 207"
+      enableBackground="new -0.744 82.256 386 207"
       overflow="visible"
       version="1.1"
       viewBox="-.744 82.256 386 207"
