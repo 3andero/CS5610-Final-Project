@@ -111,7 +111,6 @@ export const ShopView = () => {
                       fullWidth
                       onClick={() => {
                         let flag = false;
-                        item.quantity = 1;
                         const prev_cart = context.cartState;
                         const updated_cart = prev_cart.map((prev) => {
                           if (prev._id === item._id) {
@@ -121,7 +120,7 @@ export const ShopView = () => {
                           return prev;
                         });
                         if (!flag) {
-                          updated_cart.push(item);
+                          updated_cart.push({ ...item, quantity: 1 });
                         }
                         context.setCartState(updated_cart);
                       }}
