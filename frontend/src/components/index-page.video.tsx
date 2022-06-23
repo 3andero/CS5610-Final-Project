@@ -30,6 +30,7 @@ const IndexVideoSection = (): JSX.Element => {
         autoPlay={true}
         muted={true}
         loop={true}
+        playsInline
       >
         <source
           src="https://ww1.gen2d.store/genshin_banner.mp4"
@@ -58,8 +59,8 @@ const IndexVideoSection = (): JSX.Element => {
         sx={{
           textAlign: "right",
           clipPath: "polygon(30% 0, 100% 0, 100% 100%, 0 100%)",
-        //   backdropFilter: "saturate(180%) blur(30px)",
-        //   background: alpha(theme.palette.alternate.main, 0.9),
+          //   backdropFilter: "saturate(180%) blur(30px)",
+          //   background: alpha(theme.palette.alternate.main, 0.9),
         }}
       >
         <Container paddingRight={"1em"}>
