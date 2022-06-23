@@ -3,11 +3,11 @@ import StyledSVG from "./styled-svg";
 const JujutsuLogo = () => {
   return (
     <StyledSVG
-      clip-rule="evenodd"
-      fill-rule="evenodd"
-      image-rendering="optimizeQuality"
-      shape-rendering="geometricPrecision"
-      text-rendering="geometricPrecision"
+      clipRule="evenodd"
+      fillRule="evenodd"
+      imageRendering="optimizeQuality"
+      shapeRendering="geometricPrecision"
+      textRendering="geometricPrecision"
       version="1.1"
       viewBox="0 0 17568 17568"
       xmlSpace="preserve"

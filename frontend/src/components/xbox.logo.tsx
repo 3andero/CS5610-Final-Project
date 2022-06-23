@@ -3,7 +3,7 @@ import StyledSVG from "./styled-svg";
 const XBoxLogo = () => {
   return (
     <StyledSVG
-      enable-background="new 0 0 575.568 575.568"
+      enableBackground="new 0 0 575.568 575.568"
       version="1.1"
       viewBox="0 0 575.57 575.57"
       xmlSpace="preserve"

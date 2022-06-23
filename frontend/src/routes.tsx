@@ -15,7 +15,7 @@ export const AppRoutes = () => {
         <Route index element={<IndexPageView />} />
         <Route path="profile" element={<ProfileView />}>
           <Route index element={<ProfileIndexView />} />
-          <Route path="extra" element={<ProfileExtraView />} />
+          <Route path="billing" element={<ProfileExtraView />} />
         </Route>
         <Route path="shop" element={<ShopView />} />
         <Route path="featured" element={<FeaturedView />} />

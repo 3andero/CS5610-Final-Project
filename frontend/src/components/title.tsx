@@ -24,13 +24,17 @@ const TitleComponent1 = () => {
 };
 
 // https://codepen.io/josephwong2004/pen/pogbrOv
-const TitleComponent2 = () => {
+const TitleComponent2 = ({
+  variant = "h3",
+}: {
+  variant?: Parameters<typeof Typography>[0]["variant"];
+}) => {
   const text = "'Gen2D'";
   const pathAfter = "polygon(0 60%, 100% 80%, 100% 100%, 0% 100%)";
   const pathBefore = "polygon(0 60%, 100% 80%, 100% 0, 0 0)";
   return (
     <Typography
-      variant="h3"
+      variant={variant}
       fontWeight={900}
       letterSpacing={5}
       sx={{
