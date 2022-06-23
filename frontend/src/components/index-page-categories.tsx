@@ -1,4 +1,4 @@
-import { alpha, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -109,7 +109,7 @@ const mock = [
         }}
       >
         <Box height={48} width={48}>
-          <XBoxLogo/>
+          <XBoxLogo />
         </Box>
       </Box>
     ),
@@ -127,7 +127,7 @@ const IndexPageCategories = (): JSX.Element => {
             fontWeight: "medium",
           }}
           gutterBottom
-          color={"secondary"}
+          color={theme.palette.mode === "light" ? "primary" : "secondary"}
           align={"center"}
         >
           Categories
