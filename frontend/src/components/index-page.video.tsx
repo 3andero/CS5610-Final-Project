@@ -2,7 +2,6 @@ import { Box, Typography, useTheme } from "@mui/material";
 
 import Container from "./Container";
 import GenshinLogo from "./genshin.logo";
-import { alpha } from "@mui/system";
 
 const IndexVideoSection = (): JSX.Element => {
   const theme = useTheme();
