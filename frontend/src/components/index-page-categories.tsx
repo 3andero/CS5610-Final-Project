@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import GenshinLogo from "./genshin.logo";
 import JujutsuLogo from "./jujutsu.logo";
+import BluRayLogo from "./blu-ray.logo";
+import XBoxLogo from "./xbox.logo";
 
 const mock = [
   {
@@ -88,17 +90,12 @@ const mock = [
       <Box
         sx={{
           position: "relative",
-          top: "0em",
+          top: "2.3em",
         }}
       >
-        <Box
-          component={"img"}
-          height={48}
-          width={"auto"}
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/1/14/Blu-ray_Disc.svg"
-          }
-        />
+        <Box height={90} width={90}>
+          <BluRayLogo />
+        </Box>
       </Box>
     ),
   },
@@ -108,15 +105,12 @@ const mock = [
       <Box
         sx={{
           position: "relative",
-          top: "0em",
+          top: "-0.3em",
         }}
       >
-        <Box
-          component={"img"}
-          height={48}
-          width={"auto"}
-          src={"https://www.svgrepo.com/show/2336/xbox-logo.svg"}
-        />
+        <Box height={48} width={48}>
+          <XBoxLogo />
+        </Box>
       </Box>
     ),
   },
@@ -133,7 +127,7 @@ const IndexPageCategories = (): JSX.Element => {
             fontWeight: "medium",
           }}
           gutterBottom
-          color={"secondary"}
+          color={theme.palette.mode === "light" ? "primary" : "secondary"}
           align={"center"}
         >
           Categories

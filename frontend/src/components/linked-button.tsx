@@ -9,8 +9,8 @@ interface LinkedButtonProps {
   size?: Parameters<typeof Button>[0]["size"];
 }
 
-export const LinkedButton = (props: LinkedButtonProps) => {
+export const LinkedButton = ({ sx, ...rest }: LinkedButtonProps) => {
   return (
-    <Button sx={{ color: "text.primary" }} {...props} component={Link}></Button>
+    <Button sx={{ color: "text.primary", ...sx }} {...rest} component={Link} />
   );
 };

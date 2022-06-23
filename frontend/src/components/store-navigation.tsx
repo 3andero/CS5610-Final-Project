@@ -23,8 +23,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ProtectedCall, useProtected } from "../view/protected/serverApi";
 import { appConfig } from "../config";
 
-
-
 const SideBarAndButton = ({
   onClick,
   open,
@@ -32,7 +30,7 @@ const SideBarAndButton = ({
   icon,
   anchor,
   children,
-  drawerWidth
+  drawerWidth,
 }: {
   onClick: () => void;
   open: boolean;
@@ -40,7 +38,7 @@ const SideBarAndButton = ({
   icon: React.ReactNode;
   anchor: Parameters<typeof Drawer>[0]["anchor"];
   children?: React.ReactNode;
-  drawerWidth: number
+  drawerWidth: number;
 }) => {
   return (
     <>
@@ -67,7 +65,9 @@ const SideBarAndButton = ({
             maxWidth: drawerWidth,
           },
         }}
-      >{children}</Drawer>
+      >
+        {children}
+      </Drawer>
     </>
   );
 };
@@ -87,13 +87,15 @@ function ElevationScroll({ children }: { children: any }) {
 }
 
 interface fetchShoppingCartFnArgs {
-  cart?: CartItem[],
-  setCart: (...args: any[]) => void,
-  method: "GET" | "POST",
-};
+  cart?: CartItem[];
+  setCart: (...args: any[]) => void;
+  method: "GET" | "POST";
+}
 
-const fetchShoppingCartFn: ProtectedCall<fetchShoppingCartFnArgs, CartItem[]> = async (authHeader,
-  state, args) => {
+const fetchShoppingCartFn: ProtectedCall<
+  fetchShoppingCartFnArgs,
+  CartItem[]
+> = async (authHeader, state, args) => {
   const { setCart, method, cart } = args!;
   const url = `${appConfig.API_SERVER_DOMAIN}shopping-cart`;
 
@@ -101,9 +103,14 @@ const fetchShoppingCartFn: ProtectedCall<fetchShoppingCartFnArgs, CartItem[]> = 
     method,
     headers: {
       "Content-Type": "application/json",
-      ...authHeader
+      ...authHeader,
     },
-    body: method === "GET" ? undefined : JSON.stringify(cart!.map(({ _id, quantity }) => ({ product_id: _id, quantity, })))
+    body:
+      method === "GET"
+        ? undefined
+        : JSON.stringify(
+            cart!.map(({ _id, quantity }) => ({ product_id: _id, quantity }))
+          ),
   });
   console.log("res-shopping-cart", res);
   if (res.status >= 200 && res.status <= 299) {
@@ -123,96 +130,103 @@ export const StoreNavigation = () => {
   const context = useContext(AppContext);
   const { isAuthenticated } = useAuth0();
   const [fetched, setFetched] = useState(false);
-  const handle = useProtected<fetchShoppingCartFnArgs, CartItem[]>(fetchShoppingCartFn, {
-    audience: appConfig.AUDIENCE,
-  });
+  const handle = useProtected<fetchShoppingCartFnArgs, CartItem[]>(
+    fetchShoppingCartFn,
+    {
+      audience: appConfig.AUDIENCE,
+    }
+  );
   useEffect(() => {
     if (isAuthenticated) {
       if (!fetched) {
         setFetched(true);
         handle.refresh({ method: "GET", setCart: context.setCartState });
       } else {
-        handle.refresh({ method: "POST", setCart: context.setCartState, cart: context.cartState });
+        handle.refresh({
+          method: "POST",
+          setCart: context.setCartState,
+          cart: context.cartState,
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, context.cartState]);
   const theme = useTheme();
   return (
-    <ElevationScroll>
-      <AppBar
-        position="sticky"
-        color="transparent"
-        sx={{
-          top: 0,
-          // bgcolor: "background.default",
-          padding: "2em",
-          display: "flex",
-          flexDirection: "row",
-          gap: "1em",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backdropFilter: "saturate(180%) blur(30px)",
-          background: alpha(theme.palette.background.default, 0.85),
+    // <ElevationScroll>
+    <AppBar
+      position="sticky"
+      color="transparent"
+      elevation={0}
+      sx={{
+        top: 0,
+        // bgcolor: "background.default",
+        padding: "2em",
+        display: "flex",
+        flexDirection: "row",
+        gap: "1em",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backdropFilter: "saturate(180%) blur(30px)",
+        background: alpha(theme.palette.background.default, 0.85),
+      }}
+    >
+      <NavLink
+        to="/"
+        style={{
+          textDecoration: "none",
         }}
       >
-        <NavLink
-          to="/"
-          style={{
-            textDecoration: "none",
-          }}
+        <TitleComponent />
+      </NavLink>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <SearchBar />
+        <LinkedButton to={"/profile"} variant="text">
+          Profile
+        </LinkedButton>
+        <LinkedButton to={"/shop"} variant="text">
+          Shop
+        </LinkedButton>
+        <SideBarAndButton
+          onClick={context.toggleSidebar}
+          open={context.sidebarStatus}
+          sx={{ display: { md: "none", xs: "flex" } }}
+          icon={<MenuIcon />}
+          anchor={"left"}
+          drawerWidth={260}
+        />
+        <SideBarAndButton
+          onClick={context.toggleShoppingCart}
+          open={context.shoppingCartStatus}
+          sx={{ display: "flex" }}
+          icon={<ShoppingBag />}
+          anchor={"right"}
+          drawerWidth={360}
         >
-          <TitleComponent />
-        </NavLink>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-        >
-          <SearchBar />
-          <LinkedButton to={"/profile"} variant="text">
-            Profile
-          </LinkedButton>
-          <LinkedButton to={"/shop"} variant="text">
-            Shop
-          </LinkedButton>
-          <SideBarAndButton
-            onClick={context.toggleSidebar}
-            open={context.sidebarStatus}
-            sx={{ display: { md: "none", xs: "flex" } }}
-            icon={<MenuIcon />}
-            anchor={"left"}
-            drawerWidth={260}
-          />
-          <SideBarAndButton
-            onClick={context.toggleShoppingCart}
-            open={context.shoppingCartStatus}
-            sx={{ display: "flex" }}
-            icon={<ShoppingBag />}
-            anchor={"right"}
-            drawerWidth={360}
-          ><ShoppingCartView /></SideBarAndButton>
+          <ShoppingCartView />
+        </SideBarAndButton>
 
-          <Button
-            onClick={context.toggleColorMode}
-            sx={{
-              minWidth: "auto",
-              margin: "0.5em",
-            }}
-          >
-            {(context.colorMode === "dark" && (
-              <LightModeIcon
-                fontSize="small"
-                sx={{ color: "secondary.main" }}
-              />
-            )) || (
-                <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
-              )}
-          </Button>
-        </Box>
-      </AppBar>
-    </ElevationScroll>
+        <Button
+          onClick={context.toggleColorMode}
+          sx={{
+            minWidth: "auto",
+            margin: "0.5em",
+          }}
+        >
+          {(context.colorMode === "dark" && (
+            <LightModeIcon fontSize="small" sx={{ color: "secondary.main" }} />
+          )) || (
+            <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
+          )}
+        </Button>
+      </Box>
+    </AppBar>
+    // </ElevationScroll>
   );
 };

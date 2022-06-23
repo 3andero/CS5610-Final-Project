@@ -1,4 +1,3 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { alpha, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
@@ -94,7 +93,7 @@ const Hero = (): JSX.Element => {
       </Box>
       <Box alignSelf={"flex-end"} marginLeft="auto" zIndex={10}>
         <Box
-          component={LazyLoadImage}
+          component={"img"}
           maxHeight={"40em"}
           width={"auto"}
           src={
