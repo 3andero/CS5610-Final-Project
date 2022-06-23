@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+.txt
+*.zip
+.env.json
+.env
+build/
+
+.DS_Store
