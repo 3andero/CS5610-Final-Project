@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Link,
   Stack,
   Typography,
   useTheme,
@@ -9,13 +8,12 @@ import {
 import { alpha } from "@mui/system";
 import { CartBox } from "components/cart-img-box";
 import { CartTitle } from "components/cart-title";
-import { appConfig } from "config";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../app-context";
-import { CheckOutView } from "./check-out";
-import { useApi } from "./protected/serverApi";
 
 export interface CartItem {
+  [x: string]: any;
   _id: string;
   price: number;
   name: string;
@@ -27,19 +25,9 @@ export interface CartItem {
 
 export const ShoppingCartView = () => {
   // const [quant, setQuant] = useState<number>(1);
-  const handle = useApi<CartItem>();
+  const navigate = useNavigate();
   const context = useContext(AppContext);
   const theme = useTheme();
-  const postOrder = {
-    url: `${appConfig.API_SERVER_DOMAIN}order`,
-    fetchOptions: {
-      method: "POST",
-      body: JSON.stringify(context.cartState.map(item => ({
-        product_id: item._id,
-        quantity: item.quantity
-      }))),
-    }
-  };
   return (
     <Box>
       <CartTitle />
@@ -66,11 +54,11 @@ export const ShoppingCartView = () => {
           background: alpha(theme.palette.background.default, 0.85),
         }} >
         <Button onClick={() => { context.setCartState([]) }} variant="text"><Typography color={"primary"}>Delete All</Typography></Button>
-        <Button onClick={() => {
-          console.log(context.cartState);
-
-          handle.refresh?.(postOrder);
-        }}>
+        <Button
+          onClick={() => {
+            navigate("/order");
+            context.toggleShoppingCart();
+          }}>
           <Typography color={"primary"}>Check out</Typography>
         </Button>
       </Box>

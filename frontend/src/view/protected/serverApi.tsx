@@ -83,6 +83,7 @@ export const FurtherAction = <T, TData>({
 export type ApiCallArgs = {
   url: string;
   fetchOptions: Parameters<typeof fetch>[1];
+  callback?: () => void;
 };
 
 type AuthOptions = { audience?: string; scope?: string };
@@ -90,7 +91,7 @@ type AuthOptions = { audience?: string; scope?: string };
 export const useApi = <TData = any>(authOptions?: AuthOptions) => {
   return useProtected<ApiCallArgs, TData>(
     async (authHeaders, state, _args) => {
-      const { url, fetchOptions } = _args as ApiCallArgs;
+      const { url, fetchOptions, callback } = _args as ApiCallArgs;
       const res = await fetch(url, {
         ...fetchOptions,
         headers: {
@@ -105,6 +106,7 @@ export const useApi = <TData = any>(authOptions?: AuthOptions) => {
       state.error =
         (res.status >= 400 && res.status <= 599 && (await res.text())) ||
         undefined;
+      callback?.();
     },
     {
       audience: appConfig.AUDIENCE,
@@ -131,7 +133,7 @@ export type ProtectedCall<T, TData = any> = (
 
 export const useProtected = <T, TData = any>(
   fn: ProtectedCall<T, TData>,
-  options: AuthOptions
+  options: AuthOptions,
 ): ProtectedCallHandle<T, TData> => {
   const { getAccessTokenSilently } = useAuth0();
   const [state, setState] = useState<ProtectedCallState<TData>>({

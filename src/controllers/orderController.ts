@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, json, RequestHandler } from "express";
 import mongoose from "mongoose";
 import { Order, OrderModel } from "../models/order";
 import { Product, ProductModel } from "../models/product";
+import { ShoppingCartModel } from "../models/shoppingCart";
 
 //order post includs: find product;
 //adjust quantity; set quantity of original product;
@@ -18,7 +19,6 @@ export const order_post: RequestHandler = async (req, res, next) => {
       }) => {
         try {
           const update = await ProductModel.findById(product.product_id).exec();
-          // console.log(update);
           if (!update) {
             return update;
           }
@@ -51,7 +51,13 @@ export const order_post: RequestHandler = async (req, res, next) => {
       amount: price,
     };
     const creation = await OrderModel.create(data);
-    return res.status(200).send();
+
+    //delete shopping cart
+    const deletion = await ShoppingCartModel.deleteOne({
+      user_info: req.auth!.sub,
+    }).exec();
+
+    return res.status(200).send({});
   } catch (e) {
     return res.send(e);
   }

@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { CheckOutView } from "view/check-out";
+import { OrderCompleteView } from "view/order-complete";
 import App from "./App";
 import { FeaturedView } from "./view/featured";
 import { IndexPageView } from "./view/index-page";
@@ -21,7 +22,8 @@ export const AppRoutes = () => {
         <Route path="shop" element={<ShopView />} />
         <Route path="featured" element={<FeaturedView />} />
         <Route path="shopping-cart" element={<ShoppingCartView />} />
-        <Route path="order" element={<CheckOutView/>}/>
+        <Route path="order" element={<CheckOutView />} />
+        <Route path="order-complete" element={<OrderCompleteView />} />
       </Route>
     </Routes>
   );
