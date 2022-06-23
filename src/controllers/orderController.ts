@@ -11,7 +11,7 @@ export const order_post: RequestHandler = async (req, res, next) => {
   let price = 0;
   //adjust quantity; set quantity of original product;
   const newProducts_array = await Promise.all(
-    req.body.products.map(
+    req.body.map(
       async (product: {
         product_id: mongoose.Schema.Types.ObjectId;
         quantity: number;
@@ -47,7 +47,7 @@ export const order_post: RequestHandler = async (req, res, next) => {
     const data = {
       products: newProducts,
       userInfo: req.auth?.sub,
-      status: "paid",
+      status: "unpaid",
       amount: price,
     };
     const creation = await OrderModel.create(data);
