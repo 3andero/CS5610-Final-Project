@@ -6,7 +6,7 @@ import { CartItem } from "view/shopping-cart";
 export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divider: boolean }) => {
   const context = useContext(AppContext);
   return (
-    <Box key={item._id}>
+    <Box>
       <Box display={"flex"}>
         <Box
           component={"img"}
@@ -182,20 +182,20 @@ export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divid
                   },
                 }}
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                   <MenuItem
-                    key={i}
-                    value={i}
+                    key={num}
+                    value={num}
                     onClick={() => {
                       context.setCartState(context.cartState.map((cartItem: CartItem) => {
                         if (cartItem._id === item._id) {
-                          cartItem.quantity = i;
+                          cartItem.quantity = num;
                         }
                         return cartItem;
                       }))
                     }}
                   >
-                    {i}
+                    {num}
                   </MenuItem>
                 ))}
               </Select>
