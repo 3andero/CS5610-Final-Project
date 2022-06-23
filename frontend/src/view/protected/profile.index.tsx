@@ -65,9 +65,6 @@ export const ProfileIndexView = () => {
           }}
         >
           <UpdateProfile initialValues={handle.data} />
-          {/* {(status.data && <>{JSON.stringify(status.data)}</>) || (
-            <>failed: {JSON.stringify(status)}</>
-          )} */}
         </Box>
       </FurtherAction>
     </Box>
