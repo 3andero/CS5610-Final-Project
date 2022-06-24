@@ -7,9 +7,9 @@ import {
   Button,
   useTheme,
   alpha,
-  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { AutoWrappedTypography } from "components/autowrapped-typography";
 import Container from "components/Container";
 import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
@@ -67,27 +67,15 @@ export const ShopView = () => {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                   >
-                    <Tooltip title={item.name}>
-                      <Typography
-                        fontWeight={700}
-                        sx={{
-                          textTransform: "uppercase",
-                          marginRight: "1em",
-                          height: "3em",
-                          lineClamp: 2,
-                          WebkitLineClamp: 2,
-                          wordBreak: "break-all",
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          boxOrient: "vertical",
-                          WebkitBoxOrient: "vertical",
-                          textOverflow: "ellipsis",
-                          justifyContent: "center"
-                        }}
-                      >
-                        {item.name}
-                      </Typography>
-                    </Tooltip>
+                    <AutoWrappedTypography
+                      text={item.name}
+                      fontWeight={700}
+                      sx={{
+                        textTransform: "uppercase",
+                        marginRight: "1em",
+                        height: "3em",
+                      }}
+                    />
                     <Typography fontWeight={700}>${item.price}</Typography>
                   </Box>
                   <Box marginTop={0.5} display={"flex"} alignItems={"center"}>
