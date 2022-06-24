@@ -29,16 +29,15 @@ export const ShopView = () => {
 
   const theme = useTheme();
   const context = useContext(AppContext);
-
   return (
     <>
       <Container>
         <ShopPageHero />
       </Container>
       <Box margin="3em" sx={{ flexGrow: 1 }}>
-        <Grid container spacing={4}>
+        <Grid container spacing={1}>
           {products.map((item) => (
-            <Grid item xs={12} sm={6} md={3} key={item._id}>
+            <Grid item xs={12} sm={6} md={3} xl={2} key={item._id}>
               <Box display={"block"} width={1} height={1}>
                 <Card
                   sx={{
@@ -49,6 +48,19 @@ export const ShopView = () => {
                     boxShadow: "none",
                     bgcolor: "transparent",
                     backgroundImage: "none",
+                    padding: "1.5em",
+                    transition:
+                      "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    ":hover": {
+                      transition:
+                        "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      boxShadow:
+                        "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+                      transform: "scale3d(1.005, 1.005, 1)",
+                      ...(theme.palette.mode === "dark" && {
+                        bgcolor: "background.level1",
+                      }),
+                    },
                   }}
                 >
                   <CardMedia
