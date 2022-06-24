@@ -17,6 +17,7 @@ import {
   useApi,
   ApiCallArgs,
 } from "../view/protected/serverApi";
+import { LogoutButton } from "./logout.button";
 
 const validationSchema = yup.object({
   first_name: yup
@@ -105,22 +106,35 @@ export const UpdateProfile = ({
   return (
     <FurtherAction protectedCallHandle={handle} refreshArgs={formVals}>
       <Box>
-        {handle.data && <Alert severity="success">Update Succeeded!</Alert>}
-        <Typography
-          variant="h6"
-          gutterBottom
-          fontWeight={700}
-          color={"text.primary"}
+        <Box
+          display={"flex"}
+          flexDirection={{ xs: "column", md: "row" }}
+          justifyContent={"space-between"}
+          alignItems={{ xs: "flex-start", md: "center" }}
         >
-          Change your private information
-        </Typography>
-        <Typography variant={"subtitle2"} color={"text.secondary"}>
-          Please read our{" "}
-          <Link color={"primary"} href={"/company-terms"} underline={"none"}>
-            terms of use
-          </Link>{" "}
-          to be informed how we manage your private data.
-        </Typography>
+          <Box>
+            <Typography
+              variant="h6"
+              gutterBottom
+              fontWeight={700}
+              color={"text.primary"}
+            >
+              Change your private information
+            </Typography>
+            <Typography variant={"subtitle2"} color={"text.secondary"}>
+              Please read our{" "}
+              <Link
+                color={"primary"}
+                href={"/company-terms"}
+                underline={"none"}
+              >
+                terms of use
+              </Link>{" "}
+              to be informed how we manage your private data.
+            </Typography>
+          </Box>
+          <LogoutButton variant="outlined" />
+        </Box>
         <Box paddingY={4}>
           <Divider />
         </Box>

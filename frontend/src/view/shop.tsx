@@ -7,6 +7,7 @@ import {
   Button,
   useTheme,
   alpha,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Container from "components/Container";
@@ -55,7 +56,7 @@ export const ShopView = () => {
                     image={item.image}
                     sx={{
                       position: "relative",
-                      height: 320,
+                      aspectRatio: "2/3",
                       overflow: "hidden",
                       borderRadius: 2,
                     }}
@@ -66,12 +67,27 @@ export const ShopView = () => {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                   >
-                    <Typography
-                      fontWeight={700}
-                      sx={{ textTransform: "uppercase" }}
-                    >
-                      {item.name}
-                    </Typography>
+                    <Tooltip title={item.name}>
+                      <Typography
+                        fontWeight={700}
+                        sx={{
+                          textTransform: "uppercase",
+                          marginRight: "1em",
+                          height: "3em",
+                          lineClamp: 2,
+                          WebkitLineClamp: 2,
+                          wordBreak: "break-all",
+                          display: "-webkit-box",
+                          overflow: "hidden",
+                          boxOrient: "vertical",
+                          WebkitBoxOrient: "vertical",
+                          textOverflow: "ellipsis",
+                          justifyContent: "center"
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                    </Tooltip>
                     <Typography fontWeight={700}>${item.price}</Typography>
                   </Box>
                   <Box marginTop={0.5} display={"flex"} alignItems={"center"}>
