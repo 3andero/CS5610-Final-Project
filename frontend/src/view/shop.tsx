@@ -34,7 +34,7 @@ export const ShopView = () => {
       <Container>
         <ShopPageHero />
       </Container>
-      <Box margin="3em" sx={{ flexGrow: 1 }}>
+      <Box margin={{ md: "3em" }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           {products.map((item) => (
             <Grid item xs={12} sm={6} md={3} xl={2} key={item._id}>
@@ -53,14 +53,16 @@ export const ShopView = () => {
                     transition: "0.4s cubic-bezier(0.25, 1, 0.5, 1)",
                     transitionDelay: "0.1s",
                     ":hover": {
-                      transition: "0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                      transitionDelay: "0.1s",
-                      boxShadow:
-                        "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
-                      transform: "scale3d(1.005, 1.005, 1)",
-                      ...(theme.palette.mode === "dark" && {
-                        bgcolor: "background.level1",
-                      }),
+                      md: {
+                        transition: "0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                        transitionDelay: "0.1s",
+                        boxShadow:
+                          "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+                        transform: "scale3d(1.005, 1.005, 1)",
+                        ...(theme.palette.mode === "dark" && {
+                          bgcolor: "background.level1",
+                        }),
+                      },
                     },
                   }}
                 >
