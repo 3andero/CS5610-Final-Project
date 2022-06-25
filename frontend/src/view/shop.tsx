@@ -49,13 +49,14 @@ export const ShopView = () => {
                     bgcolor: "transparent",
                     backgroundImage: "none",
                     padding: "1.5em",
-                    transition:
-                      "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    borderRadius: "2em",
+                    transition: "0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                    transitionDelay: "0.1s",
                     ":hover": {
-                      transition:
-                        "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      transition: "0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      transitionDelay: "0.1s",
                       boxShadow:
-                        "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+                        "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
                       transform: "scale3d(1.005, 1.005, 1)",
                       ...(theme.palette.mode === "dark" && {
                         bgcolor: "background.level1",
@@ -94,7 +95,7 @@ export const ShopView = () => {
                           boxOrient: "vertical",
                           WebkitBoxOrient: "vertical",
                           textOverflow: "ellipsis",
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
                         {item.name}
