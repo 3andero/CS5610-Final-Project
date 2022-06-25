@@ -7,6 +7,7 @@ import {
   useScrollTrigger,
   alpha,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { AppContext } from "../app-context";
 import { LinkedButton } from "./linked-button";
@@ -16,12 +17,12 @@ import { NavLink } from "react-router-dom";
 import { SearchBar } from "./searchbar";
 import { TitleComponent } from "./title";
 import React from "react";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { CartItem, ShoppingCartView } from "../view/shopping-cart";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ProtectedCall, useProtected } from "../view/protected/serverApi";
 import { appConfig } from "../config";
+import { SidebarView } from "view/sidebar-view";
+import { ColorModeButton } from "./colormode-button";
 
 const SideBarAndButton = ({
   onClick,
@@ -43,7 +44,6 @@ const SideBarAndButton = ({
   return (
     <>
       <Button
-        variant={"outlined"}
         sx={{
           ...sx,
           borderRadius: 2,
@@ -112,7 +112,6 @@ const fetchShoppingCartFn: ProtectedCall<
             cart!.map(({ _id, quantity }) => ({ product_id: _id, quantity }))
           ),
   });
-  console.log("res-shopping-cart", res);
   if (res.status >= 200 && res.status <= 299) {
     if (method === "GET") {
       state.data = await res.json();
@@ -152,6 +151,8 @@ export const StoreNavigation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, context.cartState]);
   const theme = useTheme();
+
+  const isMd = useMediaQuery((theme: any) => theme.breakpoints.up("md"));
   return (
     // <ElevationScroll>
     <AppBar
@@ -186,45 +187,43 @@ export const StoreNavigation = () => {
           alignItems: "center",
         }}
       >
-        <SearchBar />
-        <LinkedButton to={"/profile"} variant="text">
-          Profile
-        </LinkedButton>
-        <LinkedButton to={"/shop"} variant="text">
-          Shop
-        </LinkedButton>
-        <SideBarAndButton
-          onClick={context.toggleSidebar}
-          open={context.sidebarStatus}
-          sx={{ display: { md: "none", xs: "flex" } }}
-          icon={<MenuIcon />}
-          anchor={"left"}
-          drawerWidth={260}
-        />
-        <SideBarAndButton
-          onClick={context.toggleShoppingCart}
-          open={context.shoppingCartStatus}
-          sx={{ display: "flex" }}
-          icon={<ShoppingBag />}
-          anchor={"right"}
-          drawerWidth={360}
-        >
-          <ShoppingCartView />
-        </SideBarAndButton>
-
-        <Button
-          onClick={context.toggleColorMode}
-          sx={{
-            minWidth: "auto",
-            margin: "0.5em",
-          }}
-        >
-          {(context.colorMode === "dark" && (
-            <LightModeIcon fontSize="small" sx={{ color: "secondary.main" }} />
-          )) || (
-            <DarkModeIcon fontSize="small" sx={{ color: "primary.main" }} />
-          )}
-        </Button>
+        {(isMd && (
+          <>
+            <SearchBar />
+            <LinkedButton
+              to={"/profile"}
+              variant="text"
+              sx={{ marginX: "0.5em" }}
+            >
+              Profile
+            </LinkedButton>
+            <LinkedButton to={"/shop"} variant="text" sx={{ marginX: "0.5em" }}>
+              Shop
+            </LinkedButton>
+            <SideBarAndButton
+              onClick={context.toggleShoppingCart}
+              open={context.shoppingCartStatus}
+              sx={{ display: "flex", marginX: "0.5em" }}
+              icon={<ShoppingBag />}
+              anchor={"right"}
+              drawerWidth={360}
+            >
+              <ShoppingCartView />
+            </SideBarAndButton>
+            <ColorModeButton />
+          </>
+        )) || (
+          <SideBarAndButton
+            onClick={context.toggleSidebar}
+            open={context.sidebarStatus}
+            sx={{ marginX: "0.5em" }}
+            icon={<MenuIcon />}
+            anchor={"left"}
+            drawerWidth={260}
+          >
+            <SidebarView />
+          </SideBarAndButton>
+        )}
       </Box>
     </AppBar>
     // </ElevationScroll>
