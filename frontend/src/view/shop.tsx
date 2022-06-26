@@ -62,7 +62,7 @@ export const ShopView = () => {
         <ShopPageHero />
       </Container>
       <Box
-        margin={{ md: "1em", lg: "3em", xl: "3em 5vw" }}
+        margin={{ md: "1em", lg: "3em" }}
         sx={{ flexGrow: 1 }}
       >
         <Grid container spacing={1}>
@@ -70,7 +70,6 @@ export const ShopView = () => {
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={item._id}>
               <Box display={"block"} width={1} height={1}>
                 <Card
-
                   sx={{
                     width: 1,
                     height: 1,
