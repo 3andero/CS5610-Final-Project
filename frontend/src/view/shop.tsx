@@ -34,10 +34,10 @@ export const ShopView = () => {
       <Container>
         <ShopPageHero />
       </Container>
-      <Box margin={{ md: "3em" }} sx={{ flexGrow: 1 }}>
+      <Box margin={{ md: "1em", lg: "3em" }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           {products.map((item) => (
-            <Grid item xs={12} sm={6} md={3} xl={2} key={item._id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={item._id}>
               <Box display={"block"} width={1} height={1}>
                 <Card
                   sx={{
@@ -60,7 +60,8 @@ export const ShopView = () => {
                           "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
                         transform: "scale3d(1.005, 1.005, 1)",
                         ...(theme.palette.mode === "dark" && {
-                          bgcolor: "background.level1",
+                          backgroundColor: (theme.palette.background as any)
+                            .level1,
                         }),
                       },
                     },
