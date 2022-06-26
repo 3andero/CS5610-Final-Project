@@ -50,7 +50,7 @@ const IndexVideoSection = (): JSX.Element => {
       }
       descriptiveElement={
         <Box
-          margin={"0.5em 0.7em"}
+          margin={{xs: "1em", md:"0.5em 0.7em"}}
           sx={{
             display: "flex",
             flexDirection: { xs: "row", md: "column" },

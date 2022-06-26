@@ -17,7 +17,6 @@ export interface CartItem {
 }
 
 export const ShoppingCartView = () => {
-  // const [quant, setQuant] = useState<number>(1);
   const navigate = useNavigate();
   const context = useContext(AppContext);
   return (

@@ -34,10 +34,13 @@ export const ShopView = () => {
       <Container>
         <ShopPageHero />
       </Container>
-      <Box margin={{ md: "1em", lg: "3em" }} sx={{ flexGrow: 1 }}>
+      <Box
+        margin={{ md: "1em", lg: "3em", xl: "3em 5vw" }}
+        sx={{ flexGrow: 1 }}
+      >
         <Grid container spacing={1}>
           {products.map((item) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={item._id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={item._id}>
               <Box display={"block"} width={1} height={1}>
                 <Card
                   sx={{
@@ -48,14 +51,13 @@ export const ShopView = () => {
                     boxShadow: "none",
                     bgcolor: "transparent",
                     backgroundImage: "none",
-                    padding: "1.5em",
+                    padding: { xs: "1.5em", xl: "2.5em" },
                     borderRadius: "2em",
                     transition: "0.4s cubic-bezier(0.25, 1, 0.5, 1)",
-                    transitionDelay: "0.1s",
                     ":hover": {
                       md: {
                         transition: "0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                        transitionDelay: "0.1s",
+                        transitionDelay: "0.5s",
                         boxShadow:
                           "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
                         transform: "scale3d(1.005, 1.005, 1)",
