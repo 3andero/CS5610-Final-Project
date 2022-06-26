@@ -1,77 +1,74 @@
 import { Box, Typography, useTheme } from "@mui/material";
+import { ClippedShowcaseLayout } from "./clipped-showcase-layout";
 
-import Container from "./Container";
 import GenshinLogo from "./genshin.logo";
 
 const IndexVideoSection = (): JSX.Element => {
   const theme = useTheme();
+  const fontConfig = {
+    fontSize: { xs: "5vw", md: "3vw", lg: "2.2em" },
+    fontFamily: "h2.fontFamily",
+    fontWeight: 700,
+    color: "text.primary",
+  };
   return (
-    <Box
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          top: 0,
-          width: 1,
-          height: 1,
-        },
+    <ClippedShowcaseLayout
+      blurBackground
+      clipPath={"polygon(30% 0, 100% 0, 100% 100%, 0 100%)"}
+      attach={{ right: 0 }}
+      descriptiveElementSize={{
+        width: { md: "35vw", lg: "30em" },
+        height: "40vh",
       }}
-    >
-      <Box
-        component={"video"}
-        width={"100vw"}
-        autoPlay={true}
-        muted={true}
-        loop={true}
-        playsInline
-      >
-        <source
-          src="https://ww1.gen2d.store/genshin_banner.mp4"
-          type="video/mp4"
-        />
-        <source
-          src="https://ww1.gen2d.store/genshin_banner.mp4"
-          type="video/webm"
-        />
-        <source
-          src="https://ww1.gen2d.store/genshin_banner.mp4"
-          type="video/ogg"
-        />
-        Your browser do not support HTML5 video.
-      </Box>
-      <Box
-        zIndex={100}
-        position={"absolute"}
-        right={0}
-        width={"27vw"}
-        height={"100%"}
-        bgcolor={"alternate.main"}
-        display={"flex"}
-        justifyContent={"center"}
-        flexDirection={"column"}
-        sx={{
-          textAlign: "right",
-          clipPath: "polygon(30% 0, 100% 0, 100% 100%, 0 100%)",
-          //   backdropFilter: "saturate(180%) blur(30px)",
-          //   background: alpha(theme.palette.alternate.main, 0.9),
-        }}
-      >
-        <Container paddingRight={"1em"}>
-          <Typography
-            variant="h4"
-            color="text.primary"
-            sx={{ fontWeight: 700, display: "flex", flexDirection: "column" }}
+      backgroundElement={
+        <Box
+          component={"video"}
+          width={"100vw"}
+          height={{ md: "40vh" }}
+          sx={{
+            objectFit: "cover",
+          }}
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline
+        >
+          <source
+            src="https://ww1.gen2d.store/genshin_banner.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="https://ww1.gen2d.store/genshin_banner.mp4"
+            type="video/webm"
+          />
+          <source
+            src="https://ww1.gen2d.store/genshin_banner.mp4"
+            type="video/ogg"
+          />
+          Your browser do not support HTML5 video.
+        </Box>
+      }
+      descriptiveElement={
+        <Box
+          margin={"0.5em 0.7em"}
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "row", md: "column" },
+            justifyContent: "center",
+            gap: { xs: "3vw", md: 0 },
+          }}
+        >
+          <Box
+            alignItems="center"
+            justifyContent="center"
+            display="flex"
+            flexDirection={"column"}
           >
             <Typography
-              color={"primary"}
               component={"span"}
-              variant={"inherit"}
+              {...fontConfig}
+              textAlign={{ md: "right" }}
+              alignSelf={{ md: "flex-end" }}
               sx={{
                 background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
                 backgroundClip: "text",
@@ -80,14 +77,22 @@ const IndexVideoSection = (): JSX.Element => {
             >
               See More in
             </Typography>
-            <Box width={"5em"} alignSelf={"flex-end"}>
+          </Box>
+          <Box display={"flex"} flexDirection={"column"} alignSelf={"flex-end"}>
+            <Box
+              alignSelf={{ md: "flex-end" }}
+              width={{ xs: "20vw", md: "14vw", lg: "14em" }}
+            >
               <GenshinLogo />
             </Box>
-            Featured Section.
-          </Typography>
-        </Container>
-      </Box>
-    </Box>
+            <Typography {...fontConfig} margin={0}>
+              Featured Section.
+            </Typography>
+            {/* <Box display={{md: "block", lg: "none"}}>MD</Box> */}
+          </Box>
+        </Box>
+      }
+    />
   );
 };
 
