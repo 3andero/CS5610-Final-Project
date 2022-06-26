@@ -20,13 +20,13 @@ const pages = [
 const _profile = (): JSX.Element => {
   const location = useLocation();
   return (
-    <Container display={{ xs: "block", md: "contents" }}>
+    <Box margin={{ xs: "0.5em", md: "1em 3em 3em" }}>
       <Container>
         <Typography
           variant="h4"
           fontWeight={700}
           gutterBottom
-          sx={{ color: "text.primary", marginY: "1em" }}
+          sx={{ color: "text.primary", marginBottom: { xs: "1em", md: 0 } }}
         >
           Account settings
         </Typography>
@@ -98,7 +98,7 @@ const _profile = (): JSX.Element => {
           </Grid>
         </Grid>
       </Container>
-    </Container>
+    </Box>
   );
 };
 
