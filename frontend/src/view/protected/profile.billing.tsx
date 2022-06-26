@@ -58,11 +58,7 @@ const Billing = (): JSX.Element => {
   });
 
   return (
-    <Box
-      sx={{
-        margin: "3em",
-      }}
-    >
+    <>
       <Typography variant="h6" gutterBottom fontWeight={700}>
         Change your card data
       </Typography>
@@ -214,7 +210,7 @@ const Billing = (): JSX.Element => {
           </Grid>
         </form>
       </Box>
-    </Box>
+    </>
   );
 };
 

@@ -9,6 +9,9 @@ export const LogoutButton = ({ variant }: Parameters<typeof Button>[0]) => {
         variant={variant}
         color="error"
         onClick={() => logout({ returnTo: window.location.origin })}
+        sx={{
+          marginTop: "1em",
+        }}
       >
         Logout
       </Button>

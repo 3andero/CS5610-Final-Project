@@ -2,8 +2,6 @@ import { Box, Divider } from "@mui/material";
 import { NavItem } from "components/navitem";
 import { TitleComponent } from "components/title";
 import NextIcon from "@mui/icons-material/NavigateNext";
-import { useContext } from "react";
-import { AppContext } from "app-context";
 import { ColorModeButton } from "components/colormode-button";
 import { SearchBar } from "components/searchbar";
 
@@ -18,7 +16,6 @@ const SideBarNavItem = (props: Parameters<typeof NavItem>[0]) => {
 };
 
 export const SidebarView = () => {
-  const context = useContext(AppContext);
   return (
     <Box
       sx={{
@@ -54,10 +51,6 @@ export const SidebarView = () => {
         <SideBarNavItem to={"/profile"} title={"Profile"} />
         <SideBarNavItem to={"/shopping-cart"} title={"Shopping Cart"} />
       </Box>
-      {/* <Box paddingX={2} paddingY={2}>
-        
-      </Box> */}
-
       <Box display={"flex"} width={"100%"} marginTop="auto">
         <Box marginLeft={"auto"} marginRight={"1em"} marginY={"1em"}>
           <ColorModeButton />
