@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FurtherAction, ProtectedCall, useProtected } from "./serverApi";
 import { appConfig } from "../../config";
 import { useAuth0, User } from "@auth0/auth0-react";
