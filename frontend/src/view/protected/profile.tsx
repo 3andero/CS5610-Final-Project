@@ -20,13 +20,13 @@ const pages = [
 const _profile = (): JSX.Element => {
   const location = useLocation();
   return (
-    <Box>
+    <Box margin={{ xs: "0.5em", md: "1em 3em 3em" }}>
       <Container>
         <Typography
           variant="h4"
           fontWeight={700}
           gutterBottom
-          sx={{ color: "text.primary" }}
+          sx={{ color: "text.primary", marginBottom: { xs: "1em", md: 0 } }}
         >
           Account settings
         </Typography>
@@ -92,7 +92,9 @@ const _profile = (): JSX.Element => {
             </Card>
           </Grid>
           <Grid item xs={12} md={9}>
-            <Card sx={{ boxShadow: 3, padding: 4 }}>{<Outlet />}</Card>
+            <Card sx={{ boxShadow: 3, padding: { xs: 4, md: 7 } }}>
+              {<Outlet />}
+            </Card>
           </Grid>
         </Grid>
       </Container>

@@ -7,13 +7,14 @@ import { Link } from "react-router-dom";
 
 const Footer = (): JSX.Element => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} paddingX={{ md: "2em" }}>
       <Grid item xs={12}>
         <Box
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
           width={1}
+          gap={{ xs: "0.5em", md: 0 }}
           flexDirection={{ xs: "column", sm: "row" }}
         >
           <Link to="/">

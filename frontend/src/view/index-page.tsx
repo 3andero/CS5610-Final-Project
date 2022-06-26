@@ -11,7 +11,13 @@ export const IndexPageView = () => {
       <Container>
         <IndexPageCategories />
       </Container>
-      <Link href="/featured">
+      <Link
+        href="/featured"
+        sx={{
+          textDecoration: "none",
+          margin: 0,
+        }}
+      >
         <IndexVideoSection />
       </Link>
     </Box>

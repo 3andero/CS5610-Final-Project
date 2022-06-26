@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FurtherAction, ProtectedCall, useProtected } from "./serverApi";
 import { appConfig } from "../../config";
 import { useAuth0, User } from "@auth0/auth0-react";
@@ -52,21 +51,8 @@ export const ProfileIndexView = () => {
   }, []);
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection="column"
-      alignItems={"center"}
-      gap="1em"
-    >
-      <FurtherAction protectedCallHandle={handle} refreshArgs={user}>
-        <Box
-          sx={{
-            margin: "3em",
-          }}
-        >
-          <UpdateProfile initialValues={handle.data} />
-        </Box>
-      </FurtherAction>
-    </Box>
+    <FurtherAction protectedCallHandle={handle} refreshArgs={user}>
+      <UpdateProfile initialValues={handle.data} />
+    </FurtherAction>
   );
 };
