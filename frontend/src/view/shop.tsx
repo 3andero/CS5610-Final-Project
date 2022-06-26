@@ -7,9 +7,9 @@ import {
   Button,
   useTheme,
   alpha,
-  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { AutoWrappedTypography } from "components/autowrapped-typography";
 import Container from "components/Container";
 import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
@@ -49,13 +49,14 @@ export const ShopView = () => {
                     bgcolor: "transparent",
                     backgroundImage: "none",
                     padding: "1.5em",
-                    transition:
-                      "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    borderRadius: "2em",
+                    transition: "0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                    transitionDelay: "0.1s",
                     ":hover": {
-                      transition:
-                        "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      transition: "0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      transitionDelay: "0.1s",
                       boxShadow:
-                        "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+                        "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
                       transform: "scale3d(1.005, 1.005, 1)",
                       ...(theme.palette.mode === "dark" && {
                         bgcolor: "background.level1",
@@ -79,27 +80,15 @@ export const ShopView = () => {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                   >
-                    <Tooltip title={item.name}>
-                      <Typography
-                        fontWeight={700}
-                        sx={{
-                          textTransform: "uppercase",
-                          marginRight: "1em",
-                          height: "3em",
-                          lineClamp: 2,
-                          WebkitLineClamp: 2,
-                          wordBreak: "break-all",
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          boxOrient: "vertical",
-                          WebkitBoxOrient: "vertical",
-                          textOverflow: "ellipsis",
-                          justifyContent: "center"
-                        }}
-                      >
-                        {item.name}
-                      </Typography>
-                    </Tooltip>
+                    <AutoWrappedTypography
+                      text={item.name}
+                      fontWeight={700}
+                      sx={{
+                        textTransform: "uppercase",
+                        marginRight: "1em",
+                        height: "3em",
+                      }}
+                    />
                     <Typography fontWeight={700}>${item.price}</Typography>
                   </Box>
                   <Box marginTop={0.5} display={"flex"} alignItems={"center"}>

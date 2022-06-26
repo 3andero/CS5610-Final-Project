@@ -1,29 +1,55 @@
-import { Box, Divider, FormControl, Link, MenuItem, Select, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  FormControl,
+  Link,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { AppContext } from "app-context";
 import { useContext } from "react";
 import { CartItem } from "view/shopping-cart";
+import { AutoWrappedTypography } from "./autowrapped-typography";
 
-export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divider: boolean }) => {
+export const MiniProductImage = ({
+  name,
+  image,
+}: {
+  name: string;
+  image: string;
+}) => {
+  return (
+    <Box
+      component={"img"}
+      src={image}
+      alt={name}
+      sx={{
+        borderRadius: 2,
+        width: 1,
+        height: 1,
+        maxWidth: { xs: 48, sm: 72 },
+        marginRight: 2,
+        marginLeft: 1,
+        marginY: 1,
+      }}
+    />
+  );
+};
+
+export const CartBox = ({
+  item,
+  divider,
+}: {
+  item: CartItem;
+  divider: boolean;
+}) => {
   const context = useContext(AppContext);
   return (
     <Box>
       <Box display={"flex"}>
-        <Box
-          component={"img"}
-          src={item.image}
-          alt={item.name}
-          sx={{
-            borderRadius: 2,
-            width: 1,
-            height: 1,
-            maxWidth: { xs: 48, sm: 72 },
-            marginRight: 2,
-            marginLeft: 1,
-            marginY: 1,
-            filter:
-              context.colorMode === "dark" ? "brightness(0.7)" : "none",
-          }}
-        />
+        <MiniProductImage name={item.name} image={item.image} />
         <Box
           display={"flex"}
           flexDirection={{ xs: "column", sm: "row" }}
@@ -32,9 +58,12 @@ export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divid
           width={0.7}
         >
           <Box sx={{ order: 1, flexWrap: "wrap" }} maxWidth={0.4}>
-            <Typography fontWeight={700} gutterBottom variant={"body2"}>
-              {item.name}
-            </Typography>
+            <AutoWrappedTypography
+              fontWeight={700}
+              variant={"body2"}
+              text={item.name}
+              lineClamp={3}
+            />
 
             {/* <Typography
               color={'text.secondary'}
@@ -117,9 +146,10 @@ export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divid
                 onClick={(event: any) => {
                   event.preventDefault();
                   context.setCartState(
-                    context.cartState.filter((cartItem) =>
-                      cartItem._id !== item._id
-                    ))
+                    context.cartState.filter(
+                      (cartItem) => cartItem._id !== item._id
+                    )
+                  );
                 }}
               >
                 <path
@@ -187,12 +217,14 @@ export const CartBox = ({ item, i, divider }: { item: CartItem, i: number, divid
                     key={num}
                     value={num}
                     onClick={() => {
-                      context.setCartState(context.cartState.map((cartItem: CartItem) => {
-                        if (cartItem._id === item._id) {
-                          cartItem.quantity = num;
-                        }
-                        return cartItem;
-                      }))
+                      context.setCartState(
+                        context.cartState.map((cartItem: CartItem) => {
+                          if (cartItem._id === item._id) {
+                            cartItem.quantity = num;
+                          }
+                          return cartItem;
+                        })
+                      );
                     }}
                   >
                     {num}
