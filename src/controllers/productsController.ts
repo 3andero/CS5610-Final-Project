@@ -1,5 +1,5 @@
 import { Product, ProductModel } from "../models/product";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 
 export const index = (req: Request, res: Response, next: NextFunction) => {
   ProductModel.find({}).exec((err, product_list: Product[]) => {
@@ -10,6 +10,13 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-export const product_search = () => {
-  
-}
+export const product_detail: RequestHandler = (req, res, next) => {
+  ProductModel.findOne({ _id: req.query._id }).exec(
+    (err: any, target_product: Product | null) => {
+      if (err) {
+        return next(err);
+      }
+      res.json(target_product);
+    }
+  );
+};

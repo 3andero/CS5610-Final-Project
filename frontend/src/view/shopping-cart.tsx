@@ -15,6 +15,8 @@ export interface CartItem {
   description: string;
 }
 
+export const cartQuantityLimit = 9;
+
 export const ShoppingCartView = () => {
   // const [quant, setQuant] = useState<number>(1);
   const navigate = useNavigate();

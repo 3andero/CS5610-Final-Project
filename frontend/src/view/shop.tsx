@@ -13,22 +13,49 @@ import { AutoWrappedTypography } from "components/autowrapped-typography";
 import Container from "components/Container";
 import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../app-context";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { AppContext, AppContextDef } from "../app-context";
 import { appConfig } from "../config";
 import { CartItem } from "./shopping-cart";
+
+export const modifyCart = (item: CartItem, cartQuantityLimit: number, increment: number, context: AppContextDef) => {
+  let changed = false;
+  item.quantity = increment;
+  const curr_cart = context.cartState.map((element) => {
+    if (element._id === item._id) {
+      element.quantity += item.quantity;
+      element.quantity = (element.quantity > 9) ? cartQuantityLimit : element.quantity;
+      changed = true;
+    }
+    return element;
+  });
+  if (!changed) {
+    item.quantity = (item.quantity > 9) ? cartQuantityLimit : item.quantity;
+    curr_cart.push({ ...item });
+  }
+  context.setCartState(curr_cart);
+}
 
 export const ShopView = () => {
   const [products, setProducts] = useState<CartItem[]>([]);
   useEffect(() => {
-    console.log("fetch products");
+    // console.log("fetch products");
     (async () => {
-      const res = await fetch(`${appConfig.API_SERVER_DOMAIN}products`);
+      const res = await fetch(`${appConfig.API_SERVER_DOMAIN}products/all`);
       setProducts(await res.json());
     })();
   }, []);
 
+  const navigate = useNavigate();
   const theme = useTheme();
   const context = useContext(AppContext);
+  const visitDetailPage = (item: CartItem) => {
+    const params = { _id: item._id };
+    navigate({
+      pathname: '/product-detail',
+      search: `?${createSearchParams(params)}`,
+    })
+  }
   return (
     <>
       <Container>
@@ -40,6 +67,7 @@ export const ShopView = () => {
             <Grid item xs={12} sm={6} md={3} xl={2} key={item._id}>
               <Box display={"block"} width={1} height={1}>
                 <Card
+
                   sx={{
                     width: 1,
                     height: 1,
@@ -65,9 +93,11 @@ export const ShopView = () => {
                   }}
                 >
                   <CardMedia
+                    onClick={() => { visitDetailPage(item) }}
                     title={item.name}
                     image={item.image}
                     sx={{
+                      cursor: "pointer",
                       position: "relative",
                       aspectRatio: "2/3",
                       overflow: "hidden",
@@ -79,11 +109,13 @@ export const ShopView = () => {
                     display={"flex"}
                     alignItems={"center"}
                     justifyContent={"space-between"}
+                    onClick={() => { visitDetailPage(item) }}
                   >
                     <AutoWrappedTypography
                       text={item.name}
                       fontWeight={700}
                       sx={{
+                        cursor: "pointer",
                         textTransform: "uppercase",
                         marginRight: "1em",
                         height: "3em",
@@ -127,19 +159,7 @@ export const ShopView = () => {
                       size={"large"}
                       fullWidth
                       onClick={() => {
-                        let flag = false;
-                        const prev_cart = context.cartState;
-                        const updated_cart = prev_cart.map((prev) => {
-                          if (prev._id === item._id) {
-                            prev.quantity += 1;
-                            flag = true;
-                          }
-                          return prev;
-                        });
-                        if (!flag) {
-                          updated_cart.push({ ...item, quantity: 1 });
-                        }
-                        context.setCartState(updated_cart);
+                        modifyCart(item, 9, 1, context);
                       }}
                     >
                       <svg
@@ -157,6 +177,9 @@ export const ShopView = () => {
                       size={"large"}
                       fullWidth
                       sx={{ bgcolor: alpha(theme.palette.primary.light, 0.1) }}
+                      onClick={() => {
+                        visitDetailPage(item);
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
