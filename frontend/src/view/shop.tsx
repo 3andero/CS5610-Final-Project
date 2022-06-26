@@ -114,11 +114,11 @@ export const ShopView = () => {
                     display={"flex"}
                     alignItems={"center"}
                     justifyContent={"space-between"}
-                    onClick={() => { visitDetailPage(item) }}
                   >
                     <AutoWrappedTypography
                       text={item.name}
                       fontWeight={700}
+                      onClick={() => { visitDetailPage(item) }}
                       sx={{
                         cursor: "pointer",
                         textTransform: "uppercase",
