@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { createSearchParams, NavigateFunction, Route, Routes } from "react-router-dom";
 import { CheckOutView } from "view/check-out";
 import { OrderCompleteView } from "view/order-complete";
 import { ProductDetail } from "view/product-detail";
@@ -21,7 +21,7 @@ export const AppRoutes = () => {
           <Route path="billing" element={<Billing />} />
         </Route>
         <Route path="shop" element={<ShopView />} />
-        <Route path="product-detail" element={<ProductDetail/>}/>
+        <Route path="product-detail" element={<ProductDetail />} />
         <Route path="featured" element={<FeaturedView />} />
         <Route path="shopping-cart" element={<ShoppingCartView />} />
         <Route path="order" element={<CheckOutView />} />
@@ -30,3 +30,12 @@ export const AppRoutes = () => {
     </Routes>
   );
 };
+
+export const visitDetailPage = <T extends { _id: string }>(item: T, navigate: NavigateFunction, reload: boolean = false) => {
+  const params = { _id: item._id };
+  navigate({
+    pathname: '/product-detail',
+    search: `?${createSearchParams(params)}`,
+  })
+  reload && window.location.reload();
+}

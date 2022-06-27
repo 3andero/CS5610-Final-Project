@@ -13,7 +13,8 @@ import { AutoWrappedTypography } from "components/autowrapped-typography";
 import Container from "components/Container";
 import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { visitDetailPage } from "routes";
 import { AppContext, AppContextDef } from "../app-context";
 import { appConfig } from "../config";
 import { CartItem } from "./shopping-cart";
@@ -49,13 +50,7 @@ export const ShopView = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const context = useContext(AppContext);
-  const visitDetailPage = (item: CartItem) => {
-    const params = { _id: item._id };
-    navigate({
-      pathname: '/product-detail',
-      search: `?${createSearchParams(params)}`,
-    })
-  }
+
   return (
     <>
       <Container>
@@ -97,7 +92,7 @@ export const ShopView = () => {
                   }}
                 >
                   <CardMedia
-                    onClick={() => { visitDetailPage(item) }}
+                    onClick={() => { visitDetailPage(item, navigate) }}
                     title={item.name}
                     image={item.image}
                     sx={{
@@ -117,7 +112,7 @@ export const ShopView = () => {
                     <AutoWrappedTypography
                       text={item.name}
                       fontWeight={700}
-                      onClick={() => { visitDetailPage(item) }}
+                      onClick={() => { visitDetailPage(item, navigate) }}
                       sx={{
                         cursor: "pointer",
                         textTransform: "uppercase",
@@ -182,7 +177,7 @@ export const ShopView = () => {
                       fullWidth
                       sx={{ bgcolor: alpha(theme.palette.primary.light, 0.1) }}
                       onClick={() => {
-                        visitDetailPage(item);
+                        visitDetailPage(item, navigate);
                       }}
                     >
                       <svg

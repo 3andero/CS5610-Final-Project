@@ -10,10 +10,13 @@ import { appConfig } from "config";
 import { useState } from "react";
 import { MiniProductImage } from "./cart-img-box";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
+import { visitDetailPage } from "routes";
 interface ProductsOptionType {
   inputVal?: string;
   image: string;
   name: string;
+  _id: string;
 }
 
 const ExpandableSearchBox = (params: AutocompleteRenderInputParams) => {
@@ -90,8 +93,10 @@ export const SearchBar = ({ sx }: { sx?: Parameters<typeof Box>[0]["sx"] }) => {
   const [value] = useState<ProductsOptionType>({
     image: "",
     name: "",
+    _id: "",
   });
   const [options, setOption] = useState<ProductsOptionType[]>([]);
+  const navigate = useNavigate();
   return (
     <Autocomplete
       value={value}
@@ -109,6 +114,7 @@ export const SearchBar = ({ sx }: { sx?: Parameters<typeof Box>[0]["sx"] }) => {
               resJson.map((v: any) => ({
                 name: v.name,
                 image: v.image,
+                _id: v._id,
               }))
             );
           })();
@@ -129,7 +135,9 @@ export const SearchBar = ({ sx }: { sx?: Parameters<typeof Box>[0]["sx"] }) => {
         return option.name;
       }}
       renderOption={(props, option) => (
-        <li {...props}>
+        <li {...props} onClick={() => {
+          visitDetailPage(option, navigate, true);
+        }}>
           {" "}
           <MiniProductImage image={option.image} name={option.name} />
           {option.name}
