@@ -6,7 +6,7 @@ const CartStateHook = () => useState<CartItem[]>([]);
 
 type cartT = ReturnType<typeof CartStateHook>;
 
-export const AppContext = createContext({
+const defaultContext = {
   sidebarStatus: false,
   toggleSidebar: () => { },
   toggleColorMode: () => { },
@@ -15,4 +15,8 @@ export const AppContext = createContext({
   colorMode: "light" as PaletteMode,
   cartState: [] as cartT[0],
   setCartState: (() => { }) as cartT[1],
-});
+};
+
+export type AppContextDef = typeof defaultContext;
+
+export const AppContext = createContext(defaultContext);

@@ -9,7 +9,7 @@ searchRouter.get("/", async (req: express.Request<{}, {}, {}, { text: string, li
             {
                 $search: {
                     "text": {
-                        "path": ["name", "description"],
+                        "path": ["name"],
                         "query": req.query.text || "",
                         "fuzzy": {}
                     }

@@ -29,7 +29,7 @@ export const MiniProductImage = ({
         borderRadius: 2,
         width: 1,
         height: 1,
-        maxWidth: { xs: 48, sm: 72 },
+        maxWidth: 72,
         marginRight: 2,
         marginLeft: 1,
         marginY: 1,
@@ -52,7 +52,7 @@ export const CartBox = ({
         <MiniProductImage name={item.name} image={item.image} />
         <Box
           display={"flex"}
-          flexDirection={{ xs: "column", sm: "row" }}
+          flexDirection={"row"}
           justifyContent={"space-between"}
           alignItems="center"
           width={0.7}

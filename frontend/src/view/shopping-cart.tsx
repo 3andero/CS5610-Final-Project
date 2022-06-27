@@ -16,6 +16,8 @@ export interface CartItem {
   description: string;
 }
 
+export const cartQuantityLimit = 9;
+
 export const ShoppingCartView = () => {
   const navigate = useNavigate();
   const context = useContext(AppContext);

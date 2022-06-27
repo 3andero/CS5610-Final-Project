@@ -37,7 +37,7 @@ const Auth0ProviderRedirectBack = ({
 
 const AppRoot = () => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
-  const [colorMode, setColorMode] = useState<PaletteMode>("light");
+  const [colorMode, setColorMode] = useState<PaletteMode>((localStorage.getItem('theme')) ? localStorage.getItem('theme') as PaletteMode : "light");
   const [shoppingCartStatus, setShoppingCartStatus] = useState(false);
   const [cartState, setCartState] = useState<CartItem[]>([]);
   const theme = React.useMemo(() => getTheme(colorMode), [colorMode]);
@@ -50,7 +50,11 @@ const AppRoot = () => {
             setSidebarStatus((v) => !v);
           },
           toggleColorMode: () => {
-            setColorMode((v) => (v === "dark" ? "light" : "dark"));
+            setColorMode((v) => {
+              const new_mode = v === "dark" ? "light" : "dark";
+              localStorage.setItem('theme', new_mode);
+              return new_mode;
+            });
           },
           shoppingCartStatus,
           toggleShoppingCart: () => {
@@ -78,8 +82,8 @@ const AppRoot = () => {
                   clientId={appConfig.CLIENT_ID}
                   redirectUri={window.location.origin}
                   audience={appConfig.AUDIENCE}
-                  // cacheLocation={"localstorage"}
-                  // useRefreshTokens={false}
+                // cacheLocation={"localstorage"}
+                // useRefreshTokens={false}
                 >
                   <AppRoutes />
                 </Auth0ProviderRedirectBack>
