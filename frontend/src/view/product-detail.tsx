@@ -60,7 +60,7 @@ export const ProductDetail = () => {
               bgcolor={'primary.main'}
               marginBottom={1}
             >
-              <Typography sx={{ color: 'common.white', lineHeight: 1 }}>
+              <Typography sx={{ color: 'common.white', lineHeight: 1, textAlign:"center" }} paddingBottom={0.4}>
                 new
               </Typography>
             </Box>
