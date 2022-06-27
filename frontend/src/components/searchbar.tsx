@@ -12,6 +12,7 @@ import { MiniProductImage } from "./cart-img-box";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { visitDetailPage } from "routes";
+import { AutoWrappedTypography } from "./autowrapped-typography";
 interface ProductsOptionType {
   inputVal?: string;
   image: string;
@@ -140,7 +141,8 @@ export const SearchBar = ({ sx }: { sx?: Parameters<typeof Box>[0]["sx"] }) => {
         }}>
           {" "}
           <MiniProductImage image={option.image} name={option.name} />
-          {option.name}
+          <AutoWrappedTypography text={option.name} lineClamp={4}/>
+          
         </li>
       )}
       sx={{
