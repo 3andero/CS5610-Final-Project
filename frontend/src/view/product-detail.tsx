@@ -3,7 +3,7 @@ import { AppContext } from "app-context";
 import { appConfig } from "config";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CartItem } from "./shopping-cart"
+import { CartItem, cartQuantityLimit } from "./shopping-cart"
 import { useTheme } from "@mui/material";
 import { modifyCart } from "./shop";
 export const ProductDetail = () => {
@@ -230,7 +230,7 @@ export const ProductDetail = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    modifyCart(productDetail!, 9, quantity, context);
+                    modifyCart(productDetail!, cartQuantityLimit, quantity, context);
                   }}
                   variant={'contained'}
                   color={'primary'}

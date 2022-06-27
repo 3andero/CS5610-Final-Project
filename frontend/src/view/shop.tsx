@@ -18,7 +18,7 @@ import { visitDetailPage } from "routes";
 import { AppContext, AppContextDef } from "../app-context";
 import { appConfig } from "../config";
 import { CartItem } from "./shopping-cart";
-
+import { cartQuantityLimit } from "./shopping-cart"
 export const modifyCart = (item: CartItem, cartQuantityLimit: number, increment: number, context: AppContextDef) => {
   let changed = false;
   item.quantity = increment;
@@ -158,7 +158,7 @@ export const ShopView = () => {
                       size={"large"}
                       fullWidth
                       onClick={() => {
-                        modifyCart(item, 9, 1, context);
+                        modifyCart(item, cartQuantityLimit, 1, context);
                       }}
                     >
                       <svg
