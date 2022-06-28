@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { CartItem } from 'view/shopping-cart';
-import { AppContext } from 'app-context';
+import { GeneralContext } from 'context/general-context';
 import { useContext } from 'react';
 import { useApi } from 'view/protected/serverApi';
 import { appConfig } from 'config';
@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 export const SummaryBox = (): JSX.Element => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
   const handle = useApi<CartItem>();
 
   const price = context.cartState.reduce((total, item) => { return total + item.price * item.quantity }, 0);

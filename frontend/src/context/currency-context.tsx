@@ -6,8 +6,6 @@ const defaultContext = {
   exchangeRate: {} as CurrencyCountryCode,
 };
 
-export type AppContextDef = typeof defaultContext;
-
 export const Currency = createContext(defaultContext);
 
 export const CurrencyContext = ({

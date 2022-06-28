@@ -15,11 +15,11 @@ import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { visitDetailPage } from "routes";
-import { AppContext, AppContextDef } from "../app-context";
+import { GeneralContext, GeneralContextDef } from "../context/general-context";
 import { appConfig } from "../config";
 import { CartItem } from "./shopping-cart";
 import { cartQuantityLimit } from "./shopping-cart"
-export const modifyCart = (item: CartItem, cartQuantityLimit: number, increment: number, context: AppContextDef) => {
+export const modifyCart = (item: CartItem, cartQuantityLimit: number, increment: number, context: GeneralContextDef) => {
   let changed = false;
   item.quantity = increment;
   const curr_cart = context.cartState.map((element) => {
@@ -49,7 +49,7 @@ export const ShopView = () => {
 
   const navigate = useNavigate();
   const theme = useTheme();
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
 
   return (
     <>

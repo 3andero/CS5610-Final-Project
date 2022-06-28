@@ -1,17 +1,17 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import { AppContext } from "app-context";
+import { GeneralContext } from "context/general-context";
 import { appConfig } from "config";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CartItem, cartQuantityLimit } from "./shopping-cart";
 import { useTheme } from "@mui/material";
 import { modifyCart } from "./shop";
-import { convertPrice, Currency } from "currency-context";
+import { convertPrice, Currency } from "context/currency-context";
 export const ProductDetail = () => {
   const theme = useTheme();
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
   const currencyCtx = useContext(Currency);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [productDetail, setProductDetail] = useState<CartItem>();
   const url_id = searchParams.get("_id");
   const [region, setRegion] = useState("Canada");
@@ -29,8 +29,8 @@ export const ProductDetail = () => {
         console.log(e);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(productDetail?.name);
   return (
     <Box display={"flex"}>
       <Container>

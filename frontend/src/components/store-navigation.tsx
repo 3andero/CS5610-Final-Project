@@ -9,7 +9,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { AppContext } from "../app-context";
+import { GeneralContext } from "../context/general-context";
 import { LinkedButton } from "./linked-button";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ShoppingBag } from "@mui/icons-material";
@@ -126,7 +126,7 @@ const fetchShoppingCartFn: ProtectedCall<
 };
 
 export const StoreNavigation = () => {
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
   const { isAuthenticated } = useAuth0();
   const [fetched, setFetched] = useState(false);
   const handle = useProtected<fetchShoppingCartFnArgs, CartItem[]>(

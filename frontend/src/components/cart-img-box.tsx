@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { AppContext } from "app-context";
+import { GeneralContext } from "context/general-context";
 import { useContext } from "react";
 import { CartItem } from "view/shopping-cart";
 import { AutoWrappedTypography } from "./autowrapped-typography";
@@ -45,7 +45,7 @@ export const CartBox = ({
   item: CartItem;
   divider: boolean;
 }) => {
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
   return (
     <Box>
       <Box display={"flex"}>

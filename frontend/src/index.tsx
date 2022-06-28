@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./App.css";
@@ -7,17 +7,8 @@ import { Auth0Provider, Auth0ProviderOptions } from "@auth0/auth0-react";
 import { appConfig } from "./config";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
-import { AppContext } from "./app-context";
-import { getTheme } from "./theme/myTheme";
-import { CartItem } from "./view/shopping-cart";
-import {
-  Box,
-  CssBaseline,
-  PaletteMode,
-  Paper,
-  ThemeProvider,
-} from "@mui/material";
-import { CurrencyContext } from "currency-context";
+import { Box, CssBaseline, Paper } from "@mui/material";
+import { AppContext } from "context/app-context";
 
 const Auth0ProviderRedirectBack = ({
   children,
@@ -37,68 +28,34 @@ const Auth0ProviderRedirectBack = ({
 };
 
 const AppRoot = () => {
-  const [sidebarStatus, setSidebarStatus] = useState(false);
-  const [colorMode, setColorMode] = useState<PaletteMode>(
-    localStorage.getItem("theme")
-      ? (localStorage.getItem("theme") as PaletteMode)
-      : "light"
-  );
-  const [shoppingCartStatus, setShoppingCartStatus] = useState(false);
-  const [cartState, setCartState] = useState<CartItem[]>([]);
-  const theme = React.useMemo(() => getTheme(colorMode), [colorMode]);
   return (
     <React.StrictMode>
-      <AppContext.Provider
-        value={{
-          sidebarStatus,
-          toggleSidebar: () => {
-            setSidebarStatus((v) => !v);
-          },
-          toggleColorMode: () => {
-            setColorMode((v) => {
-              const new_mode = v === "dark" ? "light" : "dark";
-              localStorage.setItem("theme", new_mode);
-              return new_mode;
-            });
-          },
-          shoppingCartStatus,
-          toggleShoppingCart: () => {
-            setShoppingCartStatus((v) => !v);
-          },
-          colorMode,
-          cartState,
-          setCartState,
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <CurrencyContext>
-            <CssBaseline />
-            <Paper elevation={0}>
-              <Box
-                sx={{
-                  minHeight: "auto",
-                  height: "100vh",
-                  width: "100%",
-                  bgcolor: "background.default",
-                }}
+      <AppContext>
+        <CssBaseline />
+        <Paper elevation={0}>
+          <Box
+            sx={{
+              minHeight: "auto",
+              height: "100vh",
+              width: "100%",
+              bgcolor: "background.default",
+            }}
+          >
+            <BrowserRouter>
+              <Auth0ProviderRedirectBack
+                domain={appConfig.ISSUER_BASE_URL}
+                clientId={appConfig.CLIENT_ID}
+                redirectUri={window.location.origin}
+                audience={appConfig.AUDIENCE}
+                // cacheLocation={"localstorage"}
+                // useRefreshTokens={false}
               >
-                <BrowserRouter>
-                  <Auth0ProviderRedirectBack
-                    domain={appConfig.ISSUER_BASE_URL}
-                    clientId={appConfig.CLIENT_ID}
-                    redirectUri={window.location.origin}
-                    audience={appConfig.AUDIENCE}
-                    // cacheLocation={"localstorage"}
-                    // useRefreshTokens={false}
-                  >
-                    <AppRoutes />
-                  </Auth0ProviderRedirectBack>
-                </BrowserRouter>
-              </Box>
-            </Paper>
-          </CurrencyContext>
-        </ThemeProvider>
-      </AppContext.Provider>
+                <AppRoutes />
+              </Auth0ProviderRedirectBack>
+            </BrowserRouter>
+          </Box>
+        </Paper>
+      </AppContext>
     </React.StrictMode>
   );
 };

@@ -4,7 +4,7 @@ import { CartTitle } from "components/cart-title";
 import Container from "components/Container";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../app-context";
+import { GeneralContext } from "../context/general-context";
 
 export interface CartItem {
   _id: string;
@@ -20,7 +20,7 @@ export const cartQuantityLimit = 9;
 
 export const ShoppingCartView = () => {
   const navigate = useNavigate();
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
   return (
     <Container display={{ xs: "block", md: "contents" }}>
       <Box display={"flex"} flexDirection="column" height={"100%"}>
