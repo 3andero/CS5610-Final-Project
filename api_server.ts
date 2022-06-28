@@ -6,7 +6,7 @@
 
 import express, { ErrorRequestHandler } from "express";
 import { appConfig, LISTEN_LOCAL_ADDR } from "./src/config";
-import { ApiError, connectToMongoDB, logStr } from "./src/utils";
+import { ApiError, connectToMongoDB, fetchCurrencyExchangeRateTask, logStr } from "./src/utils";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
@@ -21,6 +21,7 @@ import { router_user } from "./src/routes/user";
 import { router_cart } from "./src/routes/shoppingCart";
 import { router_order } from "./src/routes/order";
 import { searchRouter } from "./src/routes/search";
+import { currency } from "./src/routes/currencyExchange";
 
 // const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -37,6 +38,7 @@ app.use("/user", router_user);
 app.use("/shopping-cart", router_cart);
 app.use("/order", router_order);
 app.use("/search", searchRouter);
+app.use("/currency", currency);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
@@ -81,6 +83,7 @@ const start = async (): Promise<void> => {
   try {
     await mongoose.connect(appConfig.MONGO_DB);
     await connectToMongoDB();
+    await fetchCurrencyExchangeRateTask();
     app.listen(appConfig.API_PORT, LISTEN_LOCAL_ADDR(), () => {
       console.log(`Server started on port ${LISTEN_LOCAL_ADDR()}:${appConfig.API_PORT}`);
     });
