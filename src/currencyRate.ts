@@ -2,6 +2,7 @@ import { appConfig } from "./config";
 import fs from "fs";
 import util from 'util';
 import { CurrencyCountryCode } from "../frontend/src/currency-country-code";
+import fetch from "node-fetch";
 // Convert fs.readFile into Promise version of same    
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
