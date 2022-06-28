@@ -41,8 +41,8 @@ const Hero = (): JSX.Element => {
           </Box>
           <Box marginBottom={3}>
             <Typography variant="h6" component="p" color="text.secondary">
-              <em>Genshin Impact</em> offer till the end of June. All 1/7 scale
-              figures at maximum:
+              Genshin Impact offer till the end of June. All 1/7 scale figures
+              at maximum:
             </Typography>
             <Typography
               variant="h3"
@@ -89,7 +89,7 @@ const Hero = (): JSX.Element => {
           src={
             "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6c96f8d7-a2e2-467c-a8a0-9e9c2ec191cf/df2di95-a98c9908-83ad-4f31-9b53-a91efe55c722.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzZjOTZmOGQ3LWEyZTItNDY3Yy1hOGEwLTllOWMyZWMxOTFjZlwvZGYyZGk5NS1hOThjOTkwOC04M2FkLTRmMzEtOWI1My1hOTFlZmU1NWM3MjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.WVm5u4PohaCB4Wzx7T9Cz-ONkf0HFLhY3o_BivIRkEY"
           }
-          alt="..."
+          alt="genshin impact Raiden Shogun and Yae Miko"
         />
       }
     />

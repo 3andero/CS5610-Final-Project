@@ -167,6 +167,7 @@ export const ShopView = () => {
                       onClick={() => {
                         modifyCart(item, cartQuantityLimit, 1, context);
                       }}
+                      aria-label="add to shopping cart"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -186,6 +187,7 @@ export const ShopView = () => {
                       onClick={() => {
                         visitDetailPage(item, navigate);
                       }}
+                      aria-label="visit product detail"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -207,6 +209,7 @@ export const ShopView = () => {
                       size={"large"}
                       fullWidth
                       sx={{ bgcolor: alpha(theme.palette.primary.light, 0.1) }}
+                      aria-label="add to wish list"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
