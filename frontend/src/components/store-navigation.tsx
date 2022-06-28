@@ -29,6 +29,7 @@ const SideBarAndButton = ({
   anchor,
   children,
   drawerWidth,
+  name,
 }: {
   onClick: () => void;
   open: boolean;
@@ -37,6 +38,7 @@ const SideBarAndButton = ({
   anchor: Parameters<typeof Drawer>[0]["anchor"];
   children?: React.ReactNode;
   drawerWidth: number;
+  name: string;
 }) => {
   return (
     <>
@@ -47,6 +49,7 @@ const SideBarAndButton = ({
           minWidth: "auto",
           padding: 0.5,
         }}
+        aria-label={name}
         onClick={onClick}
       >
         {icon}
@@ -95,7 +98,6 @@ export const StoreNavigation = () => {
       elevation={0}
       sx={{
         top: 0,
-        // bgcolor: "background.default",
         padding: "2em",
         display: "flex",
         flexDirection: "row",
@@ -141,6 +143,7 @@ export const StoreNavigation = () => {
               icon={<ShoppingBag />}
               anchor={"right"}
               drawerWidth={360}
+              name={"shopping cart"}
             >
               <ShoppingCartView />
             </SideBarAndButton>
@@ -154,6 +157,7 @@ export const StoreNavigation = () => {
             icon={<MenuIcon />}
             anchor={"left"}
             drawerWidth={260}
+            name={"menu"}
           >
             <SidebarView />
           </SideBarAndButton>

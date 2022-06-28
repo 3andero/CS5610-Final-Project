@@ -46,10 +46,11 @@ export const FurtherAction = <T, TData>({
     (activated && ((error === undefined && isLoading && (
       <LinearProgress
         color="secondary"
-        style={{ width: "100%" }}
+        style={{ width: "100vw" }}
         sx={{
           position: "fixed",
           top: 0,
+          left: 0,
           zIndex: 1100,
         }}
       />

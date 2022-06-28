@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   Button,
   Divider,
@@ -114,6 +113,7 @@ export const UpdateProfile = ({
         >
           <Box>
             <Typography
+              component={"p"}
               variant="h6"
               gutterBottom
               fontWeight={700}
@@ -121,13 +121,13 @@ export const UpdateProfile = ({
             >
               Change your private information
             </Typography>
-            <Typography variant={"subtitle2"} color={"text.secondary"}>
+            <Typography
+              component={"p"}
+              variant={"subtitle2"}
+              color={"text.secondary"}
+            >
               Please read our{" "}
-              <Link
-                color={"primary"}
-                href={"/company-terms"}
-                underline={"none"}
-              >
+              <Link href={"#"} underline={"none"}>
                 terms of use
               </Link>{" "}
               to be informed how we manage your private data.
@@ -283,11 +283,7 @@ export const UpdateProfile = ({
                 <Box marginBottom={{ xs: 1, sm: 0 }}>
                   <Typography variant={"subtitle2"} color={"text.primary"}>
                     You may also consider to update your{" "}
-                    <Link
-                      color={"primary"}
-                      href={"/account-billing"}
-                      underline={"none"}
-                    >
+                    <Link href={"/profile/billing"} underline="none">
                       billing information.
                     </Link>
                   </Typography>

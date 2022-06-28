@@ -5,6 +5,26 @@ import { getTheme } from "theme/myTheme";
 import { CurrencyContext } from "./currency-context";
 import { GeneralContext } from "./general-context";
 import { CartContextProvider } from "./shopping-cart-context";
+import { Auth0Provider, Auth0ProviderOptions } from "@auth0/auth0-react";
+import { BrowserRouter, useNavigate } from "react-router-dom";
+import { appConfig } from "config";
+
+const Auth0ProviderRedirectBack = ({
+  children,
+  ...props
+}: Auth0ProviderOptions) => {
+  const navigate = useNavigate();
+  return (
+    <Auth0Provider
+      {...props}
+      onRedirectCallback={(appState) => {
+        navigate((appState && appState.returnTo) || window.location.origin);
+      }}
+    >
+      {children}
+    </Auth0Provider>
+  );
+};
 
 export const AppContext = ({ children }: { children: React.ReactNode }) => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
@@ -37,11 +57,22 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
         colorMode,
       }}
     >
-      <CartContextProvider>
-        <ThemeProvider theme={theme}>
-          <CurrencyContext>{children}</CurrencyContext>
-        </ThemeProvider>
-      </CartContextProvider>
+      <BrowserRouter>
+        <Auth0ProviderRedirectBack
+          domain={appConfig.ISSUER_BASE_URL}
+          clientId={appConfig.CLIENT_ID}
+          redirectUri={window.location.origin}
+          audience={appConfig.AUDIENCE}
+          // cacheLocation={"localstorage"}
+          // useRefreshTokens={false}
+        >
+          <CartContextProvider>
+            <ThemeProvider theme={theme}>
+              <CurrencyContext>{children}</CurrencyContext>
+            </ThemeProvider>
+          </CartContextProvider>
+        </Auth0ProviderRedirectBack>
+      </BrowserRouter>
     </GeneralContext.Provider>
   );
 };

@@ -50,8 +50,6 @@ const _profile = (): JSX.Element => {
                 {pages.map((item) => (
                   <ListItem
                     key={item.id}
-                    component={Link}
-                    to={item.href}
                     disableGutters
                     sx={{
                       marginRight: { xs: 2, md: 0 },
@@ -75,17 +73,20 @@ const _profile = (): JSX.Element => {
                       },
                     }}
                   >
-                    <Typography
-                      variant="subtitle1"
-                      noWrap
-                      color={
-                        location.pathname === item.href
-                          ? "text.primary"
-                          : "text.secondary"
-                      }
-                    >
-                      {item.title}
-                    </Typography>
+                    <Link to={item.href} style={{ textDecoration: "none" }}>
+                      <Typography
+                        component={"p"}
+                        variant="subtitle1"
+                        noWrap
+                        color={
+                          location.pathname === item.href
+                            ? "text.primary"
+                            : "text.secondary"
+                        }
+                      >
+                        {item.title}
+                      </Typography>
+                    </Link>
                   </ListItem>
                 ))}
               </List>

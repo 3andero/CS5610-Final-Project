@@ -30,6 +30,7 @@ const mock = [
           src={
             "https://ninjalathegame.com/_materials/img/news/info/collab-kimetsu/sticker-img01.png"
           }
+          alt={"鬼滅の刃"}
         />
       </Box>
     ),
@@ -80,6 +81,7 @@ const mock = [
           src={
             "https://static.wikia.nocookie.net/piapro-studio/images/2/23/Img_illust_mikunt.png"
           }
+          alt={"figures: Hatsune Miku"}
         />
       </Box>
     ),
@@ -124,7 +126,7 @@ const IndexPageCategories = (): JSX.Element => {
         <Typography
           sx={{
             textTransform: "uppercase",
-            fontWeight: "medium",
+            fontWeight: "bold",
           }}
           gutterBottom
           color={theme.palette.mode === "light" ? "primary" : "secondary"}
@@ -142,7 +144,12 @@ const IndexPageCategories = (): JSX.Element => {
         >
           Choose your Anime Merch by categories
         </Typography>
-        <Typography variant="h6" align={"center"} color={"text.secondary"}>
+        <Typography
+          variant="h6"
+          component={"span"}
+          align={"center"}
+          color={"text.secondary"}
+        >
           Buy Your Favorite Figures & BLU-RAYS Online:
           <br />
           Securely and Comfortably
@@ -201,6 +208,7 @@ const IndexPageCategories = (): JSX.Element => {
                     </Box>
                   </Box>
                   <Typography
+                    component={"p"}
                     variant={"subtitle1"}
                     align={"center"}
                     sx={{ fontWeight: 500, marginTop: 2 }}

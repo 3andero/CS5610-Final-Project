@@ -3,29 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./App.css";
 import reportWebVitals from "./reportWebVitals";
-import { Auth0Provider, Auth0ProviderOptions } from "@auth0/auth0-react";
-import { appConfig } from "./config";
-import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { Box, CssBaseline, Paper } from "@mui/material";
 import { AppContext } from "context/app-context";
-
-const Auth0ProviderRedirectBack = ({
-  children,
-  ...props
-}: Auth0ProviderOptions) => {
-  const navigate = useNavigate();
-  return (
-    <Auth0Provider
-      {...props}
-      onRedirectCallback={(appState) => {
-        navigate((appState && appState.returnTo) || window.location.origin);
-      }}
-    >
-      {children}
-    </Auth0Provider>
-  );
-};
 
 const AppRoot = () => {
   return (
@@ -38,21 +18,10 @@ const AppRoot = () => {
               minHeight: "auto",
               height: "100vh",
               width: "100%",
-              bgcolor: "background.default",
+              // bgcolor: "background.default",
             }}
           >
-            <BrowserRouter>
-              <Auth0ProviderRedirectBack
-                domain={appConfig.ISSUER_BASE_URL}
-                clientId={appConfig.CLIENT_ID}
-                redirectUri={window.location.origin}
-                audience={appConfig.AUDIENCE}
-                // cacheLocation={"localstorage"}
-                // useRefreshTokens={false}
-              >
-                <AppRoutes />
-              </Auth0ProviderRedirectBack>
-            </BrowserRouter>
+            <AppRoutes />
           </Box>
         </Paper>
       </AppContext>

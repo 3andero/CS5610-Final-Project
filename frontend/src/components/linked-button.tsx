@@ -1,16 +1,14 @@
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { Link } from "react-router-dom";
 
-interface LinkedButtonProps {
+type LinkedButtonProps = ButtonProps & {
   to: Parameters<typeof Link>[0]["to"];
-  sx?: Parameters<typeof Button>[0]["sx"];
-  variant?: Parameters<typeof Button>[0]["variant"];
-  children: Parameters<typeof Button>[0]["children"];
-  size?: Parameters<typeof Button>[0]["size"];
-}
+};
 
-export const LinkedButton = ({ sx, ...rest }: LinkedButtonProps) => {
+export const LinkedButton = ({ sx, to, ...rest }: LinkedButtonProps) => {
   return (
-    <Button sx={{ color: "text.primary", ...sx }} {...rest} component={Link} />
+    <Link to={to} style={{ textDecoration: "none" }}>
+      <Button sx={{ color: "text.primary", ...sx }} {...rest} />
+    </Link>
   );
 };

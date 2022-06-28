@@ -59,14 +59,23 @@ const Billing = (): JSX.Element => {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom fontWeight={700}>
+      <Typography component={"p"} variant="h6" gutterBottom fontWeight={700}>
         Change your card data
       </Typography>
-      <Typography variant={"subtitle2"} color={"text.secondary"} gutterBottom>
+      <Typography
+        variant={"subtitle2"}
+        component={"p"}
+        color={"text.secondary"}
+        gutterBottom
+      >
         Please be informed that we do not share any sensitive information such
         as your bank card data with any third party agencies and companies.
       </Typography>
-      <Typography variant={"subtitle2"} color={"text.secondary"}>
+      <Typography
+        variant={"subtitle2"}
+        component={"p"}
+        color={"text.secondary"}
+      >
         Please read our{" "}
         <Link color={"primary"} href={"/company-terms"} underline={"none"}>
           terms of use
@@ -82,6 +91,7 @@ const Billing = (): JSX.Element => {
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component={"p"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
               >
@@ -105,6 +115,7 @@ const Billing = (): JSX.Element => {
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component={"p"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
               >
@@ -124,6 +135,7 @@ const Billing = (): JSX.Element => {
             <Grid item xs={12} sm={4}>
               <Typography
                 variant={"subtitle2"}
+                component={"p"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
               >
@@ -143,6 +155,7 @@ const Billing = (): JSX.Element => {
             <Grid item xs={12} sm={4}>
               <Typography
                 variant={"subtitle2"}
+                component={"p"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
               >
@@ -162,6 +175,7 @@ const Billing = (): JSX.Element => {
             <Grid item xs={12} sm={4}>
               <Typography
                 variant={"subtitle2"}
+                component={"p"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
               >
@@ -191,7 +205,7 @@ const Billing = (): JSX.Element => {
                 margin={"0 auto"}
               >
                 <Box marginBottom={{ xs: 1, sm: 0 }}>
-                  <Typography variant={"subtitle2"}>
+                  <Typography variant={"subtitle2"} component={"p"}>
                     You may also consider to update your{" "}
                     <Link
                       color={"primary"}
