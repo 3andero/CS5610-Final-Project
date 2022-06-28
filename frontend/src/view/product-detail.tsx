@@ -1,19 +1,17 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import { GeneralContext } from "context/general-context";
 import { appConfig } from "config";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CartItem, cartQuantityLimit } from "./shopping-cart";
 import { useTheme } from "@mui/material";
 import { modifyCart } from "./shop";
-import { convertPrice, Currency } from "context/currency-context";
+import { CurrencyTypography } from "context/currency-context";
+import { CartContext } from "context/shopping-cart-context";
 export const ProductDetail = () => {
   const theme = useTheme();
-  const context = useContext(GeneralContext);
-  const currencyCtx = useContext(Currency);
+  const context = useContext(CartContext);
   const [searchParams] = useSearchParams();
   const [productDetail, setProductDetail] = useState<CartItem>();
-  const url_id = searchParams.get("_id");
   const [region, setRegion] = useState("Canada");
   const [quantity, setQuantity] = useState(1);
   const [manufacturer, setManufacturer] = useState("APEX");
@@ -22,7 +20,9 @@ export const ProductDetail = () => {
     (async () => {
       try {
         const res = await fetch(
-          `${appConfig.API_SERVER_DOMAIN}products?_id=${url_id}`
+          `${appConfig.API_SERVER_DOMAIN}products?_id=${searchParams.get(
+            "_id"
+          )}`
         );
         setProductDetail(await res.json());
       } catch (e) {
@@ -84,13 +84,12 @@ export const ProductDetail = () => {
               </Typography>
               <Box marginY={3}>
                 <Box display={"flex"}>
-                  <Typography variant={"h5"} fontWeight={700}>
-                    {convertPrice(
-                      currencyCtx.exchangeRate,
-                      region,
-                      productDetail?.price
-                    )}
-                  </Typography>
+                  <CurrencyTypography
+                    variant={"h5"}
+                    fontWeight={700}
+                    country={region}
+                    price={productDetail?.price}
+                  />
                 </Box>
                 <Box display={"flex"} alignItems={"center"} marginTop={1}>
                   <Box display={"flex"} justifyContent={"flex-start"}>

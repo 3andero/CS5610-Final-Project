@@ -2,9 +2,9 @@ import { PaletteMode, ThemeProvider } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { getTheme } from "theme/myTheme";
-import { CartItem } from "view/shopping-cart";
 import { CurrencyContext } from "./currency-context";
 import { GeneralContext } from "./general-context";
+import { CartContextProvider } from "./shopping-cart-context";
 
 export const AppContext = ({ children }: { children: React.ReactNode }) => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
@@ -14,7 +14,6 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
       : "light"
   );
   const [shoppingCartStatus, setShoppingCartStatus] = useState(false);
-  const [cartState, setCartState] = useState<CartItem[]>([]);
   const theme = React.useMemo(() => getTheme(colorMode), [colorMode]);
 
   return (
@@ -36,13 +35,13 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
           setShoppingCartStatus((v) => !v);
         },
         colorMode,
-        cartState,
-        setCartState,
       }}
     >
-      <ThemeProvider theme={theme}>
-        <CurrencyContext>{children}</CurrencyContext>
-      </ThemeProvider>
+      <CartContextProvider>
+        <ThemeProvider theme={theme}>
+          <CurrencyContext>{children}</CurrencyContext>
+        </ThemeProvider>
+      </CartContextProvider>
     </GeneralContext.Provider>
   );
 };

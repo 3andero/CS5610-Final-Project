@@ -1,6 +1,7 @@
+import { Typography, TypographyProps } from "@mui/material";
 import { appConfig } from "config";
 import { CurrencyCountryCode } from "currency-country-code";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const defaultContext = {
   exchangeRate: {} as CurrencyCountryCode,
@@ -53,4 +54,20 @@ export const convertPrice = (
     ).toFixed()}`;
   }
   return "Price Unavailable";
+};
+
+export const CurrencyTypography = ({
+  price,
+  country,
+  ...rest
+}: {
+  price?: number;
+  country: string;
+} & TypographyProps) => {
+  const currencyCtx = useContext(Currency);
+  return (
+    <Typography {...rest}>
+      {convertPrice(currencyCtx.exchangeRate, country, price)}
+    </Typography>
+  );
 };
