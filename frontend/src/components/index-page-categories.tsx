@@ -146,7 +146,7 @@ const IndexPageCategories = (): JSX.Element => {
         </Typography>
         <Typography
           variant="h6"
-          component={"span"}
+          component={"p"}
           align={"center"}
           color={"text.secondary"}
         >
