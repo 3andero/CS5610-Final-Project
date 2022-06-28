@@ -8,6 +8,7 @@ interface BaseAppConfig {
     ISSUER_BASE_URL: string;
     AUDIENCE: string;
     MONGO_DB: string;
+    CURRENCY_API_URL: string;
 }
 
 export const appConfig = readConfig<BaseAppConfig>(config_raw);

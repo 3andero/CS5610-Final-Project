@@ -1,11 +1,11 @@
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { Button } from "@mui/material";
-import { AppContext } from "../app-context";
+import { GeneralContext } from "../context/general-context";
 import { useContext } from "react";
 
 export const ColorModeButton = () => {
-  const context = useContext(AppContext);
+  const context = useContext(GeneralContext);
 
   return (
     <Button

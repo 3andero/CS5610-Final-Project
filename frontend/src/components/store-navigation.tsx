@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import {
   Box,
   Drawer,
@@ -9,7 +9,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { AppContext } from "../app-context";
+import { GeneralContext } from "../context/general-context";
 import { LinkedButton } from "./linked-button";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ShoppingBag } from "@mui/icons-material";
@@ -17,10 +17,7 @@ import { NavLink } from "react-router-dom";
 import { SearchBar } from "./searchbar";
 import { TitleComponent } from "./title";
 import React from "react";
-import { CartItem, ShoppingCartView } from "../view/shopping-cart";
-import { useAuth0 } from "@auth0/auth0-react";
-import { ProtectedCall, useProtected } from "../view/protected/serverApi";
-import { appConfig } from "../config";
+import { ShoppingCartView } from "../view/shopping-cart";
 import { SidebarView } from "view/sidebar-view";
 import { ColorModeButton } from "./colormode-button";
 
@@ -32,6 +29,7 @@ const SideBarAndButton = ({
   anchor,
   children,
   drawerWidth,
+  name,
 }: {
   onClick: () => void;
   open: boolean;
@@ -40,6 +38,7 @@ const SideBarAndButton = ({
   anchor: Parameters<typeof Drawer>[0]["anchor"];
   children?: React.ReactNode;
   drawerWidth: number;
+  name: string;
 }) => {
   return (
     <>
@@ -50,6 +49,7 @@ const SideBarAndButton = ({
           minWidth: "auto",
           padding: 0.5,
         }}
+        aria-label={name}
         onClick={onClick}
       >
         {icon}
@@ -86,72 +86,9 @@ function ElevationScroll({ children }: { children: any }) {
   });
 }
 
-interface fetchShoppingCartFnArgs {
-  cart?: CartItem[];
-  setCart: (...args: any[]) => void;
-  method: "GET" | "POST";
-}
-
-const fetchShoppingCartFn: ProtectedCall<
-  fetchShoppingCartFnArgs,
-  CartItem[]
-> = async (authHeader, state, args) => {
-  const { setCart, method, cart } = args!;
-  const url = `${appConfig.API_SERVER_DOMAIN}shopping-cart`;
-
-  let res = await fetch(url, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      ...authHeader,
-    },
-    body:
-      method === "GET"
-        ? undefined
-        : JSON.stringify(
-            cart!.map(({ _id, quantity }) => ({ product_id: _id, quantity }))
-          ),
-  });
-  if (res.status >= 200 && res.status <= 299) {
-    if (method === "GET") {
-      state.data = await res.json();
-      console.log("cart get", state.data);
-      setCart(state.data);
-    }
-  } else {
-    state.data = undefined;
-    state.error = await res.text();
-  }
-  return;
-};
-
 export const StoreNavigation = () => {
-  const context = useContext(AppContext);
-  const { isAuthenticated } = useAuth0();
-  const [fetched, setFetched] = useState(false);
-  const handle = useProtected<fetchShoppingCartFnArgs, CartItem[]>(
-    fetchShoppingCartFn,
-    {
-      audience: appConfig.AUDIENCE,
-    }
-  );
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (!fetched) {
-        setFetched(true);
-        handle.refresh({ method: "GET", setCart: context.setCartState });
-      } else {
-        handle.refresh({
-          method: "POST",
-          setCart: context.setCartState,
-          cart: context.cartState,
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, context.cartState]);
+  const context = useContext(GeneralContext);
   const theme = useTheme();
-
   const isMd = useMediaQuery((theme: any) => theme.breakpoints.up("md"));
   return (
     // <ElevationScroll>
@@ -161,7 +98,6 @@ export const StoreNavigation = () => {
       elevation={0}
       sx={{
         top: 0,
-        // bgcolor: "background.default",
         padding: "2em",
         display: "flex",
         flexDirection: "row",
@@ -207,6 +143,7 @@ export const StoreNavigation = () => {
               icon={<ShoppingBag />}
               anchor={"right"}
               drawerWidth={360}
+              name={"shopping cart"}
             >
               <ShoppingCartView />
             </SideBarAndButton>
@@ -220,6 +157,7 @@ export const StoreNavigation = () => {
             icon={<MenuIcon />}
             anchor={"left"}
             drawerWidth={260}
+            name={"menu"}
           >
             <SidebarView />
           </SideBarAndButton>

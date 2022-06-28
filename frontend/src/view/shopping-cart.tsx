@@ -2,9 +2,10 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { CartBox } from "components/cart-img-box";
 import { CartTitle } from "components/cart-title";
 import Container from "components/Container";
+import { CartContext } from "context/shopping-cart-context";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../app-context";
+import { GeneralContext } from "../context/general-context";
 
 export interface CartItem {
   _id: string;
@@ -20,7 +21,8 @@ export const cartQuantityLimit = 9;
 
 export const ShoppingCartView = () => {
   const navigate = useNavigate();
-  const context = useContext(AppContext);
+  const cartContext = useContext(CartContext);
+  const context = useContext(GeneralContext);
   return (
     <Container display={{ xs: "block", md: "contents" }}>
       <Box display={"flex"} flexDirection="column" height={"100%"}>
@@ -31,7 +33,7 @@ export const ShoppingCartView = () => {
             marginLeft: 1,
           }}
         >
-          {context.cartState.map((item, i, t) => (
+          {cartContext.cartState.map((item, i, t) => (
             <CartBox item={item} divider={i !== t.length - 1} key={item._id} />
           ))}
         </Stack>
@@ -49,7 +51,7 @@ export const ShoppingCartView = () => {
           <Button
             fullWidth
             onClick={() => {
-              context.setCartState([]);
+              cartContext.setCartState([]);
             }}
             variant="text"
           >

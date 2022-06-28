@@ -15,27 +15,33 @@ import ShopPageHero from "components/shop-page-hero";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { visitDetailPage } from "routes";
-import { AppContext, AppContextDef } from "../app-context";
 import { appConfig } from "../config";
 import { CartItem } from "./shopping-cart";
-import { cartQuantityLimit } from "./shopping-cart"
-export const modifyCart = (item: CartItem, cartQuantityLimit: number, increment: number, context: AppContextDef) => {
+import { cartQuantityLimit } from "./shopping-cart";
+import { CartContext, CartContextDef } from "context/shopping-cart-context";
+export const modifyCart = (
+  item: CartItem,
+  cartQuantityLimit: number,
+  increment: number,
+  context: CartContextDef
+) => {
   let changed = false;
   item.quantity = increment;
   const curr_cart = context.cartState.map((element) => {
     if (element._id === item._id) {
       element.quantity += item.quantity;
-      element.quantity = (element.quantity > 9) ? cartQuantityLimit : element.quantity;
+      element.quantity =
+        element.quantity > 9 ? cartQuantityLimit : element.quantity;
       changed = true;
     }
     return element;
   });
   if (!changed) {
-    item.quantity = (item.quantity > 9) ? cartQuantityLimit : item.quantity;
+    item.quantity = item.quantity > 9 ? cartQuantityLimit : item.quantity;
     curr_cart.push({ ...item });
   }
   context.setCartState(curr_cart);
-}
+};
 
 export const ShopView = () => {
   const [products, setProducts] = useState<CartItem[]>([]);
@@ -49,17 +55,14 @@ export const ShopView = () => {
 
   const navigate = useNavigate();
   const theme = useTheme();
-  const context = useContext(AppContext);
+  const context = useContext(CartContext);
 
   return (
     <>
       <Container>
         <ShopPageHero />
       </Container>
-      <Box
-        margin={{ md: "1em", lg: "3em" }}
-        sx={{ flexGrow: 1 }}
-      >
+      <Box margin={{ md: "1em", lg: "3em" }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           {products.map((item) => (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={item._id}>
@@ -92,7 +95,9 @@ export const ShopView = () => {
                   }}
                 >
                   <CardMedia
-                    onClick={() => { visitDetailPage(item, navigate) }}
+                    onClick={() => {
+                      visitDetailPage(item, navigate);
+                    }}
                     title={item.name}
                     image={item.image}
                     sx={{
@@ -112,7 +117,9 @@ export const ShopView = () => {
                     <AutoWrappedTypography
                       text={item.name}
                       fontWeight={700}
-                      onClick={() => { visitDetailPage(item, navigate) }}
+                      onClick={() => {
+                        visitDetailPage(item, navigate);
+                      }}
                       sx={{
                         cursor: "pointer",
                         textTransform: "uppercase",
@@ -160,6 +167,7 @@ export const ShopView = () => {
                       onClick={() => {
                         modifyCart(item, cartQuantityLimit, 1, context);
                       }}
+                      aria-label="add to shopping cart"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +187,7 @@ export const ShopView = () => {
                       onClick={() => {
                         visitDetailPage(item, navigate);
                       }}
+                      aria-label="visit product detail"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -200,6 +209,7 @@ export const ShopView = () => {
                       size={"large"}
                       fullWidth
                       sx={{ bgcolor: alpha(theme.palette.primary.light, 0.1) }}
+                      aria-label="add to wish list"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

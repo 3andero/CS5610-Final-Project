@@ -4,8 +4,10 @@ import { LinkedButton } from "./linked-button";
 import Typography from "@mui/material/Typography";
 import { TitleComponent } from "./title";
 import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 const Footer = (): JSX.Element => {
+  const theme = useTheme();
   return (
     <Grid container spacing={2} paddingX={{ md: "2em" }}>
       <Grid item xs={12}>
@@ -31,8 +33,12 @@ const Footer = (): JSX.Element => {
               <LinkedButton
                 to="/profile"
                 variant="outlined"
+                color={theme.palette.mode === "light" ? "primary" : "secondary"}
                 sx={{
-                  color: "primary",
+                  color:
+                    theme.palette.mode === "light"
+                      ? "primary.main"
+                      : "secondary.main",
                 }}
               >
                 Join Now
@@ -43,6 +49,7 @@ const Footer = (): JSX.Element => {
       </Grid>
       <Grid item xs={12}>
         <Typography
+          component={"span"}
           align={"center"}
           variant={"subtitle2"}
           color="text.secondary"
