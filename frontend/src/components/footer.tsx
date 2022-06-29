@@ -49,7 +49,7 @@ const Footer = (): JSX.Element => {
       </Grid>
       <Grid item xs={12}>
         <Typography
-          component={"span"}
+          component={"p"}
           align={"center"}
           variant={"subtitle2"}
           color="text.secondary"
