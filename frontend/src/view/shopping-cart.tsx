@@ -13,11 +13,9 @@ export interface CartItem {
   name: string;
   image: string;
   quantity: number;
-  is_available: boolean;
-  description: string;
 }
 
-export const cartQuantityLimit = 9;
+export const CART_QUANTITY_LIMIT = 9;
 
 export const ShoppingCartView = () => {
   const navigate = useNavigate();

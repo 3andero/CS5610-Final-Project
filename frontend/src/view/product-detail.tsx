@@ -2,16 +2,22 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { appConfig } from "config";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CartItem, cartQuantityLimit } from "./shopping-cart";
+import { CartItem, CART_QUANTITY_LIMIT } from "./shopping-cart";
 import { useTheme } from "@mui/material";
-import { modifyCart } from "./shop";
+import { modifyCart } from "components/product-grid";
 import { CurrencyTypography } from "context/currency-context";
 import { CartContext } from "context/shopping-cart-context";
+
+export type ProductDetailItem = CartItem & {
+  is_available: boolean;
+  description: string;
+};
+
 export const ProductDetail = () => {
   const theme = useTheme();
   const context = useContext(CartContext);
   const [searchParams] = useSearchParams();
-  const [productDetail, setProductDetail] = useState<CartItem>();
+  const [productDetail, setProductDetail] = useState<ProductDetailItem>();
   const [region, setRegion] = useState("Canada");
   const [quantity, setQuantity] = useState(1);
   const [manufacturer, setManufacturer] = useState("APEX");
@@ -269,7 +275,7 @@ export const ProductDetail = () => {
                   onClick={() => {
                     modifyCart(
                       productDetail!,
-                      cartQuantityLimit,
+                      CART_QUANTITY_LIMIT,
                       quantity,
                       context
                     );
