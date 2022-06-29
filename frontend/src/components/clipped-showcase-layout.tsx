@@ -35,7 +35,7 @@ export const ClippedShowcaseLayout = ({
             clipPath: { md: clipPath },
             ...(blurBackground && {
               backdropFilter: { md: "saturate(180%) blur(30px)" },
-              background: { md: alpha(theme.palette.alternate.main, 0.9) },
+              background: { md: alpha(theme.palette.alternate?.main || "#000", 0.9) },
             }),
           }}
         >
