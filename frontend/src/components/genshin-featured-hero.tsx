@@ -40,7 +40,12 @@ export const GenshinFeaturedHero = (): JSX.Element => {
   );
 
   const Logos = () => (
-    <Box display="flex" flexWrap="wrap" justifyContent={"center"}>
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       {[
         "https://static.wikia.nocookie.net/gensin-impact/images/2/2c/Element_Pyro.svg",
         "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Element_Hydro.svg",
@@ -50,8 +55,8 @@ export const GenshinFeaturedHero = (): JSX.Element => {
         "https://static.wikia.nocookie.net/gensin-impact/images/7/72/Element_Cryo.svg",
         "https://static.wikia.nocookie.net/gensin-impact/images/9/9b/Element_Geo.svg",
       ].map((item, i) => (
-        <Box maxWidth={80} marginTop={2} marginRight={4} key={i}>
-          <Box component="img" height={1} width={1} src={item} alt="..." />
+        <Box maxWidth={{ xs: 40, md: 80 }} margin={2} key={i}>
+          <Box component="img" height={"auto"} width={1} src={item} alt="..." />
         </Box>
       ))}
     </Box>
