@@ -8,6 +8,7 @@ import { CartContextProvider } from "./shopping-cart-context";
 import { Auth0Provider, Auth0ProviderOptions } from "@auth0/auth0-react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { appConfig } from "config";
+import { SnackBarContextProvider } from "./snackbar-context";
 
 const Auth0ProviderRedirectBack = ({
   children,
@@ -68,7 +69,9 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
         >
           <CartContextProvider>
             <ThemeProvider theme={theme}>
-              <CurrencyContext>{children}</CurrencyContext>
+              <SnackBarContextProvider>
+                <CurrencyContext>{children}</CurrencyContext>
+              </SnackBarContextProvider>
             </ThemeProvider>
           </CartContextProvider>
         </Auth0ProviderRedirectBack>

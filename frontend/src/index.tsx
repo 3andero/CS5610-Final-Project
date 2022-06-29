@@ -4,7 +4,7 @@ import "./index.css";
 import "./App.css";
 import reportWebVitals from "./reportWebVitals";
 import { AppRoutes } from "./routes";
-import { Box, CssBaseline, Paper } from "@mui/material";
+import { CssBaseline, Paper } from "@mui/material";
 import { AppContext } from "context/app-context";
 
 const AppRoot = () => {
@@ -13,16 +13,7 @@ const AppRoot = () => {
       <AppContext>
         <CssBaseline />
         <Paper elevation={0}>
-          <Box
-            sx={{
-              minHeight: "auto",
-              height: "100vh",
-              width: "100%",
-              // bgcolor: "background.default",
-            }}
-          >
-            <AppRoutes />
-          </Box>
+          <AppRoutes />
         </Paper>
       </AppContext>
     </React.StrictMode>

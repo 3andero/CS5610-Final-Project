@@ -15,6 +15,7 @@ import { visitDetailPage } from "routes";
 import { CartContext, CartContextDef } from "context/shopping-cart-context";
 import { useContext } from "react";
 import { CartItem, CART_QUANTITY_LIMIT } from "view/shopping-cart";
+import { SnackBarContext } from "context/snackbar-context";
 
 export const modifyCart = (
   item: CartItem,
@@ -44,6 +45,7 @@ export const ProductsGrid = ({ products }: { products: CartItem[] }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const context = useContext(CartContext);
+  const SnackbarCtx = useContext(SnackBarContext);
   return (
     <Box margin={{ md: "1em", lg: "3em" }} sx={{ flexGrow: 1 }}>
       <Grid container spacing={1}>
@@ -149,6 +151,7 @@ export const ProductsGrid = ({ products }: { products: CartItem[] }) => {
                     fullWidth
                     onClick={() => {
                       modifyCart(item, CART_QUANTITY_LIMIT, 1, context);
+                      SnackbarCtx.handleClick(`${item.name} added`)();
                     }}
                     aria-label="add to shopping cart"
                   >

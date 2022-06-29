@@ -7,6 +7,7 @@ import { useTheme } from "@mui/material";
 import { modifyCart } from "components/product-grid";
 import { CurrencyTypography } from "context/currency-context";
 import { CartContext } from "context/shopping-cart-context";
+import { SnackBarContext } from "context/snackbar-context";
 
 export type ProductDetailItem = CartItem & {
   is_available: boolean;
@@ -21,6 +22,7 @@ export const ProductDetail = () => {
   const [region, setRegion] = useState("Canada");
   const [quantity, setQuantity] = useState(1);
   const [manufacturer, setManufacturer] = useState("APEX");
+  const snackbarCtx = useContext(SnackBarContext);
   const quantityLimit = 4;
   useEffect(() => {
     (async () => {
@@ -279,6 +281,9 @@ export const ProductDetail = () => {
                       quantity,
                       context
                     );
+                    snackbarCtx.handleClick(
+                      `${productDetail?.name || "product"} added.`
+                    )();
                   }}
                   variant={"contained"}
                   color={"primary"}

@@ -11,6 +11,7 @@ function App() {
       flexDirection="column"
       justifyContent={"center"}
       width={"100vw"}
+      minHeight={"100%"}
       bgcolor={"background.default"}
     >
       <StoreNavigation />
