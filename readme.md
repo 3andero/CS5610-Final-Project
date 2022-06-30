@@ -4,36 +4,23 @@ This is an online store to sell anime products of [Genshin Impact](https://gensh
 
 ## Features
 
-1. Home page: **beautiful layout**; correct root context ("/"); click "discover the offer" or "shop" to visit shop page
-2. Login page: users are allowed to log in or register
-3. Profile page: users can view and update their general information; billing information is NOT applicable on back-end
-4. Shop page: view products; add products to shopping cart
+1. Home page: **beautiful layout**; special offer section; product category section; featured section
+2. Featured page: beautiful layout related to special ip;
+3. Profile page: auth0 takes charge of user registration; users can view and update their general information;
+4. Shop page: view products; add products to shopping cart; view product detail
 5. Shopping cart page: view added products; update quantity of products; delete products from cart; go to check out
 6. Check out page: place order
+7. Search bar: implement fuzzy search to search all items in store
 
 ## Getting Started
 
 1. Visit online version
    https://ww1.gen2d.store/
 
+2. See **demo video on youtube**: https://youtu.be/cQlOUEnnR6k
+
+
 ## Contributor
 
-Tianyi (Kenny) Chen - front-end related task
-
-1. Integrate Auth0 into both front-end and back-end
-2. Impl front-end routes
-3. Create user profile-related and shop-related components
-4. Build view of index page
-5. Optimize Profile page
-6. Dark mode
-7. Add footer
-8. Optimize Shop page
-
-Yue (Julie) Huang - back-end related task
-
-1. Impl back-end models, including user, product, shopping cart, and order.
-2. Impl back-end routes
-3. Connect server to MongoDB
-4. Build view of shopping cart page
-5. Build view of check out page
-6. Adjust back-end controller related with cart and order
+Tianyi (Kenny) Chen,
+Yue (Julie) Huang
