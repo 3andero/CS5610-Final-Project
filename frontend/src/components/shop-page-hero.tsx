@@ -4,7 +4,7 @@ import Typed from "react-typed";
 const ShopPageHero = () => {
   return (
     <Box>
-      <Box marginBottom={4}>
+      <Box marginBottom={{ md: 4 }}>
         <Typography
           variant="h6"
           component="p"
@@ -22,6 +22,7 @@ const ShopPageHero = () => {
           sx={{
             fontWeight: 700,
           }}
+          minHeight={"2.5em"}
         >
           We get{" "}
           <Typed

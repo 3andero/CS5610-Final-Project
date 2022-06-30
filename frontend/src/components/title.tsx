@@ -1,11 +1,15 @@
 import { Typography, useTheme } from "@mui/material";
 
 // https://codepen.io/markmead/pen/YjQKeZ
-const TitleComponent1 = () => {
+const TitleComponent1 = ({
+  variant = "h2",
+}: {
+  variant?: Parameters<typeof Typography>[0]["variant"];
+}) => {
   const theme = useTheme();
   return (
     <Typography
-      variant="h2"
+      variant={variant}
       fontWeight={"900"}
       letterSpacing={5}
       sx={{
@@ -37,12 +41,14 @@ const TitleComponent2 = ({
       variant={variant}
       fontWeight={900}
       letterSpacing={5}
+      component="p"
       sx={{
         position: "relative",
         textTransform: "uppercase",
         color: "transparent",
         fontFamily: "'Poppins', sans-serif",
         fontStyle: "italic",
+        paddingX: "0.5em",
         ":after": {
           content: text,
           position: "absolute",
@@ -60,7 +66,6 @@ const TitleComponent2 = ({
           color: "text.primary",
           WebkitClipPath: pathBefore,
           clipPath: pathBefore,
-          paddingX: "0.5em",
         },
       }}
     >

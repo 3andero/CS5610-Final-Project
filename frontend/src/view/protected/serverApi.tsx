@@ -46,10 +46,11 @@ export const FurtherAction = <T, TData>({
     (activated && ((error === undefined && isLoading && (
       <LinearProgress
         color="secondary"
-        style={{ width: "100%" }}
+        style={{ width: "100vw" }}
         sx={{
           position: "fixed",
           top: 0,
+          left: 0,
           zIndex: 1100,
         }}
       />
@@ -149,7 +150,7 @@ export const useProtected = <T, TData = any>(
   useEffect(() => {
     (async () => {
       try {
-        console.log(0);
+        // console.log(0);
         const { audience, scope } = options;
         const accessToken = await getAccessTokenSilently({ audience, scope });
         if (refreshState.count === 0) {

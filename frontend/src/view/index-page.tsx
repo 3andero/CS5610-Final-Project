@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import Container from "components/Container";
 import Hero from "components/hero";
 import IndexPageCategories from "components/index-page-categories";
@@ -11,7 +11,15 @@ export const IndexPageView = () => {
       <Container>
         <IndexPageCategories />
       </Container>
-      <IndexVideoSection />
+      <Link
+        href="/featured"
+        sx={{
+          textDecoration: "none",
+          margin: 0,
+        }}
+      >
+        <IndexVideoSection />
+      </Link>
     </Box>
   );
 };

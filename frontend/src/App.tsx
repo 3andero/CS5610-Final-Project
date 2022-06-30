@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import Container from "components/Container";
 import Footer from "components/footer";
 import { Outlet } from "react-router-dom";
@@ -10,10 +10,13 @@ function App() {
       display={"flex"}
       flexDirection="column"
       justifyContent={"center"}
+      width={"100vw"}
+      minHeight={"100%"}
       bgcolor={"background.default"}
     >
       <StoreNavigation />
       <Outlet />
+      <Divider />
       <Container>
         <Footer />
       </Container>

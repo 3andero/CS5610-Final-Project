@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   Button,
   Divider,
@@ -17,6 +16,7 @@ import {
   useApi,
   ApiCallArgs,
 } from "../view/protected/serverApi";
+import { LogoutButton } from "./logout.button";
 
 const validationSchema = yup.object({
   first_name: yup
@@ -105,22 +105,36 @@ export const UpdateProfile = ({
   return (
     <FurtherAction protectedCallHandle={handle} refreshArgs={formVals}>
       <Box>
-        {handle.data && <Alert severity="success">Update Succeeded!</Alert>}
-        <Typography
-          variant="h6"
-          gutterBottom
-          fontWeight={700}
-          color={"text.primary"}
+        <Box
+          display={"flex"}
+          flexDirection={{ xs: "column", md: "row" }}
+          justifyContent={"space-between"}
+          alignItems={{ xs: "flex-start", md: "center" }}
         >
-          Change your private information
-        </Typography>
-        <Typography variant={"subtitle2"} color={"text.secondary"}>
-          Please read our{" "}
-          <Link color={"primary"} href={"/company-terms"} underline={"none"}>
-            terms of use
-          </Link>{" "}
-          to be informed how we manage your private data.
-        </Typography>
+          <Box>
+            <Typography
+              component={"p"}
+              variant="h6"
+              gutterBottom
+              fontWeight={700}
+              color={"text.primary"}
+            >
+              Change your private information
+            </Typography>
+            <Typography
+              variant={"subtitle2"}
+              component="p"
+              color={"text.secondary"}
+            >
+              Please read our{" "}
+              <Link href={"#"} underline={"none"}>
+                terms of use
+              </Link>{" "}
+              to be informed how we manage your private data.
+            </Typography>
+          </Box>
+          <LogoutButton variant="outlined" />
+        </Box>
         <Box paddingY={4}>
           <Divider />
         </Box>
@@ -129,6 +143,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -153,6 +168,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -175,6 +191,7 @@ export const UpdateProfile = ({
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -200,6 +217,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -220,6 +238,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -240,6 +259,7 @@ export const UpdateProfile = ({
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -267,13 +287,13 @@ export const UpdateProfile = ({
                 margin={"0 auto"}
               >
                 <Box marginBottom={{ xs: 1, sm: 0 }}>
-                  <Typography variant={"subtitle2"} color={"text.primary"}>
+                  <Typography
+                    variant={"subtitle2"}
+                    component="p"
+                    color={"text.primary"}
+                  >
                     You may also consider to update your{" "}
-                    <Link
-                      color={"primary"}
-                      href={"/account-billing"}
-                      underline={"none"}
-                    >
+                    <Link href={"/profile/billing"} underline="none">
                       billing information.
                     </Link>
                   </Typography>
