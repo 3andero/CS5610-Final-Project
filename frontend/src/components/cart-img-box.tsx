@@ -2,7 +2,6 @@ import {
   Box,
   Divider,
   FormControl,
-  Link,
   MenuItem,
   Select,
   Stack,
@@ -120,81 +119,51 @@ export const CartBox = ({
             marginTop={{ xs: 2, sm: 0 }}
             sx={{ order: { xs: 3, sm: 2 } }}
           >
-            <Link
-              href={"#"}
-              underline={"none"}
-              variant={"body2"}
-              noWrap={true}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                color: "text.secondary",
-                "&:hover": {
-                  color: "primary.main",
-                },
+            <Box
+              component={"svg"}
+              xmlns="http://www.w3.org/2000/svg"
+              width={20}
+              height={20}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              marginRight={0.5}
+              onClick={(event: any) => {
+                event.preventDefault();
+                context.setCartState(
+                  context.cartState.filter(
+                    (cartItem) => cartItem._id !== item._id
+                  )
+                );
               }}
             >
-              <Box
-                component={"svg"}
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                marginRight={0.5}
-                onClick={(event: any) => {
-                  event.preventDefault();
-                  context.setCartState(
-                    context.cartState.filter(
-                      (cartItem) => cartItem._id !== item._id
-                    )
-                  );
-                }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </Box>
-            </Link>
-            <Link
-              href={"#"}
-              underline={"none"}
-              variant={"subtitle2"}
-              noWrap={true}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                color: "text.secondary",
-                "&:hover": {
-                  color: "primary.main",
-                },
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </Box>
+            <Box
+              component={"svg"}
+              xmlns="http://www.w3.org/2000/svg"
+              width={20}
+              height={20}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              marginRight={0.5}
+              onClick={(event: any) => {
+                event.preventDefault();
               }}
             >
-              <Box
-                component={"svg"}
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                marginRight={0.5}
-                onClick={(event: any) => {
-                  event.preventDefault();
-                }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </Box>
-            </Link>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </Box>
           </Stack>
           <Stack
             spacing={1}
