@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import { LogoutButton } from "../../components/logout.button";
+import { Box } from "@mui/material";
 import { FurtherAction, ProtectedCall, useProtected } from "./serverApi";
 import { appConfig } from "../../config";
 import { useAuth0, User } from "@auth0/auth0-react";
@@ -12,7 +11,7 @@ const getOrPostNewUser: ProtectedCall<User> = async (
   user?: User
 ) => {
   user = user as User;
-  const url = `${appConfig.API_URL!}user`;
+  const url = `${appConfig.API_SERVER_DOMAIN}user`;
   let res = await fetch(url, {
     method: "GET",
     headers: { ...authHeader },
@@ -49,6 +48,7 @@ export const ProfileIndexView = () => {
   });
   useEffect(() => {
     handle.refresh(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -58,8 +58,6 @@ export const ProfileIndexView = () => {
       alignItems={"center"}
       gap="1em"
     >
-      <LogoutButton variant="contained" />
-      <Typography>Profile.Index.View</Typography>
       <FurtherAction protectedCallHandle={handle} refreshArgs={user}>
         <Box
           sx={{
@@ -67,9 +65,6 @@ export const ProfileIndexView = () => {
           }}
         >
           <UpdateProfile initialValues={handle.data} />
-          {/* {(status.data && <>{JSON.stringify(status.data)}</>) || (
-            <>failed: {JSON.stringify(status)}</>
-          )} */}
         </Box>
       </FurtherAction>
     </Box>

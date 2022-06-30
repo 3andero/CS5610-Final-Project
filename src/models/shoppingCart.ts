@@ -26,7 +26,7 @@ export class ShoppingCart {
   })
   public products!: { product_id: Ref<Product>; quantity: number }[];
 
-  @prop()
+  @prop({ required: true, unique: true })
   public user_info!: string;
 }
 

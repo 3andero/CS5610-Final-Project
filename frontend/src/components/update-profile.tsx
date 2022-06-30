@@ -78,7 +78,7 @@ export const UpdateProfile = ({
   const handle = useApi();
 
   const [formVals, setFormVals] = useState<ApiCallArgs>({
-    url: `${appConfig.API_URL!}user`,
+    url: `${appConfig.API_SERVER_DOMAIN}user`,
     fetchOptions: {
       method: "PUT",
       body: "",
@@ -106,7 +106,12 @@ export const UpdateProfile = ({
     <FurtherAction protectedCallHandle={handle} refreshArgs={formVals}>
       <Box>
         {handle.data && <Alert severity="success">Update Succeeded!</Alert>}
-        <Typography variant="h6" gutterBottom fontWeight={700}>
+        <Typography
+          variant="h6"
+          gutterBottom
+          fontWeight={700}
+          color={"text.primary"}
+        >
           Change your private information
         </Typography>
         <Typography variant={"subtitle2"} color={"text.secondary"}>
@@ -126,6 +131,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 Enter your first name
               </Typography>
@@ -149,6 +155,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 Enter your last name
               </Typography>
@@ -170,6 +177,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 Bio
               </Typography>
@@ -194,6 +202,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 Country
               </Typography>
@@ -213,6 +222,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 City
               </Typography>
@@ -232,6 +242,7 @@ export const UpdateProfile = ({
                 variant={"subtitle2"}
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
+                color={"text.primary"}
               >
                 Enter your address
               </Typography>
@@ -256,7 +267,7 @@ export const UpdateProfile = ({
                 margin={"0 auto"}
               >
                 <Box marginBottom={{ xs: 1, sm: 0 }}>
-                  <Typography variant={"subtitle2"}>
+                  <Typography variant={"subtitle2"} color={"text.primary"}>
                     You may also consider to update your{" "}
                     <Link
                       color={"primary"}

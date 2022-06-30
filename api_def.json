@@ -46,13 +46,26 @@
   "/shopping-cart": {
     "get": {
       "return": {
-        "http_status": "number",
-        "products": [{ "product_id": "string", "quantity": "number" }]
+        "_id": "string",
+        "price": "number",
+        "name": "string",
+        "image": "string",
+        "quantity": "number",
+        "is_available": "boolean",
+        "description": "string",
+        "__v": "number"
       }
     },
     "post": {
       "body": {
-        "products": [{ "product_id": "string", "quantity": "number" }]
+        "_id": "string",
+        "price": "number",
+        "name": "string",
+        "image": "string",
+        "quantity": "number",
+        "is_available": "boolean",
+        "description": "string",
+        "__v": "number"
       }
     },
     "delete": {

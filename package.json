@@ -33,16 +33,15 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "install-deps": "npm install && cd frontend && npm install && npm install -g create-react-app",
+    "install-deps": "npm install && cd frontend && npm install",
     "back": "cross-env NODE_ENV=production node ./build/api_server.js",
     "back:dev": "npx nodemon ./api_server.ts",
     "front:dev": "cd frontend && npm run start",
-    "front": "cross-env NODE_ENV=production node ./build/server.js",
     "build-front": "cd frontend && npm run build && cd ..",
     "build-back": "npx tsc",
-    "build": "cross-env NODE_ENV=production rm -rf build && npm run build-front && npm run build-back && mv ./frontend/build ./build/frontend ",
-    "test": "cd frontend && react-scripts test",
-    "eject": "cd frontend && react-scripts eject",
+    "build": "cross-env NODE_ENV=production rm -rf build && npm run build-front && npm run build-back && mv ./frontend/build ./build/frontend-build && zip -r \"build-$(date +%s).zip\" build/",
+    "deploy": "rm -rf build/ && unzip $(ls -r build-*.zip | head -1) && npm run back",
+    "deploy-ver": "func() { rm -rf build/ && unzip \"$1\" && npm run back; }; func",
     "addDB": "npx nodemon ./addDataDB.ts"
   },
   "browserslist": [

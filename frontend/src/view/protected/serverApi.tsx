@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, LinearProgress } from "@mui/material";
+import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../config";
 
@@ -14,13 +14,13 @@ const RequireActionComponent = ({
 }) => {
   return (
     <Box
-      style={{
+      sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <p className="server-api-page__title">{msg}</p>
+      <Typography>{msg}</Typography>
       <Box p={5} alignContent="center">
         <Button variant="outlined" onClick={onClick}>
           {buttonMsg}
@@ -30,18 +30,20 @@ const RequireActionComponent = ({
   );
 };
 
-export const FurtherAction = <T,>({
+export const FurtherAction = <T, TData>({
   protectedCallHandle: { refresh, error, isLoading },
   children,
   refreshArgs,
+  activated = true,
 }: {
-  protectedCallHandle: ProtectedCallHandle<T>;
+  protectedCallHandle: ProtectedCallHandle<T, TData>;
   children?: React.ReactNode;
   refreshArgs?: T;
+  activated?: boolean
 }): JSX.Element => {
   const { loginWithPopup, getAccessTokenWithPopup } = useAuth0();
   return (
-    (error === undefined && isLoading && (
+    (activated && ((error === undefined && isLoading && (
       <LinearProgress
         color="secondary"
         style={{ width: "100%" }}
@@ -52,43 +54,44 @@ export const FurtherAction = <T,>({
         }}
       />
     )) ||
-    (error === "login_required" && (
-      <RequireActionComponent
-        onClick={async () => {
-          await loginWithPopup();
-          isLoading && refresh(refreshArgs);
-        }}
-        msg={"Waiting to Login..."}
-        buttonMsg={"Login"}
-      />
-    )) ||
-    (error === "consent_required" && (
-      <RequireActionComponent
-        onClick={async () => {
-          await getAccessTokenWithPopup();
-          isLoading && refresh(refreshArgs);
-        }}
-        msg={"Waiting for consent..."}
-        buttonMsg={"Consent"}
-      />
-    )) ||
-    (error && error.length > 0 && (
-      <p style={{ color: "red" }}>unknown error: {error}</p>
-    )) || <>{children}</>
+      (error === "login_required" && (
+        <RequireActionComponent
+          onClick={async () => {
+            await loginWithPopup();
+            isLoading && refresh(refreshArgs);
+          }}
+          msg={"Waiting to Login..."}
+          buttonMsg={"Login"}
+        />
+      )) ||
+      (error === "consent_required" && (
+        <RequireActionComponent
+          onClick={async () => {
+            await getAccessTokenWithPopup();
+            isLoading && refresh(refreshArgs);
+          }}
+          msg={"Waiting for consent..."}
+          buttonMsg={"Consent"}
+        />
+      )) ||
+      (error && error.length > 0 && (
+        <Typography sx={{ color: "red" }}>unknown error: {error}</Typography>
+      )))) || <>{children}</>
   );
 };
 
 export type ApiCallArgs = {
   url: string;
   fetchOptions: Parameters<typeof fetch>[1];
+  callback?: () => void;
 };
 
 type AuthOptions = { audience?: string; scope?: string };
 
-export const useApi = (authOptions?: AuthOptions) => {
-  return useProtected(
-    async (authHeaders, state, _args?: ApiCallArgs) => {
-      const { url, fetchOptions } = _args as ApiCallArgs;
+export const useApi = <TData = any>(authOptions?: AuthOptions) => {
+  return useProtected<ApiCallArgs, TData>(
+    async (authHeaders, state, _args) => {
+      const { url, fetchOptions, callback } = _args as ApiCallArgs;
       const res = await fetch(url, {
         ...fetchOptions,
         headers: {
@@ -103,6 +106,7 @@ export const useApi = (authOptions?: AuthOptions) => {
       state.error =
         (res.status >= 400 && res.status <= 599 && (await res.text())) ||
         undefined;
+      callback?.();
     },
     {
       audience: appConfig.AUDIENCE,
@@ -111,28 +115,28 @@ export const useApi = (authOptions?: AuthOptions) => {
   );
 };
 
-export interface ProtectedCallState {
+export interface ProtectedCallState<TData> {
   error?: string;
   isLoading: boolean;
-  data?: any;
+  data?: TData;
 }
 
-export type ProtectedCallHandle<T> = ProtectedCallState & {
+export type ProtectedCallHandle<T, TData> = ProtectedCallState<TData> & {
   refresh: (args?: T) => void;
 };
 
-export type ProtectedCall<T> = (
+export type ProtectedCall<T, TData = any> = (
   authHeader: { Authorization: string },
-  state: ProtectedCallState,
+  state: ProtectedCallState<TData>,
   args?: T
 ) => Promise<void>;
 
-export const useProtected = <T,>(
-  fn: ProtectedCall<T>,
-  options: AuthOptions
-): ProtectedCallHandle<T> => {
+export const useProtected = <T, TData = any>(
+  fn: ProtectedCall<T, TData>,
+  options: AuthOptions,
+): ProtectedCallHandle<T, TData> => {
   const { getAccessTokenSilently } = useAuth0();
-  const [state, setState] = useState<ProtectedCallState>({
+  const [state, setState] = useState<ProtectedCallState<TData>>({
     error: undefined,
     isLoading: false,
     data: undefined,
@@ -151,17 +155,16 @@ export const useProtected = <T,>(
         if (refreshState.count === 0) {
           return;
         }
-        await fn(
-          { Authorization: `Bearer ${accessToken}` },
-          state,
-          refreshState.args
-        );
+        const _token = `Bearer ${accessToken}`;
+        // console.log(_token);
+        await fn({ Authorization: _token }, state, refreshState.args);
         console.log(1);
         setState({
           ...state,
           isLoading: false,
         });
       } catch (error: any) {
+        console.log(error);
         setState({
           ...state,
           error,

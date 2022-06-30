@@ -6,7 +6,7 @@ export const user_create = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const data = {
       email: req.body.email,

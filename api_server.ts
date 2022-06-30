@@ -5,7 +5,7 @@
  */
 
 import express, { ErrorRequestHandler } from "express";
-import { appConfig } from "./src/config";
+import { appConfig, LISTEN_LOCAL_ADDR } from "./src/config";
 import { ApiError, logStr } from "./src/utils";
 import morgan from "morgan";
 import cors from "cors";
@@ -19,6 +19,7 @@ import { router_Index } from "./src/routes";
 import { router_Products } from "./src/routes/products";
 import { router_user } from "./src/routes/user";
 import { router_cart } from "./src/routes/shoppingCart";
+import { router_order } from "./src/routes/order";
 
 // const appOrigin = logStr(appConfig.APP_ORIGIN || `http://localhost:3000`);
 
@@ -26,13 +27,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(morgan("dev"));
-
+process.env.NODE_ENV !== "production" && app.use(cors({ origin: "*" }));
 app.use(helmet());
 
 app.use("/", router_Index);
 app.use("/products", router_Products);
 app.use("/user", router_user);
 app.use("/shopping-cart", router_cart);
+app.use("/order", router_order);
 
 const jwksURI = logStr(
   appConfig.ISSUER_BASE_URL +
@@ -61,18 +63,23 @@ app.use((_req, _res, next) => {
 });
 
 app.use(((err, req, res, next) => {
-  console.log("error");
-  res.status(err.status || 500);
+  console.log(`error: ${err}`);
   if (!res.headersSent) {
-    res.send(`${err.status} ${err.message}`);
+    if (err.status) {
+      res.status(err.status);
+      res.send(`${err.status} ${err.message}`);
+    } else {
+      res.status(500);
+      res.send(`${err}`);
+    }
   }
 }) as ErrorRequestHandler);
 
 const start = async (): Promise<void> => {
   try {
     await mongoose.connect(appConfig.MONGO_DB);
-    app.listen(appConfig.API_PORT, appConfig.LISTEN_LOCAL_ADDR!, () => {
-      console.log(`Server started on port ${appConfig.LISTEN_LOCAL_ADDR}:${appConfig.API_PORT}`);
+    app.listen(appConfig.API_PORT, LISTEN_LOCAL_ADDR(), () => {
+      console.log(`Server started on port ${LISTEN_LOCAL_ADDR()}:${appConfig.API_PORT}`);
     });
   } catch (error) {
     console.error(error);
