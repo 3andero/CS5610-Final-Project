@@ -56,7 +56,7 @@ export const CountryName = ({
 }) => {
   return (
     <Box display={"flex"} sx={{ justifyContent: "center" }}>
-      <Typography textAlign={"center"} fontWeight={700} variant={"h1"}>
+      <Typography textAlign={"center"} fontWeight={700} variant={"h1"} color="white">
         {country}
       </Typography>
     </Box>
