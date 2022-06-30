@@ -150,7 +150,7 @@ export const useProtected = <T, TData = any>(
   useEffect(() => {
     (async () => {
       try {
-        console.log(0);
+        // console.log(0);
         const { audience, scope } = options;
         const accessToken = await getAccessTokenSilently({ audience, scope });
         if (refreshState.count === 0) {
