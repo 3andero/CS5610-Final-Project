@@ -73,18 +73,16 @@ export const ProductDetail = () => {
                 padding={1}
                 display={"inline-flex"}
                 borderRadius={1}
-                // bgcolor={"pink"}
+                bgcolor={"primary.main"}
                 marginBottom={1}
-                border= '0.5px solid #999'
               >
                 <Typography
                   sx={{
-                    color: "primary.main",
+                    color: "common.white",
                     lineHeight: 1,
                     textAlign: "center",
                   }}
                   paddingBottom={0.4}
-                  
                 >
                   new
                 </Typography>
@@ -195,8 +193,7 @@ export const ProductDetail = () => {
                     </Typography>
                   </Typography>
                   <Stack direction={"row"} spacing={2} marginTop={0.5}>
-                    <Button
-                      variant="contained"
+                    <Box
                       onClick={() =>
                         setQuantity(quantity - 1 >= 1 ? quantity - 1 : 1)
                       }
@@ -213,11 +210,10 @@ export const ProductDetail = () => {
                           quantity === 1 ? "text.secondary" : "text.primary"
                         }
                       >
-                        - Reduce
+                        - Remove
                       </Typography>
-                    </Button>
-                    <Button
-                      variant="contained"
+                    </Box>
+                    <Box
                       onClick={() =>
                         setQuantity(
                           quantity + 1 <= quantityLimit
@@ -245,7 +241,7 @@ export const ProductDetail = () => {
                       >
                         + Add
                       </Typography>
-                    </Button>
+                    </Box>
                   </Stack>
                 </Box>
               </Box>
