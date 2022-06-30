@@ -41,6 +41,7 @@ const TitleComponent2 = ({
       variant={variant}
       fontWeight={900}
       letterSpacing={5}
+      component="p"
       sx={{
         position: "relative",
         textTransform: "uppercase",

@@ -14,6 +14,7 @@ export const ColorModeButton = () => {
         minWidth: "auto",
         margin: "0.5em",
       }}
+      aria-label={context.colorMode}
     >
       {(context.colorMode === "dark" && (
         <LightModeIcon fontSize="small" sx={{ color: "secondary.main" }} />

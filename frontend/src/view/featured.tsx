@@ -4,10 +4,9 @@ import { styled } from "@mui/system";
 
 import Container from "components/Container";
 import { GenshinFeaturedHero } from "components/genshin-featured-hero";
-import { Typography } from "@mui/material";
-
+import { CharBox, CountryName } from "components/featured-char-box";
 const StyledJarallaxBox = styled(Box)<{ img: string }>(({ theme, img }) => ({
-  filter: theme.palette.mode === "dark" ? "brightness(0.7)" : "none",
+  filter: theme.palette.mode === "dark" ? "brightness(0.5)" : "brightness(0.7)",
   position: "absolute",
   objectFit: "cover",
   /* support for plugin https://github.com/bfred-it/object-fit-images */
@@ -21,6 +20,11 @@ const StyledJarallaxBox = styled(Box)<{ img: string }>(({ theme, img }) => ({
   backgroundSize: "cover",
   backgroundPosition: "center center",
   backgroundImage: `url(${img})`,
+  // sx: {
+  //   "&:hover": {
+  //     transform: "scale(1.25)"
+  //   }
+  // }
 }));
 
 const JarallaxImage = ({
@@ -38,7 +42,7 @@ const JarallaxImage = ({
       data-jarallax
       data-speed="0.2"
       position={"relative"}
-      minHeight={"100vh"}
+      minHeight={{ xs: "50vh", md: "100vh" }}
       display={"flex"}
       alignItems={"center"}
       {...(scrollTo && { id: "agency__portfolio-item--js-scroll" })}
@@ -70,31 +74,52 @@ const views: {
     images: [
       [
         "https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/4/49/Mondstadt_Region_Overview.png",
-        <Container>
-          <Typography textAlign={"center"}>123</Typography>
-        </Container>,
+        <CountryName country="Mondstat" marginLeft={60} />,
       ],
       [
-        "https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/e/e3/Inazuma_Region_Overview.png",
+        "https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/4/4d/Venti.jpg",
+        <CharBox
+          text='"Perfect timing, traveler! Tell me -- what is your greatest wish?"'
+          to={"/product-detail?_id=62af611fcd30479eea7992af"}
+          sx={{ marginLeft: "min(50em, 55vw)" }}
+        />,
       ],
     ],
   },
   {
-    section: <>Section1</>,
     images: [
-      ["https://i.redd.it/b9x7mvx5mng61.png"],
-      ["https://images2.alphacoders.com/117/1175591.png"],
+      [
+        "https://i.redd.it/b9x7mvx5mng61.png",
+        <CountryName country="Liyue" marginLeft={0} />,
+      ],
+      [
+        "https://thegaminggenie.com/wp-content/uploads/2021/01/Ganyu-Best-Build-Genshin-Impact.png",
+        <CharBox
+          text={
+            '"Should we really be off work this early? There is still a lot left to do..."'
+          }
+          to={"/product-detail?_id=62af5ffd37350699029bbde0"}
+          sx={{ marginRight: "min(50em, 55vw)", marginLeft: "0.5em" }}
+        />,
+      ],
     ],
   },
   {
-    section: <>Section2</>,
     images: [
-      ["https://images5.alphacoders.com/117/1175581.jpg"],
-      ["https://images7.alphacoders.com/116/1161810.jpg"],
+      [
+        "https://d1lss44hh2trtw.cloudfront.net/assets/article/2021/07/09/genshin-impact-version-20-coming-late-july-with-new-inazuma-area-cross-progression_feature.jpg",
+        <CountryName country="Inazuma" marginLeft={60} />,
+      ],
+      [
+        "https://thegaminggenie.com/wp-content/uploads/2021/07/Genshin-Impact-Ayaka-Best-Build.png",
+        <CharBox
+          text="Kamisato Ayaka Coming Soon..."
+          to="/shop"
+          sx={{ marginLeft: 0 }}
+          buttonText="Explore Store"
+        />,
+      ],
     ],
-  },
-  {
-    section: <>Section3</>,
   },
 ];
 
@@ -126,7 +151,7 @@ export const FeaturedView = (): JSX.Element => {
   return (
     <>
       <Box
-        minHeight={"100vh"}
+        height={"100vh"}
         display={"flex"}
         alignItems={"center"}
         bgcolor={"alternate.main"}

@@ -122,8 +122,8 @@ export const UpdateProfile = ({
               Change your private information
             </Typography>
             <Typography
-              component={"p"}
               variant={"subtitle2"}
+              component="p"
               color={"text.secondary"}
             >
               Please read our{" "}
@@ -143,6 +143,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -167,6 +168,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -189,6 +191,7 @@ export const UpdateProfile = ({
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -214,6 +217,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -234,6 +238,7 @@ export const UpdateProfile = ({
             <Grid item xs={12} sm={6}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -254,6 +259,7 @@ export const UpdateProfile = ({
             <Grid item xs={12}>
               <Typography
                 variant={"subtitle2"}
+                component="p"
                 sx={{ marginBottom: 2 }}
                 fontWeight={700}
                 color={"text.primary"}
@@ -281,7 +287,11 @@ export const UpdateProfile = ({
                 margin={"0 auto"}
               >
                 <Box marginBottom={{ xs: 1, sm: 0 }}>
-                  <Typography variant={"subtitle2"} color={"text.primary"}>
+                  <Typography
+                    variant={"subtitle2"}
+                    component="p"
+                    color={"text.primary"}
+                  >
                     You may also consider to update your{" "}
                     <Link href={"/profile/billing"} underline="none">
                       billing information.
