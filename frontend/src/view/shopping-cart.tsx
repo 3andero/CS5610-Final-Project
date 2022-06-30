@@ -53,7 +53,11 @@ export const ShoppingCartView = () => {
             }}
             variant="text"
           >
-            <Typography color={"primary"}>Delete All</Typography>
+            <Typography
+              color={context.colorMode === "dark" ? "secondary" : "primary"}
+            >
+              Delete All
+            </Typography>
           </Button>
           <Button
             fullWidth
@@ -62,7 +66,11 @@ export const ShoppingCartView = () => {
               context.toggleShoppingCart();
             }}
           >
-            <Typography color={"primary"}>Check out</Typography>
+            <Typography
+              color={context.colorMode === "dark" ? "secondary" : "primary"}
+            >
+              Check out
+            </Typography>
           </Button>
         </Box>
       </Box>
